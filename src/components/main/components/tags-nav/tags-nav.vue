@@ -28,7 +28,7 @@
             :name="item.name"
             @on-close="handleClose"
             @click.native="handleClick(item)"
-            :closable="item.name !== 'home'"
+            :closable="item.name !== '首页'"
             :color="item.name === value.name ? 'blue' : 'default'"
           >{{ showTitleInside(item) }}</Tag>
         </transition-group>
@@ -82,11 +82,11 @@ export default {
     handleTagsOption (type) {
       if (type === 'close-all') {
         // 关闭所有，除了home
-        let res = this.list.filter(item => item.name === 'home')
+        let res = this.list.filter(item => item.name === '首页')
         this.$emit('on-close', res, 'all')
       } else {
         // 关闭除当前页和home页的其他页
-        let res = this.list.filter(item => item.name === this.value.name || item.name === 'home')
+        let res = this.list.filter(item => item.name === this.value.name || item.name === '首页')
         this.$emit('on-close', res, 'others')
       }
     },

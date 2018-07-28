@@ -18,8 +18,8 @@ export default [
   },
   {
     path: '/',
-    name: 'index',
-    redirect: '/home',
+    name: 'home',
+    redirect: '/',
     component: Main,
     meta: {
       hideInMenu: true,
@@ -27,8 +27,8 @@ export default [
     },
     children: [
       {
-        path: 'home',
-        name: 'home',
+        path: '/',
+        name: '首页',
         meta: {
           hideInMenu: true,
           notCache: true
@@ -38,38 +38,9 @@ export default [
     ]
   },
 
-  /* {
-     path: '/send',
-     name: 'send',
-     meta: {
-       icon: 'ios-navigate',
-       title: '发送管理'
-     },
-     component: Main,
-     children: [
-       {
-         path: 'new_task',
-         name: 'new_task',
-         meta: {
-           icon: 'ios-navigate',
-           title: '新建任务'
-         },
-         component: () => import('@/components/task/Task.vue')
-       },
-       {
-         path: 'send_record',
-         name: 'send_record',
-         meta: {
-           icon: 'ios-navigate',
-           title: '发送记录'
-         },
-         component: () => import('@/components/task/Record.vue')
-       }
-     ]
-   },*/
   {
     path: '/publish_index',
-    name: 'publish_index',
+    name: '编辑',
     meta:{
       title: '',
     },
@@ -77,13 +48,79 @@ export default [
     children: [
       {
         path: '/publish',
-        name: 'publish',
+        name: 'publish_index',
         meta:{
-          icon: 'ios-compose-outline',
-          title: 'abcd',
+          //<Icon type="paintbrush"></Icon>
+          icon: 'android-create',
+          title: '文章编辑',
         },
         component: () => import('@/components/publish/Publish')
       },
+    ]
+  },
+
+  {
+    path: '/article',
+    name: 'article',
+    meta: {
+      //<Icon type="android-compass"></Icon>
+      icon: 'navigate',
+      title: '文章管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'article_draft',
+        name: 'article_draft',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'checkmark-circled',
+          title: '草稿管理'
+        },
+        component: () => import('@/components/article/ArticleDraft')
+      },
+      {
+        path: 'article_list',
+        name: 'article_list',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-list',
+          title: '文章列表'
+        },
+        component: () => import('@/components/article/ArticleList')
+      }
+    ]
+  },
+  {
+    path: '/category',
+    name: 'category',
+    meta: {
+      //<Icon type="android-compass"></Icon>
+      icon: 'code',
+      title: '分类管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'category_new',
+        name: 'category_new',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-create',
+          title: '新建分类'
+        },
+        component: () => import('@/components/category/Category')
+      },
+      {
+        path: 'category_list',
+        name: 'category_list',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-list',
+          title: '分类列表'
+        },
+        component: () => import('@/components/category/CategoryDetail')
+      }
     ]
   },
 

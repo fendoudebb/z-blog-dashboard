@@ -49,8 +49,8 @@ export const getBreadCrumbList = (routeMetched) => {
     return !item.meta.hideInMenu
   });
   return [{
-    name: 'home',
-    to: '/home'
+    name: '首页',
+    to: '/'
   }, ...res]
 };
 
@@ -84,7 +84,7 @@ export const getHomeRoute = routers => {
       let res = getHomeRoute(item.children);
       if (res.name) return res
     } else {
-      if (item.name === 'home') homeRoute = item
+      if (item.name === '首页') homeRoute = item
     }
   }
   return homeRoute
@@ -170,7 +170,7 @@ export const getParams = url => {
 export const getNextName = (list, name) => {
   let res = '';
   if (list.length === 2) {
-    res = 'home'
+    res = '首页'
   } else {
     if (list.findIndex(item => item.name === name) === list.length - 1) res = list[list.length - 2].name
     else res = list[list.findIndex(item => item.name === name) + 1].name
