@@ -47,7 +47,8 @@
 </template>
 
 <script>
-  import MarkdownEditor from '@/components/markdown'
+  import MarkdownEditor from '@/components/markdown';
+  import { mapActions } from 'vuex'
 
   export default {
     name: "publish",
@@ -96,13 +97,15 @@
       }
     },
     methods:{
+      ...mapActions([
+        'handlePublishArticle'
+      ]),
       articleSavePublish() {
         this.publishLoading = true;
-        this.$Message.info("publish1");
-        setTimeout(function () {
-          console.log("publish3")
-        }, 3000);
-        this.$Message.info("publish2");
+        this.$Message.info("publish");
+        this.handlePublishArticle().then(value => {
+          this.$Message.info("aaaaaaaaaaa");
+        })
       },
       articleSaveDraft() {
         this.publishLoading = true;

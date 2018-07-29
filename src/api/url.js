@@ -1,8 +1,5 @@
-let url = {
-
-  
-
-
+export const publishArticleUrl = () => {
+  return '/article/publish';
 };
 
-export default url;
+
