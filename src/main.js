@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import axios from 'axios';
+
+axios.defaults.baseURL = process.env.BASE_URL;
 
 Vue.use(iView);
 
@@ -18,6 +21,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
