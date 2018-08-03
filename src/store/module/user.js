@@ -2,12 +2,12 @@ import { login, logout } from '@/api/user'
 
 export default {
   state: {
-    userName: '',
+    username: '',
     access: []
   },
   mutations: {
-    setUserName (state, name) {
-      state.userName = name
+    setUsername (state, name) {
+      state.username = name
     },
     setAccess (state, access) {
       state.access = access;
@@ -15,20 +15,18 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, {userName, password}) {
-      userName = userName.trim();
+    handleLogin ({ commit }, {username, password}) {
+      username = username.trim();
       return new Promise((resolve, reject) => {
         login({
-          userName,
+          username,
           password
         }).then(res => {
-          const data = res.data;
-          console.log("登录: " + JSON.stringify(data));
-          commit('setUserName', userName);
+          commit('setUsername', username);
           commit('setAccess', res.data.access);
-          resolve(res.data)
+          resolve(res)
         }).catch(err => {
-          reject(err)
+          // reject(err)
         })
       })
     },
@@ -36,11 +34,11 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout().then(() => {
-          commit('setUserName', '');
+          commit('setUsername', '');
           commit('setAccess', []);
           resolve()
         }).catch(err => {
-          reject(err)
+          // reject(err)
         })
         // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
         // commit('setToken', '')

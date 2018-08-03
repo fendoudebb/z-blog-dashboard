@@ -1,72 +1,81 @@
 <template>
-  <Form ref="loginForm" :model="form" :rules="rules">
-    <FormItem prop="userName">
-      <Input v-model="form.userName" placeholder="请输入用户名">
+  <div @keyup.enter="submitLogin">
+    <Form ref="loginForm" :model="form" :rules="rules" >
+      <FormItem prop="username">
+        <Input v-model="form.username" placeholder="请输入用户名">
         <span slot="prepend">
           <Icon :size="16" type="person"></Icon>
         </span>
-      </Input>
-    </FormItem>
-    <FormItem prop="password">
-      <Input type="password" v-model="form.password" placeholder="请输入密码">
+        </Input>
+      </FormItem>
+      <FormItem prop="password">
+        <Input type="password" v-model="form.password" placeholder="请输入密码">
         <span slot="prepend">
           <Icon :size="14" type="locked"></Icon>
         </span>
-      </Input>
-    </FormItem>
-    <FormItem>
-      <Button @click="handleSubmit" type="primary" long>登录</Button>
-    </FormItem>
-  </Form>
+        </Input>
+      </FormItem>
+      <FormItem>
+        <Button @click="submitLogin" type="primary" long>登录</Button>
+      </FormItem>
+    </Form>
+  </div>
 </template>
 <script>
-export default {
-  name: 'LoginForm',
-  props: {
-    userNameRules: {
-      type: Array,
-      default: () => {
-        return [
-          { required: true, message: '账号不能为空', trigger: 'blur' }
-        ]
+  import { mapActions } from 'vuex'
+  export default {
+    name: 'LoginForm',
+    props: {
+      usernameRules: {
+        type: Array,
+        default: () => {
+          return [
+            {required: true, message: '账号不能为空', trigger: 'blur'}
+          ]
+        }
+      },
+      passwordRules: {
+        type: Array,
+        default: () => {
+          return [
+            {required: true, message: '密码不能为空', trigger: 'blur'}
+          ]
+        }
       }
     },
-    passwordRules: {
-      type: Array,
-      default: () => {
-        return [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
-        ]
-      }
-    }
-  },
-  data () {
-    return {
-      form: {
-        userName: 'super_admin',
-        password: ''
-      }
-    }
-  },
-  computed: {
-    rules () {
+    data() {
       return {
-        userName: this.userNameRules,
-        password: this.passwordRules
-      }
-    }
-  },
-  methods: {
-    handleSubmit () {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.$emit('on-success-valid', {
-            userName: this.form.userName,
-            password: this.form.password
-          })
+        form: {
+          username: '',
+          password: ''
         }
-      })
+      }
+    },
+    computed: {
+      rules() {
+        return {
+          username: this.usernameRules,
+          password: this.passwordRules
+        }
+      }
+    },
+    methods: {
+      ...mapActions([
+        'handleLogin'
+      ]),
+      submitLogin() {
+        this.$refs.loginForm.validate((valid) => {
+          if (valid) {
+            const username = this.form.username;
+            const password = this.form.password;
+            this.handleLogin({ username, password }).then(res => {
+              this.$router.push({
+                name: '首页'
+              })
+            })
+          }
+        })
+      }
     }
   }
-}
 </script>

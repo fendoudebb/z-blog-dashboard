@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import { Message } from 'iview'
-class axios {
+
+class httpRequest {
   constructor () {
     this.options = {
       method: '',
@@ -30,26 +31,43 @@ class axios {
     // 添加响应拦截器
     instance.interceptors.response.use((res) => {
       let {data} = res;
+      let {status} = res;
       const is = this.destroy(url);
       if (!is) {
         setTimeout(() => {
           // Spin.hide()
         }, 500)
       }
-      if (!(data instanceof Blob)) {
-        if (data.code !== 200) {
-          // 后端服务在个别情况下回报201，待确认
-          if (data.code === 401) {
-            window.location.href = '/login';
-            Message.error('未登录，或登录失效，请登录')
-          } else {
-            if (data.msg) Message.error(data.msg)
+      if (status !== 200) {
+        if (status === 401) {
+          window.location.href = '/login';
+          Message.error('未登录，或登录失效，请登录')
+        } else {
+          if (data.msg) Message.error(data.msg)
+        }
+        return Promise.reject(data.msg);
+        /*if (!(data instanceof Blob)) {
+          console.log("axios: " + JSON.stringify(data))
+          if (data.code !== 200) {
+            // 后端服务在个别情况下回报201，待确认
+            if (data.code === 401) {
+              window.location.href = '/login';
+              Message.error('未登录，或登录失效，请登录')
+            } else {
+              if (data.msg) Message.error(data.msg)
+            }
+            return false
           }
-          return false
+        }*/
+      } else {
+        if (data.code !== 0) {
+          Message.error(data.msg);
+          return Promise.reject(data.msg);
         }
       }
       return data
     }, (error) => {
+      console.log("error: " + JSON.stringify(error));
       Message.error('服务内部错误');
       // 对响应错误做点什么
       return Promise.reject(error)
@@ -58,11 +76,12 @@ class axios {
   // 创建实例
   create () {
     let conf = {
-      baseURL: "http://localhost:9999",
+      baseURL: process.env.BASE_URL,
+      withCredentials: true,
       // timeout: 2000,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'X-URL-PATH': location.pathname
+        // 'X-URL-PATH': location.pathname
       }
     };
     return Axios.create(conf)
@@ -80,4 +99,6 @@ class axios {
     return instance(options)
   }
 }
+
+const axios = new httpRequest();
 export default axios
