@@ -11,6 +11,8 @@
 
 <script>
   import expandRow from './ArticleDetail';
+  import { mapActions } from 'vuex';
+  import axios from 'axios';
   export default {
     name: "article-list",
     components: { expandRow },
@@ -89,14 +91,25 @@
       }
     },
     methods:{
+      ...mapActions([
+        'handleArticleList'
+      ]),
       online() {
         this.$Message.success("上线成功！");
       },
       changePage() {
 
+      },
+      getList() {
+        axios.get("http://localhost:9999/admin/article/list").then(value => {
+          console.log("value: " + JSON.stringify(value));
+        }).catch(reason => {
+          console.log("reason: " + JSON.stringify(reason));
+        })
       }
     },
     mounted() {
+      this.getList();
       this.auditArticle = [
         {
           id: 1,
