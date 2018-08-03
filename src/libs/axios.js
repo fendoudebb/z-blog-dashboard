@@ -40,7 +40,7 @@ class axios {
         if (data.code !== 200) {
           // 后端服务在个别情况下回报201，待确认
           if (data.code === 401) {
-            window.location.href = '/#/login'
+            window.location.href = '/login';
             Message.error('未登录，或登录失效，请登录')
           } else {
             if (data.msg) Message.error(data.msg)
@@ -50,7 +50,7 @@ class axios {
       }
       return data
     }, (error) => {
-      Message.error('服务内部错误')
+      Message.error('服务内部错误');
       // 对响应错误做点什么
       return Promise.reject(error)
     })
@@ -58,7 +58,7 @@ class axios {
   // 创建实例
   create () {
     let conf = {
-      baseURL: process.env.BASE_URL,
+      baseURL: "http://localhost:9999",
       // timeout: 2000,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',

@@ -1,29 +1,17 @@
-import { login, logout, getUserInfo } from '@/api/user'
+import { login, logout } from '@/api/user'
 
 export default {
   state: {
     userName: '',
-    userId: '',
-    avatorImgPath: '',
-    token: '',
-    access: ''
+    access: []
   },
   mutations: {
-    setAvator (state, avatorPath) {
-      state.avatorImgPath = avatorPath
-    },
-    setUserId (state, id) {
-      state.userId = id;
-    },
     setUserName (state, name) {
       state.userName = name
     },
     setAccess (state, access) {
       state.access = access;
     },
-    setToken (state, token) {
-      state.token = token;
-    }
   },
   actions: {
     // 登录
@@ -36,9 +24,9 @@ export default {
         }).then(res => {
           const data = res.data;
           console.log("登录: " + JSON.stringify(data));
-          commit('setUserId', data.data);
-          sessionStorage.setItem("login", data.data);
-          resolve()
+          commit('setUserName', userName);
+          commit('setAccess', res.data.access);
+          resolve(res.data)
         }).catch(err => {
           reject(err)
         })
@@ -47,10 +35,9 @@ export default {
     // 退出登录
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        logout(state.userId).then(() => {
-          commit('setToken', '');
+        logout().then(() => {
+          commit('setUserName', '');
           commit('setAccess', []);
-          sessionStorage.setItem("login", "");
           resolve()
         }).catch(err => {
           reject(err)
@@ -62,18 +49,9 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
+    getUserAccess ({ state }) {
       return new Promise((resolve, reject) => {
-        state.userId = sessionStorage.getItem("login");
-        getUserInfo(state.userId).then(res => {
-          const data = res.data;
-          console.log("get user info: " + JSON.stringify(res.data));
-          commit('setUserName', data.data.userName);
-          commit('setAccess', data.data.access);
-          resolve(data)
-        }).catch(err => {
-          reject(err)
-        })
+        resolve(state.access);
       })
     }
   }

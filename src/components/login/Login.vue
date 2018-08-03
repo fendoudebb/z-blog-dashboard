@@ -24,16 +24,19 @@ export default {
   },
   methods: {
     ...mapActions([
-      'handleLogin',
-      'getUserInfo'
+      'handleLogin'
     ]),
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
+        console.log("login result: " + JSON.stringify(res));
+        if (res.code === 0) {
           this.$router.push({
             name: '首页'
           })
-        })
+        } else {
+          this.$Message.error("用户名或密码错误!");
+        }
+
       })
     }
   }
