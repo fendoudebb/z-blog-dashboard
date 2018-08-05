@@ -6,13 +6,12 @@ export default {
     size: 10,
   },
   actions: {
-    handleArticleList() {
+    handleArticleList({state, commit}) {
       return new Promise((resolve, reject) => {
         getArticleList().then(res => {
-          console.log("aaaa");
           resolve(res);
         }).catch(err => {
-          reject(err);
+          // reject(err);
         });
       })
     }

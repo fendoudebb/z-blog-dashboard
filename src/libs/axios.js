@@ -30,45 +30,33 @@ class httpRequest {
 
     // 添加响应拦截器
     instance.interceptors.response.use((res) => {
+      // console.log("intercept: " + JSON.stringify(res));
       let {data} = res;
-      let {status} = res;
       const is = this.destroy(url);
       if (!is) {
         setTimeout(() => {
           // Spin.hide()
         }, 500)
       }
-      if (status !== 200) {
-        if (status === 401) {
-          window.location.href = '/login';
-          Message.error('未登录，或登录失效，请登录')
-        } else {
-          if (data.msg) Message.error(data.msg)
-        }
+      if (data.code !== 0) {
+        Message.error(data.msg);
         return Promise.reject(data.msg);
-        /*if (!(data instanceof Blob)) {
-          console.log("axios: " + JSON.stringify(data))
-          if (data.code !== 200) {
-            // 后端服务在个别情况下回报201，待确认
-            if (data.code === 401) {
-              window.location.href = '/login';
-              Message.error('未登录，或登录失效，请登录')
-            } else {
-              if (data.msg) Message.error(data.msg)
-            }
-            return false
-          }
-        }*/
-      } else {
-        if (data.code !== 0) {
-          Message.error(data.msg);
-          return Promise.reject(data.msg);
-        }
       }
       return data
     }, (error) => {
-      console.log("error: " + JSON.stringify(error));
-      Message.error('服务内部错误');
+      // console.log("error: " + JSON.stringify(error));
+      let {response} = error;
+      console.log("error response: " + JSON.stringify(response));
+      switch (response.status) {
+        case 401:
+          Message.error('登录状态过期,请重新登录!');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1500);
+          break;
+        default :
+          Message.error('内部错误!');
+      }
       // 对响应错误做点什么
       return Promise.reject(error)
     })

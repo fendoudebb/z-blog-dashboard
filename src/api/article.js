@@ -4,6 +4,6 @@ import {articleListUrl} from './url';
 export const getArticleList = () => {
   return axios.request({
     url: articleListUrl,
-    method: 'get'
+    method: 'post'
   })
 };

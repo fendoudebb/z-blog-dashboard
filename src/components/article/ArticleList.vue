@@ -3,7 +3,7 @@
     <Table border stripe :data="auditArticle" :columns="auditArticleColumns" ></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :total="totalPage" :current="currentPage" @on-change="changePage"></Page>
+        <Page :page-size="1" :total="totalElements" :current="currentPage" @on-change="changePage" show-elevator show-total ></Page>
       </div>
     </div>
   </div>
@@ -12,14 +12,13 @@
 <script>
   import expandRow from './ArticleDetail';
   import { mapActions } from 'vuex';
-  import axios from 'axios';
   export default {
     name: "article-list",
     components: { expandRow },
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
-        totalPage:100,
+        totalElements:100,
         currentPage:1,
         auditArticle:[
 
@@ -100,16 +99,15 @@
       changePage() {
 
       },
-      getList() {
-        axios.get("http://localhost:9999/admin/article/list").then(value => {
-          console.log("value: " + JSON.stringify(value));
-        }).catch(reason => {
-          console.log("reason: " + JSON.stringify(reason));
-        })
-      }
+    },
+    created() {
+      this.handleArticleList().then(value => {
+        console.log("value: " + JSON.stringify(value));
+        this.totalElements = value.data.totalElements;
+        console.log("value:totalElements " + this.totalElements);
+      })
     },
     mounted() {
-      this.getList();
       this.auditArticle = [
         {
           id: 1,
