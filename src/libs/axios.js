@@ -1,8 +1,8 @@
 import Axios from 'axios'
-import { Message } from 'iview'
+import {Message, Spin} from 'iview';
 
 class httpRequest {
-  constructor () {
+  constructor() {
     this.options = {
       method: '',
       url: ''
@@ -10,17 +10,19 @@ class httpRequest {
     // 存储请求队列
     this.queue = {}
   }
+
   // 销毁请求实例
-  destroy (url) {
+  destroy(url) {
     delete this.queue[url];
     const queue = Object.keys(this.queue);
     return queue.length
   }
+
   // 请求拦截
-  interceptors (instance, url) {
+  interceptors(instance, url) {
     // 添加请求拦截器
     instance.interceptors.request.use(config => {
-      // Spin.show()
+      // Spin.show();
       // 在发送请求之前做些什么
       return config
     }, error => {
@@ -34,9 +36,9 @@ class httpRequest {
       let {data} = res;
       const is = this.destroy(url);
       if (!is) {
-        setTimeout(() => {
-          // Spin.hide()
-        }, 500)
+        /*setTimeout(() => {
+          Spin.hide()
+        }, 500)*/
       }
       if (data.code !== 0) {
         Message.error(data.msg);
@@ -49,6 +51,7 @@ class httpRequest {
       console.log("error response: " + JSON.stringify(response));
       switch (response.status) {
         case 401:
+          localStorage.setItem('username', '');
           Message.error('登录状态过期,请重新登录!');
           setTimeout(() => {
             window.location.href = '/login';
@@ -61,8 +64,9 @@ class httpRequest {
       return Promise.reject(error)
     })
   }
+
   // 创建实例
-  create () {
+  create() {
     let conf = {
       baseURL: process.env.BASE_URL,
       withCredentials: true,
@@ -74,12 +78,14 @@ class httpRequest {
     };
     return Axios.create(conf)
   }
+
   // 合并请求实例
-  mergeReqest (instances = []) {
+  mergeReqest(instances = []) {
     //
   }
+
   // 请求实例
-  request (options) {
+  request(options) {
     let instance = this.create();
     this.interceptors(instance, options.url);
     options = Object.assign({}, options);
