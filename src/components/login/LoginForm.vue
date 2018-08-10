@@ -46,7 +46,7 @@
     data() {
       return {
         form: {
-          username: '',
+          username: localStorage.getItem('username'),
           password: ''
         }
       }

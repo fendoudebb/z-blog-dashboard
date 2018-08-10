@@ -16,7 +16,7 @@ router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   // const token = store.state.user.username;
   // const token = sessionStorage.getItem('username');
-  const token = localStorage.getItem('username');
+  const token = sessionStorage.getItem('username');
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
     next({

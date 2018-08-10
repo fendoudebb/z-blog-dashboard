@@ -1,4 +1,4 @@
-# msg-front-end
+# msj-front-end
 
 > msg admin console front end project
 

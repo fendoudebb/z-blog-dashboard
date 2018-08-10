@@ -23,6 +23,7 @@ export default {
           password
         }).then(res => {
           localStorage.setItem('username', username);
+          sessionStorage.setItem('username', username);
           commit('setUsername', username);
           commit('setAccess', res.data.access);
           resolve(res)
@@ -35,7 +36,7 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout().then(() => {
-          localStorage.setItem('username', '');
+          sessionStorage.setItem('username', '');
           commit('setUsername', '');
           commit('setAccess', []);
           resolve()

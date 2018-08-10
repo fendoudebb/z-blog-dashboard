@@ -5,7 +5,7 @@ export const logoutUrl = '/logout';
 
 export const articleListUrl = '/admin/article/list';
 
-export const publishArticleUrl = '/article/publish';
+export const publishArticleUrl = '/admin/article/save';
 
 
 

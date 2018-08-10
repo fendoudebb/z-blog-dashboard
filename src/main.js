@@ -11,7 +11,7 @@ import 'iview/dist/styles/iview.css'
 
 Vue.use(iView);
 
-if (process.env.NODE_ENV === 'development') require('@/mock');
+// if (process.env.NODE_ENV === 'development') require('@/mock');
 
 Vue.config.productionTip = false;
 

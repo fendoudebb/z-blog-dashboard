@@ -51,7 +51,6 @@ class httpRequest {
       console.log("error response: " + JSON.stringify(response));
       switch (response.status) {
         case 401:
-          localStorage.setItem('username', '');
           Message.error('登录状态过期,请重新登录!');
           setTimeout(() => {
             window.location.href = '/login';
