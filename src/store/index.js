@@ -4,7 +4,9 @@ import Vuex from 'vuex'
 import user from './module/user'
 import app from './module/app'
 import publish from './module/publish'
-import article from './module/article'
+import article_list from './module/article_list'
+import article_draft from './module/article_draft'
+import category from './module/category'
 
 Vue.use(Vuex);
 
@@ -22,6 +24,8 @@ export default new Vuex.Store({
     user,
     app,
     publish,
-    article
+    article_list,
+    article_draft,
+    category
   }
 })

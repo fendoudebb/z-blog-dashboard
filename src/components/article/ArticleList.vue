@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border stripe :data="auditArticle" :columns="auditArticleColumns"></Table>
+    <Table border stripe :data="articleDraft" :columns="articleDraftColumns"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :page-size="1" :total="totalElements" :current="currentPage" @on-change="changePage" show-elevator
@@ -22,8 +22,8 @@
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
         totalElements: 100,
         currentPage: 1,
-        auditArticle: [],
-        auditArticleColumns: [
+        articleDraft: [],
+        articleDraftColumns: [
           {
             type: 'expand', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
@@ -138,7 +138,7 @@
     },
     methods: {
       ...mapMutations([
-        'setPage'
+        'setListPage'
       ]),
       ...mapActions([
         'handleArticleList'
@@ -148,14 +148,14 @@
       },
       changePage(index) {
         console.log('index: ' + index);
-        this.setPage(index - 1);
+        this.setListPage(index - 1);
         this.getArticleList();
       },
       getArticleList() {
         this.handleArticleList().then(value => {
           console.log("value: " + JSON.stringify(value));
           this.totalElements = value.data.totalElements;
-          this.auditArticle = value.data.content;
+          this.articleDraft = value.data.content;
         })
       }
     },
@@ -163,20 +163,7 @@
       this.getArticleList();
     },
     mounted() {
-      this.auditArticle = [
-        {
-          id: 1,
-          title: '标题',
-          author: '作者',
-          original: true,
-          originalLink: '',
-          auditStatus: 3,
-          keywords: '关键字',
-          description: '描述',
-          category: '分类',
-          updateTime: '2018-07-28'
-        }
-      ];
+
     }
   }
 </script>

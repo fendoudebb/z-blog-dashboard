@@ -1,4 +1,4 @@
-import {getArticleList} from '@/api/article';
+import {getArticleDraft} from '@/api/article';
 
 export default {
   state: {
@@ -6,14 +6,14 @@ export default {
     size: 1,
   },
   mutations: {
-    setPage (state, page) {
+    setDraftPage(state, page) {
       state.page = page
     },
   },
   actions: {
-    handleArticleList({state, commit}) {
+    handleArticleDraft({state, commit}) {
       return new Promise((resolve, reject) => {
-        getArticleList(state.page, state.size).then(res => {
+        getArticleDraft(state.page, state.size).then(res => {
           resolve(res);
         }).catch(err => {
           // reject(err);
