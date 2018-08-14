@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border stripe :data="articleDraft" :columns="articleDraftColumns"></Table>
+    <Table border stripe :data="articleList" :columns="articleListColumns"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :page-size="1" :total="totalElements" :current="currentPage" @on-change="changePage" show-elevator
@@ -22,8 +22,8 @@
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
         totalElements: 100,
         currentPage: 1,
-        articleDraft: [],
-        articleDraftColumns: [
+        articleList: [],
+        articleListColumns: [
           {
             type: 'expand', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
@@ -41,16 +41,16 @@
               let auditStatus = params.row.auditStatus;
               let text = '';
               let color = '';
-              if (auditStatus === 0) {
+              if (auditStatus === 'UNDER_REVIEW') {
                 text = '待审核';
                 color = 'orange';
-              } else if (auditStatus === 1) {
+              } else if (auditStatus === 'ONLINE') {
                 text = '上线';
                 color = 'green';
-              } else if (auditStatus === 2) {
+              } else if (auditStatus === 'REJECT') {
                 text = '审核拒绝';
                 color = 'red';
-              } else if (auditStatus === 3) {
+              } else if (auditStatus === 'OFFLINE') {
                 text = '下线';
                 color = 'lightskyblue';
               }
@@ -92,7 +92,7 @@
             render: (h, params) => {
               let action = [];
               let auditStatus = params.row.auditStatus;
-              if (auditStatus === 0) {
+              if (auditStatus === 'UNDER_REVIEW') {
                 action.push(h('Button', {
                   props: {type: 'primary', size: 'small'},
                   style: {marginRight: '5px'},
@@ -109,7 +109,7 @@
                     }
                   }
                 }, '拒绝'));
-              } else if (auditStatus === 1) {
+              } else if (auditStatus === 'ONLINE') {
                 action.push(h('Button', {
                   props: {type: 'warning', size: 'small'}, on: {
                     click: () => {
@@ -119,7 +119,7 @@
                 }, '下线'));
               } else if (auditStatus === 2) {
 
-              } else if (auditStatus === 3) {
+              } else if (auditStatus === 'REJECT') {
                 action.push(h('Button', {
                   props: {type: 'primary', size: 'small'}, on: {
                     click: () => {
@@ -138,13 +138,23 @@
     },
     methods: {
       ...mapMutations([
-        'setListPage'
+        'setListPage',
+        'setArticleId',
+        'setAuditStatus'
       ]),
       ...mapActions([
-        'handleArticleList'
+        'handleArticleList',
+        'handleArticleStatus'
       ]),
-      online() {
-        this.$Message.success("上线成功！");
+      online(index) {
+        console.log("index: " + index);
+        let articleList = this.articleList[index];
+        this.setArticleId(articleList.id);
+        this.setAuditStatus(articleList.auditStatus);
+        this.handleArticleStatus().then(value => {
+          this.$Message.success("上线成功！" + JSON.stringify(value));
+        });
+        console.log("Json: " + JSON.stringify(articleList));
       },
       changePage(index) {
         console.log('index: ' + index);
@@ -155,7 +165,7 @@
         this.handleArticleList().then(value => {
           console.log("value: " + JSON.stringify(value));
           this.totalElements = value.data.totalElements;
-          this.articleDraft = value.data.content;
+          this.articleList = value.data.content;
         })
       }
     },

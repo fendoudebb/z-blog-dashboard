@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {articleListUrl, articleDraftUrl} from './url';
+import {articleListUrl, articleAuditUrl, articleDraftUrl} from './url';
 
 export const getArticleList = (page, size) => {
   const data = {
@@ -20,6 +20,18 @@ export const getArticleDraft = (page, size) => {
   };
   return axios.request({
     url: articleDraftUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const modifyArticleStatus = (articleId, auditStatus) => {
+  const data = {
+    articleId,
+    auditStatus
+  };
+  return axios.request({
+    url: articleAuditUrl,
     data,
     method: 'post'
   })
