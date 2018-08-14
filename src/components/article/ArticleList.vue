@@ -61,7 +61,7 @@
             title: '是否原创', key: 'original', align: 'center', render: (h, params) => {
               let auditStatus = params.row.auditStatus;
               let linkUrl = [];
-              if (auditStatus === 1) {
+              if (auditStatus === 'ONLINE') {
                 let original = params.row.original;
                 if (original) {
                   let id = params.row.id;
@@ -92,45 +92,22 @@
             render: (h, params) => {
               let action = [];
               let auditStatus = params.row.auditStatus;
+              //@formatter:off
+              let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
+              let reject = h('Button', {props: {type: 'error', size: 'small'}, on: {click: () => {this.reject(params.index)}}}, '拒绝');
+              let offline = h('Button', {props: {type: 'warning', size: 'small'}, on: {click: () => {this.offline(params.index)}}}, '下线');
+              //@formatter:on
               if (auditStatus === 'UNDER_REVIEW') {
-                action.push(h('Button', {
-                  props: {type: 'primary', size: 'small'},
-                  style: {marginRight: '5px'},
-                  on: {
-                    click: () => {
-                      this.online(params.index)
-                    }
-                  }
-                }, '上线'));
-                action.push(h('Button', {
-                  props: {type: 'error', size: 'small'}, on: {
-                    click: () => {
-                      this.online(params.index)
-                    }
-                  }
-                }, '拒绝'));
+                action.push(online);
+                action.push(reject);
               } else if (auditStatus === 'ONLINE') {
-                action.push(h('Button', {
-                  props: {type: 'warning', size: 'small'}, on: {
-                    click: () => {
-                      this.online(params.index)
-                    }
-                  }
-                }, '下线'));
-              } else if (auditStatus === 2) {
-
+                action.push(offline);
+              } else if (auditStatus === 'OFFLINE') {
+                action.push(online);
               } else if (auditStatus === 'REJECT') {
-                action.push(h('Button', {
-                  props: {type: 'primary', size: 'small'}, on: {
-                    click: () => {
-                      this.online(params.index)
-                    }
-                  }
-                }, '上线'));
+                action.push(online);
               }
-              return h('div', [
-                action,
-              ]);
+              return h('div', [action]);
             }
           }
         ]
@@ -147,12 +124,28 @@
         'handleArticleStatus'
       ]),
       online(index) {
+        this.modifyArticleStatus(index, 'ONLINE');
+      },
+      offline(index) {
+        this.modifyArticleStatus(index, 'OFFLINE');
+      },
+      reject(index) {
+        this.modifyArticleStatus(index, 'REJECT');
+      },
+      modifyArticleStatus(index, status) {
         console.log("index: " + index);
         let articleList = this.articleList[index];
         this.setArticleId(articleList.id);
-        this.setAuditStatus(articleList.auditStatus);
+        this.setAuditStatus(status);
         this.handleArticleStatus().then(value => {
-          this.$Message.success("上线成功！" + JSON.stringify(value));
+          this.articleList[index].auditStatus = status;
+          if (status === 'ONLINE') {
+            this.$Message.success("文章上线成功!");
+          } else if (status === 'OFFLINE') {
+            this.$Message.warning("文章已下线!");
+          } else if (status === 'REJECT') {
+            this.$Message.error("文章审核不通过!");
+          }
         });
         console.log("Json: " + JSON.stringify(articleList));
       },
@@ -175,7 +168,7 @@
     mounted() {
 
     }
-  }
+  };
 </script>
 
 <style scoped>
