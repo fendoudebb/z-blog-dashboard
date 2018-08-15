@@ -78,7 +78,7 @@
 
 <script>
   import MarkdownEditor from '@/components/markdown';
-  import {mapMutations, mapActions} from 'vuex';
+  import {mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
     name: "publish",
@@ -96,12 +96,12 @@
         articleStatus: '待审核',
         articleProperty: 'PUBLIC',
         categoryList: [],
-        propertyList: [{value: 'PUBLIC', label: '公开'}, {value: 'PRIVATE', label: '个人'},
-        ],
+        propertyList: [{value: 'PUBLIC', label: '公开'}, {value: 'PRIVATE', label: '个人'}],
       }
     },
     methods: {
       ...mapMutations([
+        'setEditArticleId',
         'setTitle',
         'setContent',
         'setArticleProperty',
@@ -109,9 +109,14 @@
         'setKeywords',
         'setDescription',
       ]),
+      ...mapGetters([
+        'getEditArticleId'
+      ]),
       ...mapActions([
+        'getUserAccess',
+        'handleCategoryList',
         'handlePublishArticle',
-        'handleCategoryList'
+        'handleEditArticle',
       ]),
       articleSave(articleProperty) {
         if (!this.articleTitle) {
@@ -145,13 +150,22 @@
         this.setKeywords(this.articleKeywords);
         this.setDescription(this.articleDescription);
         this.publishLoading = true;
-        this.handlePublishArticle().then(value => {
-          this.publishLoading = false;
-          this.$Message.success("publish success");
-        }).catch(reason => {
-          this.publishLoading = false;
-          this.$Message.error("publish fail");
-        })
+
+        if (this.getEditArticleId > 0) {
+
+        } else {
+          this.handlePublishArticle().then(value => {
+            this.publishLoading = false;
+            this.$Message.success("发布文章成功!");
+            localStorage.markdownContent = '';
+            this.$router.push({
+              name: 'article_list'
+            });
+          }).catch(reason => {
+            this.publishLoading = false;
+            this.$Message.error("发布文章失败!");
+          })
+        }
       },
       articleSavePublish() {
         this.articleSave(this.articleProperty);
@@ -167,6 +181,17 @@
       this.handleCategoryList().then(value => {
         this.categoryList = value.data;
       });
+      this.getUserAccess().then(value => {
+        if (value.indexOf("ROLE_ADMIN") > -1) {
+          this.propertyList.push({value: 'SYSTEM', label: '系统'});
+        }
+      })
+    },
+    destroyed() {
+      console.log("destroy")
+      if (this.getEditArticleId() > 0) {
+        this.setEditArticleId(-1);
+      }
     }
   }
 </script>

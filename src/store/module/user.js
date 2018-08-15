@@ -25,7 +25,7 @@ export default {
           localStorage.setItem('username', username);
           sessionStorage.setItem('username', username);
           commit('setUsername', username);
-          commit('setAccess', res.data.access);
+          commit('setAccess', res.data);
           resolve(res)
         }).catch(err => {
           // reject(err)

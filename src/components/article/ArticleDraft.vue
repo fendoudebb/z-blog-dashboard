@@ -18,7 +18,7 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
-        totalElements: 2,
+        totalElements: 1,
         currentPage: 1,
         articleDraft: [],
         articleDraftColumns: [

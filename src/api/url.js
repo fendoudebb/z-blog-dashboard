@@ -13,5 +13,7 @@ export const categoryListUrl = '/admin/primary/category';
 
 export const publishArticleUrl = '/admin/article/save';
 
+export const editArticleUrl = '/admin/article/edit';
+
 
 

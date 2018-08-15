@@ -1,6 +1,6 @@
 <template>
   <div class="markdown-wrapper">
-    <textarea ref="editor"></textarea>
+    <textarea ref="editor" placeholder="请输入内容..."></textarea>
   </div>
 </template>
 
