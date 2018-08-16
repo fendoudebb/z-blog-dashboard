@@ -1,5 +1,13 @@
 import axios from '@/libs/axios'
-import {publishArticleUrl, editArticleUrl} from './url';
+import {articleInfoUrl, publishArticleUrl, editArticleUrl} from './url';
+
+export const articleInfo = (data) => {
+  return axios.request({
+    url: articleInfoUrl,
+    data,
+    method: 'post'
+  })
+};
 
 export const publishArticle = (data) => {
   return axios.request({

@@ -41,30 +41,24 @@
           },
           {
             title: '操作', key: 'action', align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {type: 'primary', size: 'small'}, on: {
-                    click: () => {
-                      this.edit(params.index)
-                    }
-                  }
-                }, '编辑'),
-              ]);
-            }
+            //@formatter:off
+            render: (h, params) => {return h('div', [h('Button', {props: {type: 'primary', size: 'small'}, on: {click: () => {this.edit(params.index)}}}, '编辑'),]);}
+            //@formatter:on
           },
         ]
       }
     },
     methods: {
       ...mapMutations([
-        'setDraftPage'
+        'setDraftPage',
+        'setEditArticleId'
       ]),
       ...mapActions([
         'handleArticleDraft'
       ]),
-      edit() {
-        this.$Message.success("edit！");
+      edit(index) {
+        this.setEditArticleId(this.articleDraft[index].id);
+        this.$router.push({name: 'publish_index'})
       },
       changePage(index) {
         console.log('index: ' + index);

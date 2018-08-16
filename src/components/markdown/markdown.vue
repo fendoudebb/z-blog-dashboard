@@ -44,6 +44,9 @@ export default {
       this.editor.codemirror.on('blur', () => {
         this.$emit('on-blur', this.editor.value())
       })
+    },
+    setValue(content) {
+      this.editor.value(content);
     }
   },
   mounted () {

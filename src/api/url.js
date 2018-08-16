@@ -3,6 +3,8 @@ export const loginUrl = '/login';
 
 export const logoutUrl = '/logout';
 
+export const articleInfoUrl = '/admin/article/info';
+
 export const articleListUrl = '/admin/article/list';
 
 export const articleAuditUrl = '/admin/article/audit';

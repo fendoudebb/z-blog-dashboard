@@ -1,4 +1,4 @@
-import {editArticle, publishArticle} from '@/api/publish';
+import {articleInfo, editArticle, publishArticle} from '@/api/publish';
 
 export default {
   state: {
@@ -42,6 +42,7 @@ export default {
     handlePublishArticle({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
+          author: localStorage.getItem('username'),
           title: state.title,
           content: state.content,
           articleProperty: state.articleProperty,
@@ -59,6 +60,7 @@ export default {
     handleEditArticle({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
+          author: localStorage.getItem('username'),
           title: state.title,
           content: state.content,
           articleProperty: state.articleProperty,
@@ -74,6 +76,19 @@ export default {
         });
       })
     },
+    handleArticleInfo({state, commit}) {
+      return new Promise((resolve, reject) => {
+        const data = {
+          articleId: state.editArticleId
+        };
+        articleInfo(data).then(value => {
+          console.log("editArticleId: " + state.editArticleId);
+          resolve(value);
+        }).catch(reason => {
+          reject(reason);
+        });
+      })
+    }
   },
 
 }

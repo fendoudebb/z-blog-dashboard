@@ -18,7 +18,7 @@ export default {
   props: {
     userName: {
       type: String,
-      default: 'aaa'
+      default: localStorage.getItem('username')
     }
   },
   methods: {

@@ -12,7 +12,7 @@
 
 <script>
   import expandRow from './ArticleDetail';
-  import {mapMutations, mapActions} from 'vuex';
+  import {mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
     name: "article-list",
@@ -91,22 +91,28 @@
             title: '操作', key: 'action', align: 'center',
             render: (h, params) => {
               let action = [];
-              let auditStatus = params.row.auditStatus;
-              //@formatter:off
-              let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
-              let reject = h('Button', {props: {type: 'error', size: 'small'}, on: {click: () => {this.reject(params.index)}}}, '拒绝');
-              let offline = h('Button', {props: {type: 'warning', size: 'small'}, on: {click: () => {this.offline(params.index)}}}, '下线');
-              //@formatter:on
-              if (auditStatus === 'UNDER_REVIEW') {
-                action.push(online);
-                action.push(reject);
-              } else if (auditStatus === 'ONLINE') {
-                action.push(offline);
-              } else if (auditStatus === 'OFFLINE') {
-                action.push(online);
-              } else if (auditStatus === 'REJECT') {
-                action.push(online);
+              let access = this.getAccess();
+              console.log("access: " + access)
+              if (access.indexOf("ROLE_ADMIN") > -1) {
+                let auditStatus = params.row.auditStatus;
+                //@formatter:off
+                  let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
+                  let reject = h('Button', {props: {type: 'error', size: 'small'},  style: {marginRight: '5px'}, on: {click: () => {this.reject(params.index)}}}, '拒绝');
+                  let offline = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.offline(params.index)}}}, '下线');
+                  //@formatter:on
+                if (auditStatus === 'UNDER_REVIEW') {
+                  action.push(online);
+                  action.push(reject);
+                } else if (auditStatus === 'ONLINE') {
+                  action.push(offline);
+                } else if (auditStatus === 'OFFLINE') {
+                  action.push(online);
+                } else if (auditStatus === 'REJECT') {
+                  action.push(online);
+                }
               }
+              let edit = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.edit(params.index)}}}, '编辑');
+              action.push(edit);
               return h('div', [action]);
             }
           }
@@ -117,9 +123,14 @@
       ...mapMutations([
         'setListPage',
         'setArticleId',
-        'setAuditStatus'
+        'setAuditStatus',
+        'setEditArticleId'
+      ]),
+      ...mapGetters([
+        'getAccess'
       ]),
       ...mapActions([
+        'getUserAccess',
         'handleArticleList',
         'handleArticleStatus'
       ]),
@@ -131,6 +142,10 @@
       },
       reject(index) {
         this.modifyArticleStatus(index, 'REJECT');
+      },
+      edit(index) {
+        this.setEditArticleId(this.articleList[index].id);
+        this.$router.push({name:'publish_index'})
       },
       modifyArticleStatus(index, status) {
         console.log("index: " + index);

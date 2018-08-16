@@ -13,6 +13,14 @@ export default {
       state.access = access;
     },
   },
+  getters: {
+    getUsername: state => {
+      return state.username;
+    },
+    getAccess: state => {
+      return state.access;
+    }
+  },
   actions: {
     // 登录
     handleLogin ({ commit }, {username, password}) {
@@ -23,7 +31,6 @@ export default {
           password
         }).then(res => {
           localStorage.setItem('username', username);
-          sessionStorage.setItem('username', username);
           commit('setUsername', username);
           commit('setAccess', res.data);
           resolve(res)
@@ -36,7 +43,6 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout().then(() => {
-          sessionStorage.setItem('username', '');
           commit('setUsername', '');
           commit('setAccess', []);
           resolve()
