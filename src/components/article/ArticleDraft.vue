@@ -3,7 +3,7 @@
     <Table border stripe :data="articleDraft" :columns="articleDraftColumns"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :page-size="1" :total="totalElements" :current="currentPage" @on-change="changePage"></Page>
+        <Page :page-size="pageSize" :total="totalElements" :current="currentPage" @on-change="changePage"></Page>
       </div>
     </div>
   </div>
@@ -11,13 +11,14 @@
 
 <script>
   import expandRow from './ArticleDetail';
-  import {mapMutations, mapActions} from 'vuex';
+  import {mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
     components: {expandRow},
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
+        pageSize: this.getDraftPage(),
         totalElements: 1,
         currentPage: 1,
         articleDraft: [],
@@ -46,12 +47,15 @@
             //@formatter:on
           },
         ]
-      }
+      };
     },
     methods: {
       ...mapMutations([
         'setDraftPage',
         'setEditArticleId'
+      ]),
+      ...mapGetters([
+        'getDraftPage'
       ]),
       ...mapActions([
         'handleArticleDraft'
@@ -79,7 +83,7 @@
     mounted() {
 
     }
-  }
+  };
 </script>
 
 <style scoped>

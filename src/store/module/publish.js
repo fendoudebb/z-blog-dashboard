@@ -1,4 +1,4 @@
-import {articleInfo, editArticle, publishArticle} from '@/api/publish';
+import {articleInfo, editArticle, publishArticle, previewEditArticle} from '@/api/publish';
 
 export default {
   state: {
@@ -42,7 +42,7 @@ export default {
     handlePublishArticle({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          author: localStorage.getItem('username'),
+          author: sessionStorage.getItem('username'),
           title: state.title,
           content: state.content,
           articleProperty: state.articleProperty,
@@ -60,7 +60,7 @@ export default {
     handleEditArticle({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          author: localStorage.getItem('username'),
+          author: sessionStorage.getItem('username'),
           title: state.title,
           content: state.content,
           articleProperty: state.articleProperty,
@@ -83,6 +83,25 @@ export default {
         };
         articleInfo(data).then(value => {
           console.log("editArticleId: " + state.editArticleId);
+          resolve(value);
+        }).catch(reason => {
+          reject(reason);
+        });
+      })
+    },
+    handlePreviewEditArticle({state, commit}) {
+      return new Promise((resolve, reject) => {
+        const data = {
+          author: sessionStorage.getItem('username'),
+          title: state.title,
+          content: state.content,
+          articleProperty: state.articleProperty,
+          category: state.category,
+          keywords: state.keywords,
+          description: state.description,
+        };
+        previewEditArticle(data).then(value => {
+          console.log("previewEditArticle: " + JSON.stringify(data));
           resolve(value);
         }).catch(reason => {
           reject(reason);

@@ -9,7 +9,7 @@
     <br>
     <br>
     <span class="expand-key">分类: </span>
-    <span class="expand-value">{{ row.category }}</span>
+    <span class="expand-value">{{ row.categoryAlias }}</span>
     <br>
     <br>
     <span class="expand-key">最后更新时间: </span>

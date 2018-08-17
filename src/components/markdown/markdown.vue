@@ -72,5 +72,8 @@ export default {
   .CodeMirror-fullscreen{
     z-index: 9999;
   }
+  .CodeMirror, .CodeMirror-scroll {
+    min-height: 600px;
+  }
 }
 </style>

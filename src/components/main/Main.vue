@@ -70,7 +70,7 @@ export default {
       return this.$store.state.app.tagRouter
     },
     userName () {
-      return this.$store.state.user.userName
+      return sessionStorage.getItem('username')
     },
     cacheList () {
       return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)) : []

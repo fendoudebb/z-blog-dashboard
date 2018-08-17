@@ -3,7 +3,7 @@
     <Table border stripe :data="articleList" :columns="articleListColumns"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :page-size="1" :total="totalElements" :current="currentPage" @on-change="changePage" show-elevator
+        <Page :page-size="pageSize" :total="totalElements" :current="currentPage" @on-change="changePage" show-elevator
               show-total></Page>
       </div>
     </div>
@@ -12,6 +12,7 @@
 
 <script>
   import expandRow from './ArticleDetail';
+  import {previewAuditArticleUrl} from '@/api/url';
   import {mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
@@ -20,6 +21,7 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
+        pageSize: this.getListSize(),
         totalElements: 1,
         currentPage: 1,
         articleList: [],
@@ -65,14 +67,19 @@
                 let original = params.row.original;
                 if (original) {
                   let id = params.row.id;
-                  let href = 'http://localhost:9999/admin/article/preview/audit/' + id;
-                  linkUrl.push(h('a', {domProps: {target: '_blank', href: href}}, href))
+                  let category = params.row.category;
+                  if (category !== 'system') {
+                    let href = process.env.BASE_URL + '/article/' + category + '/' + id;
+                    linkUrl.push(h('a', {domProps: {target: '_blank', href: href}}, href))
+                  }
                 } else {
                   let originalLink = params.row.originalLink;
                   linkUrl.push(h('a', {domProps: {target: '_blank', href: originalLink}}, originalLink))
                 }
               } else {
-                linkUrl.push(h('div', '未上线'))
+                let id = params.row.id;
+                let href = process.env.BASE_URL + previewAuditArticleUrl + '/' + id;
+                linkUrl.push(h('a', {domProps: {target: '_blank', href: href}}, href))
               }
               let poptipContent = [
                 h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载'),
@@ -81,7 +88,7 @@
               return h('Poptip', {
                 props: {
                   trigger: 'hover',
-                  title: "原文链接",
+                  title: auditStatus === 'ONLINE' ? '原文链接' : '预览链接',
                   placement: 'top'
                 }
               }, poptipContent)
@@ -91,7 +98,7 @@
             title: '操作', key: 'action', align: 'center',
             render: (h, params) => {
               let action = [];
-              let access = this.getAccess();
+              let access = sessionStorage.getItem('access');
               console.log("access: " + access)
               if (access.indexOf("ROLE_ADMIN") > -1) {
                 let auditStatus = params.row.auditStatus;
@@ -111,7 +118,15 @@
                   action.push(online);
                 }
               }
-              let edit = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.edit(params.index)}}}, '编辑');
+              let edit = h('Button', {
+                props: {type: 'primary', size: 'small'},
+                style: {marginRight: '5px'},
+                on: {
+                  click: () => {
+                    this.edit(params.index)
+                  }
+                }
+              }, '编辑');
               action.push(edit);
               return h('div', [action]);
             }
@@ -127,10 +142,9 @@
         'setEditArticleId'
       ]),
       ...mapGetters([
-        'getAccess'
+        'getListSize'
       ]),
       ...mapActions([
-        'getUserAccess',
         'handleArticleList',
         'handleArticleStatus'
       ]),
@@ -145,7 +159,7 @@
       },
       edit(index) {
         this.setEditArticleId(this.articleList[index].id);
-        this.$router.push({name:'publish_index'})
+        this.$router.push({name: 'publish_index'})
       },
       modifyArticleStatus(index, status) {
         console.log("index: " + index);

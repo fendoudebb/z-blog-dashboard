@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 5px">
     <Row>
-      <Col span="16">
+      <Col span="20">
       <Form>
         <FormItem label="文章标题" :label-width="80">
           <Input v-model="articleTitle" placeholder="请输入文章标题..." clearable></Input>
@@ -9,7 +9,7 @@
       </Form>
       <markdown-editor ref="markdownEditor" :value="articleContent" v-model="articleContent"></markdown-editor>
       </Col>
-      <Col span="8" style="padding-left: 5px">
+      <Col span="4" style="padding-left: 5px">
       <Card :bordered="false">
         <p slot="title">
           <!--<Icon type="ios-film-outline"></Icon>-->
@@ -27,19 +27,13 @@
         <br>
         <br>
 
-        <Icon type="android-time"></Icon>
-        文章状态：
-        <Input v-model="articleStatus" style="width:90px" readonly></Input>
-        <br>
-
-        <br>
         <div style="height: 1px;width: auto;background-color:#E9EAEC;"></div>
         <br>
 
         <Button type="success" :loading="publishLoading" @click="articleSavePublish">发布</Button>
         <Button type="ghost" :loading="publishLoading" @click="articleSaveDraft" v-if="showDraftBtn">存为草稿
         </Button>
-        <Button type="ghost" @click="articlePreview">预览</Button>
+        <!--<Button type="ghost" @click="articlePreview">预览</Button>-->
       </Card>
       <br>
       <Card :bordered="false">
@@ -94,7 +88,6 @@
         articleKeywords: '',
         articleDescription: '',
         articleCategory: '',
-        articleStatus: '待审核',
         articleProperty: 'PUBLIC',
         showDraftBtn: true,
         categoryList: [],
@@ -112,14 +105,15 @@
         'setDescription',
       ]),
       ...mapGetters([
+        'getUserAccess',
         'getEditArticleId'
       ]),
       ...mapActions([
-        'getUserAccess',
         'handleCategoryList',
         'handlePublishArticle',
         'handleEditArticle',
-        'handleArticleInfo'
+        'handleArticleInfo',
+        'handlePreviewEditArticle'
       ]),
       articleSave(articleProperty) {
         if (!this.articleTitle) {
@@ -193,16 +187,13 @@
       articleSaveDraft() {
         this.articleSave('DRAFT');
       },
-      articlePreview() {
-        this.$Message.info("Preview");
-      }
     },
     mounted() {
-      this.getUserAccess().then(value => {
-        if (value.indexOf("ROLE_ADMIN") > -1) {
-          this.propertyList.push({value: 'SYSTEM', label: '系统'});
-        }
-      });
+      let access = this.getUserAccess();
+      if (access.indexOf("ROLE_ADMIN") > -1) {
+        this.propertyList.push({value: 'ABOUT_US', label: '关于我们'});
+        this.propertyList.push({value: 'DISCLAIMER', label: '免责声明'});
+      }
       this.handleCategoryList().then(value => {
         console.log("categoryList: " + JSON.stringify(value));
         this.categoryList = value.data;

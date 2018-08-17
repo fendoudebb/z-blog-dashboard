@@ -6,19 +6,12 @@ export default {
     access: []
   },
   mutations: {
-    setUsername (state, name) {
-      state.username = name
-    },
-    setAccess (state, access) {
-      state.access = access;
-    },
+
   },
   getters: {
-    getUsername: state => {
-      return state.username;
-    },
-    getAccess: state => {
-      return state.access;
+
+    getUserAccess: () => {
+      return sessionStorage.getItem('access');
     }
   },
   actions: {
@@ -30,9 +23,9 @@ export default {
           username,
           password
         }).then(res => {
-          localStorage.setItem('username', username);
-          commit('setUsername', username);
-          commit('setAccess', res.data);
+          sessionStorage.setItem('username', username);
+          localStorage.setItem('loginUsername', username);
+          sessionStorage.setItem('access', res.data);
           resolve(res)
         }).catch(err => {
           // reject(err)
@@ -43,8 +36,8 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout().then(() => {
-          commit('setUsername', '');
-          commit('setAccess', []);
+          sessionStorage.setItem('username', '');
+          sessionStorage.setItem('access', '');
           resolve()
         }).catch(err => {
           // reject(err)
@@ -55,11 +48,5 @@ export default {
         // resolve()
       })
     },
-    // 获取用户相关信息
-    getUserAccess ({ state }) {
-      return new Promise((resolve, reject) => {
-        resolve(state.access);
-      })
-    }
   }
 }
