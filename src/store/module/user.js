@@ -9,7 +9,6 @@ export default {
 
   },
   getters: {
-
     getUserAccess: () => {
       return sessionStorage.getItem('access');
     }

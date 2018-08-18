@@ -7,7 +7,8 @@
           <Input v-model="articleTitle" placeholder="请输入文章标题..." clearable></Input>
         </FormItem>
       </Form>
-      <markdown-editor ref="markdownEditor" :value="articleContent" v-model="articleContent"></markdown-editor>
+      <markdown-editor ref="markdownEditor"
+                       style="height: 600px"></markdown-editor>
       </Col>
       <Col span="4" style="padding-left: 5px">
       <Card :bordered="false">
@@ -84,7 +85,6 @@
       return {
         publishLoading: false,
         articleTitle: '',
-        articleContent: '',
         articleKeywords: '',
         articleDescription: '',
         articleCategory: '',
@@ -120,7 +120,9 @@
           this.$Message.error("文章标题不能为空!");
           return;
         }
-        if (!this.articleContent) {
+        let articleContent = this.$refs.markdownEditor.getValue();
+        console.log("articleContent: " + articleContent);
+        if (!articleContent) {
           this.$Message.error("文章内容不能为空!");
           return;
         }
@@ -141,7 +143,7 @@
           return;
         }
         this.setTitle(this.articleTitle);
-        this.setContent(this.articleContent);
+        this.setContent(articleContent);
         this.setArticleProperty(articleProperty);
         this.setCategory(this.articleCategory);
         this.setKeywords(this.articleKeywords);
@@ -201,7 +203,6 @@
           this.handleArticleInfo().then(value => {
             console.log("info: " + JSON.stringify(value));
             this.articleTitle = value.data.title;
-            this.articleContent = value.data.content;
             this.articleKeywords = value.data.keywords;
             this.articleDescription = value.data.description;
             let articleCategory = value.data.category;

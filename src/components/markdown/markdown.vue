@@ -1,79 +1,61 @@
 <template>
-  <div class="markdown-wrapper">
-    <textarea ref="editor" placeholder="请输入内容..."></textarea>
-  </div>
+    <mavon-editor :subfield="subfield"
+                  :code_style="code_style"
+                  :ishljs="true"
+                  :externalLink="externalLink" v-model="value"></mavon-editor>
 </template>
 
 <script>
-import Simplemde from 'simplemde'
-import 'simplemde/dist/simplemde.min.css'
-export default {
-  name: 'MarkdownEditor',
-  props: {
-    value: {
-      type: String,
-      default: ''
+  import {mavonEditor} from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
+
+  export default {
+    name: "MarkdownEditor",
+    components: {
+      mavonEditor
     },
-    options: {
-      type: Object,
-      default: () => {
-        return {}
+    data() {
+      return {
+        value:'',
+        subfield: true,
+        code_style: 'solarized-dark',
+        externalLink: {
+          markdown_css: function() {
+            // 这是你的markdown css文件路径
+            return 'https://s.maisiji.cn/lib/github-markdown-css/2.10.0/github-markdown.min.css';
+          },
+          hljs_js: function() {
+            // 这是你的hljs文件路径
+            return 'https://s.maisiji.cn/lib/highlight/9.12.0/js/highlight.min.js';
+          },
+          hljs_css: function() {
+            // 这是你的代码高亮配色文件路径
+            return 'https://s.maisiji.cn/lib/highlight/9.12.0/css/androidstudio.min.css';
+          },
+          katex_css: function() {
+            // 这是你的katex配色方案路径路径
+            return 'https://s.maisiji.cn/lib/katex/0.9.0/css/katex.min.css';
+          },
+          katex_js: function() {
+            // 这是你的katex.js路径
+            return 'https://s.maisiji.cn/lib/katex/0.9.0/js/katex.min.js';
+          },
+        }
       }
     },
-    localCache: {
-      type: Boolean,
-      default: true
+    methods: {
+      getValue() {
+        return this.value;
+      },
+      setValue(value) {
+        this.value = value;
+      }
     }
-  },
-  data () {
-    return {
-      editor: null
-    }
-  },
-  methods: {
-    addEvents () {
-      this.editor.codemirror.on('change', () => {
-        let value = this.editor.value();
-        if (this.localCache) localStorage.markdownContent = value;
-        this.$emit('input', value);
-        this.$emit('on-change', value)
-      });
-      this.editor.codemirror.on('focus', () => {
-        this.$emit('on-focus', this.editor.value())
-      });
-      this.editor.codemirror.on('blur', () => {
-        this.$emit('on-blur', this.editor.value())
-      })
-    },
-    setValue(content) {
-      this.editor.value(content);
-    }
-  },
-  mounted () {
-    this.editor = new Simplemde(Object.assign(this.options, {
-      element: this.$refs.editor
-    }));
-    /**
-     * 事件列表为Codemirror编辑器的事件，更多事件类型，请参考：
-     * https://codemirror.net/doc/manual.html#events
-     */
-    this.addEvents();
-    let content = localStorage.markdownContent;
-    if (content) this.editor.value(content)
   }
-}
 </script>
 
-<style lang="less">
-.markdown-wrapper{
-  .editor-toolbar.fullscreen{
-    z-index: 9999;
+<style>
+  .markdown-body .highlight pre, .markdown-body pre {
+    padding: 0 !important;
   }
-  .CodeMirror-fullscreen{
-    z-index: 9999;
-  }
-  .CodeMirror, .CodeMirror-scroll {
-    min-height: 600px;
-  }
-}
 </style>

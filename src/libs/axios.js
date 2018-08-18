@@ -53,7 +53,7 @@ class httpRequest {
         case 401:
           Message.error('登录状态过期,请重新登录!');
           setTimeout(() => {
-            window.location.href = '/login';
+            window.location.href = process.env.BASE_URL + '/login';
           }, 1500);
           break;
         default :

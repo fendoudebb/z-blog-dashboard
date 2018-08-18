@@ -21,6 +21,7 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
+        access: sessionStorage.getItem('access'),
         pageSize: this.getListSize(),
         totalElements: 1,
         currentPage: 1,
@@ -98,9 +99,7 @@
             title: '操作', key: 'action', align: 'center',
             render: (h, params) => {
               let action = [];
-              let access = sessionStorage.getItem('access');
-              console.log("access: " + access)
-              if (access.indexOf("ROLE_ADMIN") > -1) {
+              if (this.access.indexOf("ROLE_ADMIN") > -1) {
                 let auditStatus = params.row.auditStatus;
                 //@formatter:off
                   let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
