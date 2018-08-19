@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import {Message, Spin} from 'iview';
+import router from '@/router'
 
 class httpRequest {
   constructor() {
@@ -51,9 +52,11 @@ class httpRequest {
       console.log("error response: " + JSON.stringify(response));
       switch (response.status) {
         case 401:
+          sessionStorage.setItem('username', '');
+          sessionStorage.setItem('access', '');
           Message.error('登录状态过期,请重新登录!');
           setTimeout(() => {
-            window.location.href = process.env.BASE_URL + '/login';
+            router.push({name: 'login'})
           }, 1500);
           break;
         default :
