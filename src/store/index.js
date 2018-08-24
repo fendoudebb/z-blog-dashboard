@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vue from 'vue'
+// import Vuex from 'vuex'
 
 import user from './module/user'
 import app from './module/app'
@@ -9,7 +9,7 @@ import article_audit from './module/article_audit'
 import article_draft from './module/article_draft'
 import category from './module/category'
 
-Vue.use(Vuex);
+// Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {

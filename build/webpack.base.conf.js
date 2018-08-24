@@ -13,7 +13,14 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    app: ["babel-polyfill", "./src/main.js"]
+  },
+  externals:{
+    'vue': 'Vue',
+    'vuex': 'Vuex',
+    'vue-router': 'VueRouter',
+    'iview': 'iview',
+    'axios': 'axios'
   },
   output: {
     path: config.build.assetsRoot,

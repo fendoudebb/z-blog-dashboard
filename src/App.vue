@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import "babel-polyfill";
 export default {
   name: 'App'
 }
