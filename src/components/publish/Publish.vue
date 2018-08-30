@@ -43,9 +43,9 @@
           分类
         </p>
         <Select v-model="articleCategory" clearable>
-          <OptionGroup v-for="primaryCategory in categoryList" :key="primaryCategory.id" :label="primaryCategory.alias">
+          <OptionGroup v-for="primaryCategory in categoryList" :key="primaryCategory.id" :label="primaryCategory.name">
             <Option v-for="secondaryCategory in primaryCategory.secondaryCategories" :value="secondaryCategory.name"
-                    :key="secondaryCategory.id">{{ secondaryCategory.alias }}
+                    :key="secondaryCategory.id">{{ secondaryCategory.name }}
             </Option>
           </OptionGroup>
           <!--<Option v-for="item in categoryList" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
@@ -113,7 +113,6 @@
         'handlePublishArticle',
         'handleEditArticle',
         'handleArticleInfo',
-        'handlePreviewEditArticle'
       ]),
       articleSave(articleProperty) {
         if (!this.articleTitle) {
@@ -209,9 +208,9 @@
             for (let i = 0; i < this.categoryList.length; i++) {
               let secondaryCategories = this.categoryList[i].secondaryCategories;
               for (let j = 0; j < secondaryCategories.length; j++) {
-                let alias = secondaryCategories[j].alias;
-                if (articleCategory === alias) {
-                  this.articleCategory = secondaryCategories[j].name;
+                let name = secondaryCategories[j].name;
+                if (articleCategory === name) {
+                  this.articleCategory = name;
                 }
               }
             }

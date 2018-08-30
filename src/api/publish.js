@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {articleInfoUrl, publishArticleUrl, editArticleUrl, previewEditArticleUrl} from './url';
+import {articleInfoUrl, publishArticleUrl, editArticleUrl} from './url';
 
 export const articleInfo = (data) => {
   return axios.request({
@@ -20,14 +20,6 @@ export const publishArticle = (data) => {
 export const editArticle = (id, data) => {
   return axios.request({
     url: editArticleUrl + '/' + id,
-    data,
-    method: 'post'
-  })
-};
-
-export const previewEditArticle = (data) => {
-  return axios.request({
-    url: previewEditArticleUrl,
     data,
     method: 'post'
   })

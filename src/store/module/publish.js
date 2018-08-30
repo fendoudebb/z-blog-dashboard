@@ -1,4 +1,4 @@
-import {articleInfo, editArticle, publishArticle, previewEditArticle} from '@/api/publish';
+import {articleInfo, editArticle, publishArticle} from '@/api/publish';
 
 export default {
   state: {
@@ -89,25 +89,6 @@ export default {
         });
       })
     },
-    handlePreviewEditArticle({state, commit}) {
-      return new Promise((resolve, reject) => {
-        const data = {
-          author: sessionStorage.getItem('username'),
-          title: state.title,
-          content: state.content,
-          articleProperty: state.articleProperty,
-          category: state.category,
-          keywords: state.keywords,
-          description: state.description,
-        };
-        previewEditArticle(data).then(value => {
-          console.log("previewEditArticle: " + JSON.stringify(data));
-          resolve(value);
-        }).catch(reason => {
-          reject(reason);
-        });
-      })
-    }
   },
 
 }

@@ -12,7 +12,7 @@
 
 <script>
   import expandRow from './ArticleDetail';
-  import {previewAuditArticleUrl} from '@/api/url';
+  import {previewArticleUrl} from '@/api/url';
   import {mapMutations, mapGetters, mapActions} from 'vuex';
 
   export default {
@@ -35,9 +35,6 @@
           {title: 'ID', key: 'id', align: 'center'},
           {title: '标题', key: 'title', align: 'center'},
           {title: '作者', key: 'author', align: 'center'},
-          // {title: '关键字', key: 'keywords', align: 'center'},
-          // {title: '描述', key: 'description', align: 'center'},
-          // {title: '分类', key: 'category', align: 'center'},
           {
             title: '状态', key: 'auditStatus', align: 'center',
             render: (h, params) => {
@@ -79,7 +76,7 @@
                 }
               } else {
                 let id = params.row.id;
-                let href = process.env.BASE_URL + previewAuditArticleUrl + '/' + id;
+                let href = process.env.BASE_URL + previewArticleUrl + '/' + id;
                 linkUrl.push(h('a', {domProps: {target: '_blank', href: href}}, href))
               }
               let poptipContent = [
@@ -89,7 +86,7 @@
               return h('Poptip', {
                 props: {
                   trigger: 'hover',
-                  title: auditStatus === 'ONLINE' ? '原文链接' : '预览链接',
+                  title: auditStatus === 'ONLINE' ? '原文链接' : '未上线',
                   placement: 'top'
                 }
               }, poptipContent)

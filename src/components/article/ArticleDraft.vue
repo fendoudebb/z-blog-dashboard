@@ -31,10 +31,6 @@
           {title: 'ID', key: 'id', align: 'center'},
           {title: '标题', key: 'title', align: 'center'},
           {title: '作者', key: 'author', align: 'center'},
-          // {title: '关键字', key: 'keywords', align: 'center'},
-          // {title: '描述', key: 'description', align: 'center'},
-          // {title: '分类', key: 'category', align: 'center'},
-          // {title: '更新时间', key: 'updateTime', align: 'center'},
           {
             title: '是否原创', key: 'original', align: 'center', render: (h, params) => {
               return h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')

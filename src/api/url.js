@@ -17,9 +17,7 @@ export const publishArticleUrl = '/admin/article/save';
 
 export const editArticleUrl = '/admin/article/edit';
 
-export const previewEditArticleUrl = '/admin/article/preview/edit';
-
-export const previewAuditArticleUrl = '/admin/article/preview/audit';
+export const previewArticleUrl = '/article/preview';
 
 
 
