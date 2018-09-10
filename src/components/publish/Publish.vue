@@ -190,11 +190,6 @@
       },
     },
     mounted() {
-      let access = this.getUserAccess();
-      if (access.indexOf("ROLE_ADMIN") > -1) {
-        this.propertyList.push({value: 'ABOUT_US', label: '关于我们'});
-        this.propertyList.push({value: 'DISCLAIMER', label: '免责声明'});
-      }
       this.handleCategoryList().then(value => {
         console.log("categoryList: " + JSON.stringify(value));
         this.categoryList = value.data;
