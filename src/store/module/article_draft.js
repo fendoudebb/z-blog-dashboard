@@ -21,7 +21,7 @@ export default {
         getArticleDraft(state.page, state.size).then(res => {
           resolve(res);
         }).catch(err => {
-          // reject(err);
+          reject(err);
         });
       })
     }

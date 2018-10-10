@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border stripe :data="articleDraft" :columns="articleDraftColumns"></Table>
+    <Table border stripe :data="articleDraft" :columns="articleDraftColumns" :loading="articleDraftTableLoading"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :page-size="pageSize" :total="totalElements" :current="currentPage" @on-change="changePage"></Page>
@@ -18,6 +18,7 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
+        articleDraftTableLoading: false,
         pageSize: this.getDraftPage(),
         totalElements: 1,
         currentPage: 1,
@@ -66,10 +67,14 @@
         this.getArticleDraft();
       },
       getArticleDraft() {
+        this.articleDraftTableLoading = true;
         this.handleArticleDraft().then(value => {
           console.log("value: " + JSON.stringify(value));
           this.totalElements = value.data.totalElements;
           this.articleDraft = value.data.content;
+          this.articleDraftTableLoading = false;
+        }).catch(reason => {
+          this.articleDraftTableLoading = false;
         })
       }
     },

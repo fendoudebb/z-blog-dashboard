@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border stripe :data="articleList" :columns="articleListColumns"></Table>
+    <Table border stripe :data="articleList" :columns="articleListColumns" :loading="articleListTableLoading"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :page-size="pageSize" :total="totalElements" :current="currentPage" @on-change="changePage" show-elevator
@@ -21,6 +21,7 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
+        articleListTableLoading: false,
         access: sessionStorage.getItem('access'),
         pageSize: this.getListSize(),
         totalElements: 1,
@@ -180,10 +181,14 @@
         this.getArticleList();
       },
       getArticleList() {
+        this.articleListTableLoading = true;
         this.handleArticleList().then(value => {
           console.log("value: " + JSON.stringify(value));
           this.totalElements = value.data.totalElements;
           this.articleList = value.data.content;
+          this.articleListTableLoading = false;
+        }).catch(reason => {
+          this.articleListTableLoading = false;
         })
       }
     },
