@@ -2,16 +2,14 @@ import axios from '@/libs/axios'
 import {loginUrl, logoutUrl} from './url';
 
 export const login = ({username, password}) => {
-  let params = new URLSearchParams();
-  params.append('username', username);
-  params.append('password', password);
+  const data = {
+    username,
+    password
+  };
   return axios.request({
     url: loginUrl,
-    params,
+    data,
     method: 'post',
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded'
-    }
   })
 };
 

@@ -3,14 +3,14 @@ import { login, logout } from '@/api/user'
 export default {
   state: {
     username: '',
-    access: []
+    roles: []
   },
   mutations: {
 
   },
   getters: {
     getUserAccess: () => {
-      return sessionStorage.getItem('access');
+      return localStorage.getItem('roles');
     }
   },
   actions: {
@@ -22,9 +22,9 @@ export default {
           username,
           password
         }).then(res => {
-          sessionStorage.setItem('username', username);
-          localStorage.setItem('loginUsername', username);
-          sessionStorage.setItem('access', res.data);
+          localStorage.setItem('username', username);
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('roles', res.data.roles);
           resolve(res)
         }).catch(err => {
           // reject(err)
@@ -35,8 +35,8 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout().then(() => {
-          sessionStorage.setItem('username', '');
-          sessionStorage.setItem('access', '');
+          localStorage.setItem('username', '');
+          localStorage.setItem('roles', '');
           resolve()
         }).catch(err => {
           // reject(err)

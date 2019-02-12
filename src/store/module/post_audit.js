@@ -1,22 +1,22 @@
-import {modifyArticleStatus} from '@/api/article';
+import {modifyPostStatus} from '@/api/post';
 
 export default {
   state: {
-    articleId: -1,
-    auditStatus: '',
+    postId: -1,
+    auditStatus: 0,
   },
   mutations: {
-    setArticleId(state, articleId) {
-      state.articleId = articleId
+    setPostId(state, postId) {
+      state.postId = postId
     },
     setAuditStatus(state, auditStatus) {
       state.auditStatus = auditStatus
     },
   },
   actions: {
-    handleArticleStatus({state, commit}) {
+    handlePostStatus({state, commit}) {
       return new Promise((resolve, reject) => {
-        modifyArticleStatus(state.articleId, state.auditStatus).then(res => {
+        modifyPostStatus(state.postId, state.auditStatus).then(res => {
           resolve(res);
         }).catch(err => {
           // reject(err);

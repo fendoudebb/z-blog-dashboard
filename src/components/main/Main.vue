@@ -29,7 +29,7 @@
         </Layout>
       </Content>
       <Footer style="text-align: center">
-        <p>&copy; 2018 <a href="" target="_blank">msj</a></p>
+        <p>&copy; 2019 <a href="https://www.maisiji.cn" target="_blank">msj</a></p>
       </Footer>
     </Layout>
   </Layout>
@@ -70,7 +70,7 @@ export default {
       return this.$store.state.app.tagRouter
     },
     userName () {
-      return sessionStorage.getItem('username')
+      return localStorage.getItem('username')
     },
     cacheList () {
       return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)) : []

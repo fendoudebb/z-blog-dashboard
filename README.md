@@ -1,7 +1,7 @@
 # 麦司机博客项目后台管理前端
 > [博客主页](https://www.maisiji.cn)
 
-#### [Vue前端技术选型介绍](https://maisiji.cn/article/front_end/4)
+#### [Vue前端技术选型介绍](https://maisiji.cn/p/5.html)
 - Vue: 前端框架
 	- 项目主页: [https://vuejs.org/](https://vuejs.org/)
 	- 开源地址: [https://github.com/vuejs/vue](https://github.com/vuejs/vue)

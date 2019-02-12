@@ -15,7 +15,7 @@ const LOGIN_PAGE_NAME = 'login';
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   // const token = store.state.user.username;
-  const token = sessionStorage.getItem('username');
+  const token = localStorage.getItem('username');
   // const token = store.getters.user.getUsername;
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
@@ -31,7 +31,7 @@ router.beforeEach((to, from, next) => {
       name: 'home' // 跳转到home页
     })
   } else {
-    let access = sessionStorage.getItem('access');
+    let access = localStorage.getItem('roles');
     // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
     if (canTurnTo(to.name, access, routes)) next(); // 有权限，可访问
     else next({replace: true, name: 'error_401'}) // 无权限，重定向到401页面

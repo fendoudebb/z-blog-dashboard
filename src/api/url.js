@@ -1,23 +1,23 @@
 
-export const loginUrl = '/login';
+export const loginUrl = '/admin/login';
 
-export const logoutUrl = '/logout';
+export const logoutUrl = '/admin/logout';
 
-export const articleInfoUrl = '/admin/article/info';
+export const postListUrl = '/admin/post';
 
-export const articleListUrl = '/admin/article/list';
+export const publishPostUrl = '/admin/post/publish';
 
-export const articleAuditUrl = '/admin/article/audit';
+export const postInfoUrl = '/admin/post/info';
 
-export const articleDraftUrl = '/admin/article/draft';
+export const postAuditUrl = '/admin/post/audit';
 
-export const categoryListUrl = '/admin/primary/category';
+export const postDraftUrl = '/admin/post/draft';
 
-export const publishArticleUrl = '/admin/article/save';
+export const topicListUrl = '/admin/topic';
 
-export const editArticleUrl = '/admin/article/edit';
+export const editPostUrl = '/admin/post/edit';
 
-export const previewArticleUrl = '/article/preview';
+export const previewPostUrl = '/admin/post/preview';
 
 
 

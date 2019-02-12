@@ -41,27 +41,20 @@ class httpRequest {
           Spin.hide()
         }, 500)*/
       }
-      if (data.code !== 0) {
-        Message.error(data.msg);
-        return Promise.reject(data.msg);
-      }
-      return data
-    }, (error) => {
-      // console.log("error: " + JSON.stringify(error));
-      let {response} = error;
-      console.log("error response: " + JSON.stringify(response));
-      switch (response.status) {
-        case 401:
-          sessionStorage.setItem('username', '');
-          sessionStorage.setItem('access', '');
+      if (data.code !== 200) {
+        if (data.code === 401) {
+          localStorage.setItem('username', '');
           Message.error('登录状态过期,请重新登录!');
           setTimeout(() => {
             router.push({name: 'login'})
           }, 1500);
-          break;
-        default :
-          Message.error('内部错误!');
+        } else {
+          Message.error(data.msg);
+        }
+        return Promise.reject(data.msg);
       }
+      return data
+    }, (error) => {
       // 对响应错误做点什么
       return Promise.reject(error)
     })
@@ -76,6 +69,7 @@ class httpRequest {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         // 'X-URL-PATH': location.pathname
+        'token': localStorage.getItem('token')
       }
     };
     return Axios.create(conf)

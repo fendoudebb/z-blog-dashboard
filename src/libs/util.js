@@ -5,13 +5,13 @@ export const hasChild = (item) => {
 };
 
 const showThisMenuEle = (item, access) => {
-  if (item.meta && item.meta.access && item.meta.access.length) {
-    if (hasOneOf(item.meta.access, access)) return true;
+  if (item.meta && item.meta.roles && item.meta.roles.length) {
+    if (hasOneOf(item.meta.roles, access)) return true;
     else return false
   } else return true
 };
 /**
- * {Array} list 通过路由列表得到菜单列表 {Array} access 用户权限
+ * {Array} list 通过路由列表得到菜单列表 {Array} roles 用户权限
  * @returns {Array}
  */
 export const getMenuByRouter = (list, access) => {
@@ -119,7 +119,7 @@ export const getLockStatus = () => {
  * @param {*} route 路由列表
  */
 const hasAccess = (access, route) => {
-  if (route.meta && route.meta.access) return hasOneOf(access, route.meta.access);
+  if (route.meta && route.meta.roles) return hasOneOf(access, route.meta.roles);
   else return true
 };
 
@@ -136,7 +136,7 @@ export const canTurnTo = (name, access, routes) => {
       if (item.children && item.children.length) {
         res = [].concat(res, getHasAccessRouteNames(item.children))
       } else {
-        if (item.meta && item.meta.access) {
+        if (item.meta && item.meta.roles) {
           if (hasAccess(access, item)) res.push(item.name)
         } else {
           res.push(item.name)

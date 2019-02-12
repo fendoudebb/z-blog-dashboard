@@ -1,18 +1,16 @@
-import {articleInfo, editArticle, publishArticle} from '@/api/publish';
+import {postInfo, editPost, publishPost} from '@/api/publish';
 
 export default {
   state: {
-    editArticleId: -1,
+    editPostId: -1,
     title: '',
     content: '',
-    articleProperty: '',
-    category: '',
-    keywords: '',
-    description: '',
+    postIsPrivate: 0,
+    topic: '',
   },
   mutations: {
-    setEditArticleId(state, editArticleId) {
-      state.editArticleId = editArticleId
+    setEditPostId(state, editPostId) {
+      state.editPostId = editPostId
     },
     setTitle(state, title) {
       state.title = title
@@ -20,69 +18,59 @@ export default {
     setContent(state, content) {
       state.content = content
     },
-    setArticleProperty(state, articleProperty) {
-      state.articleProperty = articleProperty
+    setPostIsPrivate(state, postProperty) {
+      state.postIsPrivate = postProperty
     },
-    setCategory(state, category) {
-      state.category = category
-    },
-    setKeywords(state, keywords) {
-      state.keywords = keywords
-    },
-    setDescription(state, description) {
-      state.description = description
-    },
+    setTopic(state, topic) {
+      state.topic = topic
+    }
   },
   getters: {
-    getEditArticleId: state => {
-      return state.editArticleId;
+    getEditPostId: state => {
+      return state.editPostId;
     }
   },
   actions: {
-    handlePublishArticle({state, commit}) {
+    handlePublishPost({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          author: sessionStorage.getItem('username'),
+          author: localStorage.getItem('username'),
           title: state.title,
           content: state.content,
-          articleProperty: state.articleProperty,
-          category: state.category,
-          keywords: state.keywords,
-          description: state.description,
+          isPrivate: state.postIsPrivate,
+          topic: state.topic,
         };
-        publishArticle(data).then(value => {
+        publishPost(data).then(value => {
           resolve(value);
         }).catch(reason => {
           reject(reason);
         });
       })
     },
-    handleEditArticle({state, commit}) {
+    handleEditPost({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          author: sessionStorage.getItem('username'),
+          author: localStorage.getItem('username'),
           title: state.title,
           content: state.content,
-          articleProperty: state.articleProperty,
-          category: state.category,
-          keywords: state.keywords,
-          description: state.description,
+          postIsPrivate: state.postIsPrivate,
+          topic: state.topic,
         };
-        editArticle(state.editArticleId, data).then(value => {
-          console.log("editArticleId: " + state.editArticleId);
+        editPost(state.editPostId, data).then(value => {
+          console.log("editPostId: " + state.editPostId);
           resolve(value);
         }).catch(reason => {
           reject(reason);
         });
       })
     },
-    handleArticleInfo({state, commit}) {
+    handlePostInfo({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          articleId: state.editArticleId
+          postId: state.editPostId
         };
-        articleInfo(data).then(value => {
-          console.log("editArticleId: " + state.editArticleId);
+        postInfo(data).then(value => {
+          console.log("editPostId: " + state.editPostId);
           resolve(value);
         }).catch(reason => {
           reject(reason);

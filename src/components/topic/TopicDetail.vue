@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: "category-detail"
+    name: "topic-detail"
   }
 </script>
 

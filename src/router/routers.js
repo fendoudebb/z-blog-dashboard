@@ -60,8 +60,8 @@ export default [
   },
 
   {
-    path: '/article',
-    name: 'article',
+    path: '/post',
+    name: 'post',
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'navigate',
@@ -70,30 +70,30 @@ export default [
     component: Main,
     children: [
       {
-        path: 'article_draft',
-        name: 'article_draft',
+        path: 'post_draft',
+        name: 'post_draft',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'checkmark-circled',
           title: '草稿管理'
         },
-        component: () => import('@/components/article/ArticleDraft')
+        component: () => import('@/components/post/PostDraft')
       },
       {
-        path: 'article_list',
-        name: 'article_list',
+        path: 'post_list',
+        name: 'post_list',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'android-list',
           title: '文章列表'
         },
-        component: () => import('@/components/article/ArticleList')
+        component: () => import('@/components/post/PostList')
       }
     ]
   },
   {
-    path: '/category',
-    name: 'category',
+    path: '/topic',
+    name: 'topic',
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'code',
@@ -102,24 +102,24 @@ export default [
     component: Main,
     children: [
       {
-        path: 'category_new',
-        name: 'category_new',
+        path: 'topic_new',
+        name: 'topic_new',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'android-create',
           title: '新建分类'
         },
-        component: () => import('@/components/category/Category')
+        component: () => import('@/components/topic/Topic')
       },
       {
-        path: 'category_list',
-        name: 'category_list',
+        path: 'topic_list',
+        name: 'topic_list',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'android-list',
           title: '分类列表'
         },
-        component: () => import('@/components/category/CategoryDetail')
+        component: () => import('@/components/topic/TopicDetail')
       }
     ]
   },

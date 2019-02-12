@@ -1,4 +1,4 @@
-import {getCategoryList} from '@/api/category';
+import {getTopicList} from '@/api/topic';
 
 export default {
   state: {
@@ -6,9 +6,9 @@ export default {
   mutations: {
   },
   actions: {
-    handleCategoryList({state, commit}) {
+    handleTopicList({state, commit}) {
       return new Promise((resolve, reject) => {
-        getCategoryList().then(res => {
+        getTopicList().then(res => {
           resolve(res);
         }).catch(err => {
           // reject(err);

@@ -1,74 +1,48 @@
 <template>
   <div style="padding: 5px">
     <Row>
-      <Col span="20">
-      <Form>
-        <FormItem label="文章标题" :label-width="80">
-          <Input v-model="articleTitle" placeholder="请输入文章标题..." clearable></Input>
-        </FormItem>
-      </Form>
-      <markdown-editor ref="markdownEditor"
-                       style="height: 600px"></markdown-editor>
+      <Col span="15">
+        <Form>
+          <FormItem label="文章标题" :label-width="80">
+            <Input v-model="postTitle" placeholder="请输入文章标题..." clearable></Input>
+          </FormItem>
+        </Form>
       </Col>
-      <Col span="4" style="padding-left: 5px">
-      <Card :bordered="false">
-        <p slot="title">
-          <!--<Icon type="ios-film-outline"></Icon>-->
-          <!--<Icon type="android-send"></Icon>-->
-          <Icon type="paper-airplane"></Icon>
-          发布
-        </p>
-
-        <Icon type="eye"></Icon>
-        文章属性：
-        <Select v-model="articleProperty" style="width:90px">
-          <Option v-for="item in propertyList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-        </Select>
-
-        <br>
-        <br>
-
-        <div style="height: 1px;width: auto;background-color:#E9EAEC;"></div>
-        <br>
-
-        <Button type="success" :loading="publishLoading" @click="articleSavePublish">发布</Button>
-        <Button type="ghost" :loading="publishLoading" @click="articleSaveDraft" v-if="showDraftBtn">存为草稿
-        </Button>
-        <!--<Button type="ghost" @click="articlePreview">预览</Button>-->
-      </Card>
-      <br>
-      <Card :bordered="false">
-        <p slot="title">
-          <Icon type="navicon-round"></Icon>
-          分类
-        </p>
-        <Select v-model="articleCategory" clearable>
-          <OptionGroup v-for="primaryCategory in categoryList" :key="primaryCategory.id" :label="primaryCategory.name">
-            <Option v-for="secondaryCategory in primaryCategory.secondaryCategories" :value="secondaryCategory.name"
-                    :key="secondaryCategory.id">{{ secondaryCategory.name }}
-            </Option>
-          </OptionGroup>
-          <!--<Option v-for="item in categoryList" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
-        </Select>
-      </Card>
-      <br>
-      <Card :bordered="false">
-        <p slot="title">
-          <Icon type="key"></Icon>
-          关键词
-        </p>
-        <Input v-model="articleKeywords" placeholder="请输入文章关键词..." clearable></Input>
-      </Card>
-      <br>
-      <Card :bordered="false">
-        <p slot="title">
-          <Icon type="compose"></Icon>
-          描述
-        </p>
-        <Input v-model="articleDescription" placeholder="请输入文章描述..." clearable></Input>
-      </Card>
+      <Col span="8" offset="1">
+        <Button type="success" :loading="publishLoading" @click="publishPostModal = true">发布文章</Button>
+        <Button type="ghost" :loading="publishLoading" @click="postPublish" >存为草稿</Button>
       </Col>
     </Row>
+
+    <markdown-editor ref="markdownEditor"
+                     style="height: 600px;z-index: 1"></markdown-editor>
+
+    <Modal
+      v-model="publishPostModal"
+      title="发布文章"
+      @on-ok="postPublish"
+      @on-cancel="cancel">
+      <div>
+        文章类型：
+        <Select v-model="postIsCopy" style="width:120px">
+          <Option v-for="item in postIsCopyMapper" :value="item.value" :key="item.value">{{ item.label }}</Option>
+        </Select>
+      </div>
+      <div style="margin-top: 20px">
+        文章分类：
+        <Select v-model="postTopic" style="width:150px">
+          <Option v-for="item in postTopicMapper" :value="item.id" :key="item.value">{{ item.name }}</Option>
+        </Select>
+      </div>
+
+      <div style="margin-top: 20px">
+        私人文章：
+        <i-switch v-model="postIsPrivate" size="large">
+          <span slot="open">私人</span>
+          <span slot="close">公开</span>
+        </i-switch>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -83,95 +57,81 @@
     },
     data() {
       return {
+        publishPostModal: false,
+        postIsCopy: 0,
+        postIsCopyMapper: [{value: 0, label: '原创'}, {value: 1, label: '转载'}],
+        postTopic: -1,
+        postTopicMapper: [],
+        postIsPrivate: false,
         publishLoading: false,
-        articleTitle: '',
-        articleKeywords: '',
-        articleDescription: '',
-        articleCategory: '',
-        articleProperty: 'PUBLIC',
-        showDraftBtn: true,
-        categoryList: [],
-        propertyList: [{value: 'PUBLIC', label: '公开'}, {value: 'PRIVATE', label: '个人'}],
+        postTitle: '',
       }
     },
     methods: {
       ...mapMutations([
-        'setEditArticleId',
+        'setEditPostId',
         'setTitle',
         'setContent',
-        'setArticleProperty',
-        'setCategory',
+        'setPostIsPrivate',
+        'setTopic',
         'setKeywords',
         'setDescription',
       ]),
       ...mapGetters([
         'getUserAccess',
-        'getEditArticleId'
+        'getEditPostId'
       ]),
       ...mapActions([
-        'handleCategoryList',
-        'handlePublishArticle',
-        'handleEditArticle',
-        'handleArticleInfo',
+        'handleTopicList',
+        'handlePublishPost',
+        'handleEditPost',
+        'handlePostInfo',
       ]),
-      articleSave(articleProperty) {
-        if (!this.articleTitle) {
+      postPublish() {
+        if (!this.postTitle) {
           this.$Message.error("文章标题不能为空!");
           return;
         }
-        let articleContent = this.$refs.markdownEditor.getValue();
-        console.log("articleContent: " + articleContent);
-        if (!articleContent) {
+        let postContent = this.$refs.markdownEditor.getValue();
+        console.log("postContent: " + postContent);
+        if (!postContent) {
           this.$Message.error("文章内容不能为空!");
           return;
         }
-        if (!this.articleProperty) {
-          this.$Message.error("文章属性不能为空!");
-          return;
-        }
-        if (!this.articleCategory) {
+        if (!this.postTopic) {
           this.$Message.error("文章分类不能为空!");
           return;
         }
-        if (!this.articleKeywords) {
-          this.$Message.error("文章关键词不能为空!");
-          return;
-        }
-        if (!this.articleDescription) {
-          this.$Message.error("文章描述不能为空!");
-          return;
-        }
-        this.setTitle(this.articleTitle);
-        this.setContent(articleContent);
-        this.setArticleProperty(articleProperty);
-        this.setCategory(this.articleCategory);
-        this.setKeywords(this.articleKeywords);
-        this.setDescription(this.articleDescription);
+        this.setTitle(this.postTitle);
+        this.setContent(postContent);
+        this.setPostIsPrivate(this.postIsPrivate ? 1 : 0);
+        this.setTopic(this.postTopic);
         this.publishLoading = true;
 
-        if (this.getEditArticleId() > 0) {
-          this.handleEditArticle().then(value => {
+        if (this.getEditPostId() > 0) {
+          this.handleEditPost().then(value => {
             this.$Message.success("修改文章成功!");
-            this.doAction(articleProperty);
+            this.doAction();
           }).catch(reason => {
             this.publishLoading = false;
             this.$Message.error("修改文章失败!");
           })
         } else {
-          this.handlePublishArticle().then(value => {
+          this.handlePublishPost().then(value => {
             this.$Message.success("发布文章成功!");
-            this.doAction(articleProperty);
+            this.doAction();
           }).catch(reason => {
+            console.log(reason);
             this.publishLoading = false;
             this.$Message.error("发布文章失败!");
           })
         }
       },
-      doAction(articleProperty) {
+      doAction() {
         this.publishLoading = false;
         localStorage.markdownContent = '';
         let location;
-        if (articleProperty === 'DRAFT') {
+        /*if (articleProperty === 'DRAFT') {
           location = {
             name: 'article_draft'
           };
@@ -179,41 +139,16 @@
           location = {
             name: 'article_list'
           };
-        }
-        this.$router.push(location);
-      },
-      articleSavePublish() {
-        this.articleSave(this.articleProperty);
-      },
-      articleSaveDraft() {
-        this.articleSave('DRAFT');
+        }*/
+        this.$router.push({name:'post_list'});
       },
     },
     mounted() {
-      this.handleCategoryList().then(value => {
-        console.log("categoryList: " + JSON.stringify(value));
-        this.categoryList = value.data;
-        if (this.getEditArticleId() > 0) {
-          this.handleArticleInfo().then(value => {
-            console.log("info: " + JSON.stringify(value));
-            this.articleTitle = value.data.title;
-            this.articleKeywords = value.data.keywords;
-            this.articleDescription = value.data.description;
-            let articleCategory = value.data.category;
-            for (let i = 0; i < this.categoryList.length; i++) {
-              let secondaryCategories = this.categoryList[i].secondaryCategories;
-              for (let j = 0; j < secondaryCategories.length; j++) {
-                let name = secondaryCategories[j].name;
-                if (articleCategory === name) {
-                  this.articleCategory = name;
-                }
-              }
-            }
-            let articleProperty = value.data.articleProperty;
-            if (articleProperty !== 'DRAFT') {
-              this.articleProperty = articleProperty;
-              this.showDraftBtn = false;
-            }
+      this.handleTopicList().then(value => {
+        this.postTopicMapper = value.data.topic;
+        if (this.getEditPostId() > 0) {
+          this.handlePostInfo().then(value => {
+            this.postTitle = value.data.title;
             this.$refs.markdownEditor.setValue(value.data.content);
           })
         }
@@ -221,9 +156,9 @@
 
     },
     destroyed() {
-      console.log("destroy")
-      if (this.getEditArticleId() > 0) {
-        this.setEditArticleId(-1);
+      console.log("destroy");
+      if (this.getEditPostId() > 0) {
+        this.setEditPostId(-1);
         localStorage.markdownContent = '';
       }
     }

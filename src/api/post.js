@@ -1,37 +1,37 @@
 import axios from '@/libs/axios'
-import {articleListUrl, articleAuditUrl, articleDraftUrl} from './url';
+import {postListUrl, postAuditUrl, postDraftUrl} from './url';
 
-export const getArticleList = (page, size) => {
+export const getPostList = (page, size) => {
   const data = {
     page,
     size
   };
   return axios.request({
-    url: articleListUrl,
+    url: postListUrl,
     data,
     method: 'post'
   })
 };
 
-export const getArticleDraft = (page, size) => {
+export const getPostDraft = (page, size) => {
   const data = {
     page,
     size
   };
   return axios.request({
-    url: articleDraftUrl,
+    url: postDraftUrl,
     data,
     method: 'post'
   })
 };
 
-export const modifyArticleStatus = (articleId, auditStatus) => {
+export const modifyPostStatus = (postId, auditStatus) => {
   const data = {
-    articleId,
+    postId,
     auditStatus
   };
   return axios.request({
-    url: articleAuditUrl,
+    url: postAuditUrl,
     data,
     method: 'post'
   })
