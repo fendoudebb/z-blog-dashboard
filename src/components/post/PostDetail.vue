@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="expand-key">作者: </span>
-    <span class="expand-value">{{ row.nickname }}</span>
+    <span class="expand-value">{{ row.sysUser.username }}</span>
     <br>
     <br>
     <span class="expand-key">创建时间: </span>
