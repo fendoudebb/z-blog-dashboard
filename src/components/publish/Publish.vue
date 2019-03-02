@@ -60,7 +60,7 @@
         publishPostModal: false,
         postIsCopy: 0,
         postIsCopyMapper: [{value: 0, label: '原创'}, {value: 1, label: '转载'}],
-        postTopic: -1,
+        postTopic: [],
         postTopicMapper: [],
         postIsPrivate: false,
         publishLoading: false,

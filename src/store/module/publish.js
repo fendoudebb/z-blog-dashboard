@@ -6,7 +6,7 @@ export default {
     title: '',
     content: '',
     postIsPrivate: 0,
-    topic: '',
+    topic: [],
   },
   mutations: {
     setEditPostId(state, editPostId) {
