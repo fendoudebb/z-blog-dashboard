@@ -13,7 +13,7 @@ export const postAuditUrl = '/admin/post/audit';
 
 export const postDraftUrl = '/admin/post/draft';
 
-export const topicListUrl = '/admin/topic';
+export const topicListUrl = '/admin/topics';
 
 export const editPostUrl = '/admin/post/edit';
 

@@ -2,11 +2,11 @@ import {postInfo, editPost, publishPost} from '@/api/publish';
 
 export default {
   state: {
-    editPostId: -1,
+    editPostId: '',
     title: '',
     content: '',
     postIsPrivate: 0,
-    topic: [],
+    topics: [],
   },
   mutations: {
     setEditPostId(state, editPostId) {
@@ -21,8 +21,8 @@ export default {
     setPostIsPrivate(state, postProperty) {
       state.postIsPrivate = postProperty
     },
-    setTopic(state, topic) {
-      state.topic = topic
+    setTopics(state, topics) {
+      state.topics = topics
     }
   },
   getters: {
@@ -38,7 +38,7 @@ export default {
           title: state.title,
           content: state.content,
           isPrivate: state.postIsPrivate,
-          topic: state.topic,
+          topics: state.topics,
         };
         publishPost(data).then(value => {
           resolve(value);
@@ -54,7 +54,7 @@ export default {
           title: state.title,
           content: state.content,
           postIsPrivate: state.postIsPrivate,
-          topic: state.topic,
+          topics: state.topics,
         };
         editPost(state.editPostId, data).then(value => {
           console.log("editPostId: " + state.editPostId);

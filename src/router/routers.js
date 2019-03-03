@@ -92,8 +92,8 @@ export default [
     ]
   },
   {
-    path: '/topic',
-    name: 'topic',
+    path: '/topics',
+    name: 'topics',
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'code',

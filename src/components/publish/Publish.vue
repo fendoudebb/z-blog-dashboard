@@ -30,7 +30,7 @@
       </div>
       <div style="margin-top: 20px">
         文章分类：
-        <Select v-model="postTopic" style="width:150px">
+        <Select v-model="postTopics" style="width:150px">
           <Option v-for="item in postTopicMapper" :value="item.id" :key="item.value">{{ item.name }}</Option>
         </Select>
       </div>
@@ -60,7 +60,7 @@
         publishPostModal: false,
         postIsCopy: 0,
         postIsCopyMapper: [{value: 0, label: '原创'}, {value: 1, label: '转载'}],
-        postTopic: [],
+        postTopics: [],
         postTopicMapper: [],
         postIsPrivate: false,
         publishLoading: false,
@@ -73,7 +73,7 @@
         'setTitle',
         'setContent',
         'setPostIsPrivate',
-        'setTopic',
+        'setTopics',
         'setKeywords',
         'setDescription',
       ]),
@@ -98,14 +98,14 @@
           this.$Message.error("文章内容不能为空!");
           return;
         }
-        if (!this.postTopic) {
+        if (!this.postTopics) {
           this.$Message.error("文章分类不能为空!");
           return;
         }
         this.setTitle(this.postTitle);
         this.setContent(postContent);
         this.setPostIsPrivate(this.postIsPrivate ? 1 : 0);
-        this.setTopic(this.postTopic);
+        this.setTopics(this.postTopics);
         this.publishLoading = true;
 
         if (this.getEditPostId() > 0) {
@@ -144,16 +144,12 @@
       },
     },
     mounted() {
-      this.handleTopicList().then(value => {
-        this.postTopicMapper = value.data.topic;
-        if (this.getEditPostId() > 0) {
-          this.handlePostInfo().then(value => {
-            this.postTitle = value.data.title;
-            this.$refs.markdownEditor.setValue(value.data.content);
-          })
-        }
-      });
-
+      if (this.getEditPostId() > 0) {
+        this.handlePostInfo().then(value => {
+          this.postTitle = value.data.title;
+          this.$refs.markdownEditor.setValue(value.data.content);
+        })
+      }
     },
     destroyed() {
       console.log("destroy");

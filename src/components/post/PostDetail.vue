@@ -17,7 +17,7 @@
     <br>
     <br>
     <span class="expand-key">分类: </span>
-    <span class="expand-value">{{ row.topic }}</span>
+    <span class="expand-value">{{ row.topics }}</span>
 
 
   </div>
