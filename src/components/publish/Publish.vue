@@ -28,11 +28,11 @@
           <Option v-for="item in postIsCopyMapper" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
       </div>
-      <div style="margin-top: 20px">
+      <div style="margin-top: 20px" v-for="(topic, index) in postTopics" :key="index">
         文章分类：
-        <Select v-model="postTopics" style="width:150px">
-          <Option v-for="item in postTopicMapper" :value="item.id" :key="item.value">{{ item.name }}</Option>
-        </Select>
+        <Input v-model="topic.value" placeholder="请输入分类" style="width: 150px;margin-right: 10px"></Input>
+        <Button type="primary" size="small" shape="circle" icon="plus-round" @click="addTopicInput"></Button>
+        <Button type="error" size="small" shape="circle" icon="minus-round" @click="deleteTopicInput(index)" v-if="index > 0"></Button>
       </div>
 
       <div style="margin-top: 20px">
@@ -60,7 +60,7 @@
         publishPostModal: false,
         postIsCopy: 0,
         postIsCopyMapper: [{value: 0, label: '原创'}, {value: 1, label: '转载'}],
-        postTopics: [],
+        postTopics: [{}],
         postTopicMapper: [],
         postIsPrivate: false,
         publishLoading: false,
@@ -87,7 +87,18 @@
         'handleEditPost',
         'handlePostInfo',
       ]),
+      deleteTopicInput(index) {
+        this.postTopics.splice(index,1)
+      },
+      addTopicInput() {
+        if (this.postTopics.length >= 3) {
+          this.$Message.error("最多添加三个分类!");
+          return;
+        }
+        this.postTopics.push({});
+      },
       postPublish() {
+        console.log(JSON.stringify(this.postTopics));
         if (!this.postTitle) {
           this.$Message.error("文章标题不能为空!");
           return;
