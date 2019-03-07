@@ -9,6 +9,10 @@ export const publishPostUrl = '/admin/post/publish';
 
 export const postInfoUrl = '/admin/post/info';
 
+export const postAddTopicUrl = '/admin/post/topic/add';
+
+export const postDeleteTopicUrl = '/admin/post/topic/delete';
+
 export const postAuditUrl = '/admin/post/audit';
 
 export const postDraftUrl = '/admin/post/draft';

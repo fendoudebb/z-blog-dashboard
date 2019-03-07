@@ -82,7 +82,6 @@
         'getEditPostId'
       ]),
       ...mapActions([
-        'handleTopicList',
         'handlePublishPost',
         'handleEditPost',
         'handlePostInfo',

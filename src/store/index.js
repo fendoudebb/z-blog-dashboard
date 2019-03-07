@@ -7,7 +7,7 @@ import publish from './module/publish'
 import post_list from './module/post_list'
 import post_audit from './module/post_audit'
 import post_draft from './module/post_draft'
-import topic from './module/topic'
+import post_topic from './module/post_topic'
 
 // Vue.use(Vuex);
 
@@ -31,6 +31,6 @@ export default new Vuex.Store({
     post_list,
     post_audit,
     post_draft,
-    topic
+    post_topic
   }
 })

@@ -7,6 +7,19 @@
               show-total></Page>
       </div>
     </div>
+    <Modal v-model="deleteTopicModal" width="360">
+      <p slot="header" style="color:#f60;text-align:center">
+        <Icon type="information-circled"></Icon>
+        <span>删除确认</span>
+      </p>
+      <div style="text-align:center">
+        <p>将删除《{{deleteTopicPost.title}}》一文中的{{deleteTopic}}分类。</p>
+        <p>是否继续删除？</p>
+      </div>
+      <div slot="footer">
+        <Button type="error" size="large" long :loading="deleteTopicModalLoading" @click="deleteTopicFunc(deleteTopicPost)">删除</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -20,6 +33,10 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
+        deleteTopicModal: false,
+        deleteTopicModalLoading: false,
+        deleteTopicPost:'',
+        deleteTopic:'',
         postListTableLoading: false,
         roles: localStorage.getItem('roles'),
         pageSize: this.getListSize(),
@@ -42,8 +59,11 @@
                 let tags = topics.map(topic => {
                   return h('Tag', {
                     props: {color: "green", type: "border", closable: true}, on: {
-                      "on-close": () => {//绑定事件
+                      "on-close": (event, topic) => {//绑定事件
                         this.$Message.success("close!");
+                        this.deleteTopicPost = params.row;
+                        this.deleteTopic = topic;
+                        this.deleteTopicModal = true;
                       }
                     }
                   }, topic)
@@ -134,19 +154,36 @@
     methods: {
       ...mapMutations([
         'setListPage',
-        'setPostId',
+        'setAuditPostId',
         'setAuditStatus',
-        'setEditPostId'
+        'setEditPostId',
+        'setAddTopicPostId',
+        'setDeleteTopicPostId',
+        'setAddTopic',
+        'setDeleteTopic'
       ]),
       ...mapGetters([
         'getListSize'
       ]),
       ...mapActions([
         'handlePostList',
-        'handlePostStatus'
+        'handlePostStatus',
+        'handleAddPostTopic',
+        'handleDeletePostTopic',
       ]),
-      handleClose2() {
-        console.log("aaaaaaaa");
+      deleteTopicFunc(deleteTopicPost) {
+        this.deleteTopicModalLoading = true;
+        this.setDeleteTopicPostId(deleteTopicPost.id);
+        this.setDeleteTopic(this.deleteTopic);
+        this.handleDeletePostTopic().then(value => {
+          deleteTopicPost.topics.splice(deleteTopicPost.topics.indexOf(this.deleteTopic), 1);
+          this.deleteTopicModalLoading = false;
+          this.deleteTopicModal = false;
+        }).catch(reason => {
+          this.deleteTopicModalLoading = false;
+          this.deleteTopicModal = false;
+        })
+
       },
       online(index) {
         this.modifyPostStatus(index, 1);
@@ -160,7 +197,7 @@
       },
       modifyPostStatus(index, status) {
         let post = this.postList[index];
-        this.setPostId(post.id);
+        this.setAuditPostId(post.id);
         this.setAuditStatus(status);
         this.handlePostStatus().then(value => {
           this.postList[index].status = status;

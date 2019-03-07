@@ -22,14 +22,6 @@
     <br>
     <span class="expand-key">是否公开: </span>
     <span class="expand-value">{{ row.isPrivate ? '个人' : '公开' }}</span>
-    <br>
-    <br>
-    <span class="expand-key">分类: </span>
-    <span class="expand-value">
-      <Tag closable color="green" type="border" v-for="topic in row.topics" :key="topic" :name="topic" @on-close="handleClose2">{{ topic }}</Tag>
-
-    </span>
-
 
   </div>
 </template>
