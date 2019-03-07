@@ -34,9 +34,45 @@
           },
           {title: 'ID', key: 'postId', align: 'center'},
           {title: '标题', key: 'title', align: 'center'},
+          {
+            title: '分类', key: 'topics', align: 'center',
+            render: (h, params) => {
+              let topics = params.row.topics;
+              if (topics != null) {
+                let tags = topics.map(topic => {
+                  return h('Tag', {
+                    props: {color: "green", type: "border", closable: true}, on: {
+                      "on-close": () => {//绑定事件
+                        this.$Message.success("close!");
+                      }
+                    }
+                  }, topic)
+                });
+                if (topics.length < 3) {
+                  tags.push(h('Button', {
+                    props: {type: 'primary', size: 'small'}, on: {
+                      click: () => {
+                        this.$Message.success("添加!");
+                      }
+                    }
+                  }, '添加'));
+                }
+                return h('div', tags)
+              } else {
+                return h('Button', {
+                  props: {type: 'primary', size: 'small'}, on: {
+                    click: () => {
+                      this.$Message.success("添加!");
+                    }
+                  }
+                }, '添加')
+              }
+
+            }
+          },
           {title: '阅读数', key: 'pv', align: 'center'},
-          {title: '评论数', key: 'commentCount', align: 'center'},
-          {title: '点赞数', key: 'likeCount', align: 'center'},
+          // {title: '评论数', key: 'commentCount', align: 'center'},
+          // {title: '点赞数', key: 'likeCount', align: 'center'},
           {
             title: '状态', key: 'status', align: 'center',
             render: (h, params) => {
@@ -84,7 +120,7 @@
                 style: {marginRight: '5px'},
                 on: {
                   click: () => {
-                    this.edit(params.row.postId)
+                    this.edit(params.row.id)
                   }
                 }
               }, '编辑');
@@ -109,6 +145,9 @@
         'handlePostList',
         'handlePostStatus'
       ]),
+      handleClose2() {
+        console.log("aaaaaaaa");
+      },
       online(index) {
         this.modifyPostStatus(index, 1);
       },

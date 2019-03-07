@@ -98,7 +98,6 @@
         this.postTopics.push({});
       },
       postPublish() {
-        console.log(JSON.stringify(this.postTopics));
         if (!this.postTitle) {
           this.$Message.error("文章标题不能为空!");
           return;
@@ -113,10 +112,19 @@
           this.$Message.error("文章分类不能为空!");
           return;
         }
+        let topics = [];
+        for(let i = 0; i < this.postTopics.length; i ++) {
+          let postTopic = this.postTopics[i];
+          if (postTopic.hasOwnProperty('value') && postTopic.value.length > 0) {
+            topics.push(postTopic.value);
+          }
+        }
+        console.log(JSON.stringify(topics));
         this.setTitle(this.postTitle);
         this.setContent(postContent);
         this.setPostIsPrivate(this.postIsPrivate ? 1 : 0);
-        this.setTopics(this.postTopics);
+
+        this.setTopics(topics);
         this.publishLoading = true;
 
         if (this.getEditPostId() > 0) {
