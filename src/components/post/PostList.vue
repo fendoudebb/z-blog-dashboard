@@ -59,8 +59,7 @@
                 let tags = topics.map(topic => {
                   return h('Tag', {
                     props: {color: "green", type: "border", closable: true}, on: {
-                      "on-close": (event, topic) => {//绑定事件
-                        this.$Message.success("close!");
+                      "on-close": () => {//绑定事件
                         this.deleteTopicPost = params.row;
                         this.deleteTopic = topic;
                         this.deleteTopicModal = true;
@@ -177,6 +176,7 @@
         this.setDeleteTopic(this.deleteTopic);
         this.handleDeletePostTopic().then(value => {
           deleteTopicPost.topics.splice(deleteTopicPost.topics.indexOf(this.deleteTopic), 1);
+          this.$Message.success("删除成功！");
           this.deleteTopicModalLoading = false;
           this.deleteTopicModal = false;
         }).catch(reason => {
