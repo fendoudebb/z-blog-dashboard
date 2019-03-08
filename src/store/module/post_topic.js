@@ -36,7 +36,7 @@ export default {
         deletePostTopic(state.deleteTopicPostId, state.deleteTopic).then(res => {
           resolve(res);
         }).catch(err => {
-          reject(err);
+          // reject(err);
         });
       })
     }

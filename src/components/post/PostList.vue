@@ -7,19 +7,6 @@
               show-total></Page>
       </div>
     </div>
-    <Modal v-model="deleteTopicModal" width="360">
-      <p slot="header" style="color:#f60;text-align:center">
-        <Icon type="information-circled"></Icon>
-        <span>删除确认</span>
-      </p>
-      <div style="text-align:center">
-        <p>将删除《{{deleteTopicPost.title}}》一文中的{{deleteTopic}}分类。</p>
-        <p>是否继续删除？</p>
-      </div>
-      <div slot="footer">
-        <Button type="error" size="large" long :loading="deleteTopicModalLoading" @click="deleteTopicFunc(deleteTopicPost)">删除</Button>
-      </div>
-    </Modal>
   </div>
 </template>
 
@@ -33,10 +20,6 @@
     data() {
       return {
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
-        deleteTopicModal: false,
-        deleteTopicModalLoading: false,
-        deleteTopicPost:'',
-        deleteTopic:'',
         postListTableLoading: false,
         roles: localStorage.getItem('roles'),
         pageSize: this.getListSize(),
@@ -60,9 +43,25 @@
                   return h('Tag', {
                     props: {color: "green", type: "border", closable: true}, on: {
                       "on-close": () => {//绑定事件
-                        this.deleteTopicPost = params.row;
+                        /*this.deleteTopicPost = params.row;
                         this.deleteTopic = topic;
-                        this.deleteTopicModal = true;
+                        this.deleteTopicModal = true;*/
+                        this.$Modal.confirm(
+                          {
+                            title: "删除分类",
+                            content: "是否删除《" + params.row.title + "》一文的" + topic + "分类？",
+                            okText: "确认删除",
+                            closable: true,
+                            onOk: () => {
+                              this.setDeleteTopicPostId(params.row.id);
+                              this.setDeleteTopic(topic);
+                              this.handleDeletePostTopic().then(value => {
+                                params.row.topics.splice(params.row.topics.indexOf(topic), 1);
+                                this.$Message.success("删除成功！");
+                              });
+                            }
+                          });
+
                       }
                     }
                   }, topic)
@@ -71,7 +70,7 @@
                   tags.push(h('Button', {
                     props: {type: 'primary', size: 'small'}, on: {
                       click: () => {
-                        this.$Message.success("添加!");
+                        this.addTopicFunc(params.row);
                       }
                     }
                   }, '添加'));
@@ -81,10 +80,10 @@
                 return h('Button', {
                   props: {type: 'primary', size: 'small'}, on: {
                     click: () => {
-                      this.$Message.success("添加!");
+                      this.addTopicFunc(params.row);
                     }
                   }
-                }, '添加')
+                }, '添加');
               }
 
             }
@@ -170,20 +169,36 @@
         'handleAddPostTopic',
         'handleDeletePostTopic',
       ]),
-      deleteTopicFunc(deleteTopicPost) {
-        this.deleteTopicModalLoading = true;
-        this.setDeleteTopicPostId(deleteTopicPost.id);
-        this.setDeleteTopic(this.deleteTopic);
-        this.handleDeletePostTopic().then(value => {
-          deleteTopicPost.topics.splice(deleteTopicPost.topics.indexOf(this.deleteTopic), 1);
-          this.$Message.success("删除成功！");
-          this.deleteTopicModalLoading = false;
-          this.deleteTopicModal = false;
-        }).catch(reason => {
-          this.deleteTopicModalLoading = false;
-          this.deleteTopicModal = false;
+      addTopicFunc(params) {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: this.newTopic,
+                autofocus: true,
+                placeholder: '请输入分类名...'
+              },
+              on: {
+                input: (val) => {
+                  this.newTopic = val;
+                }
+              }
+            })
+          },
+          onOk: () => {
+            this.setAddTopicPostId(params.id);
+            this.setAddTopic(this.newTopic);
+            this.handleAddPostTopic().then(value => {
+              if (params.hasOwnProperty('topics')) {
+                params.topics.push(this.newTopic);
+              } else {
+                params.topics = [this.newTopic];
+              }
+              this.newTopic = '';
+              this.$Message.success("添加成功！");
+            });
+          }
         })
-
       },
       online(index) {
         this.modifyPostStatus(index, 1);
