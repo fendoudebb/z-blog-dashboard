@@ -29,7 +29,7 @@
         </Layout>
       </Content>
       <Footer style="text-align: center">
-        <p>&copy; 2019 <a href="https://www.maisiji.cn" target="_blank">msj</a></p>
+        <p>&copy; 2019 <a href="https://www.zhangbj.com" target="_blank">Z-Blog</a></p>
       </Footer>
     </Layout>
   </Layout>

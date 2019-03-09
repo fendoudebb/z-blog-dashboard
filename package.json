@@ -1,7 +1,7 @@
 {
-  "name": "msj-front-end",
+  "name": "z-blog-console",
   "version": "1.0.0",
-  "description": "msj admin console front end project",
+  "description": "z-blog admin console front end project",
   "author": "fendoudebb",
   "private": true,
   "scripts": {
