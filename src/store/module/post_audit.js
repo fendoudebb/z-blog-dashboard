@@ -3,7 +3,7 @@ import {modifyPostStatus} from '@/api/post';
 export default {
   state: {
     postId: '',
-    auditStatus: 0,
+    auditStatus: '',
   },
   mutations: {
     setAuditPostId(state, postId) {

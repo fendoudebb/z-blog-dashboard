@@ -5,6 +5,7 @@ export default {
     editPostId: '',
     title: '',
     content: '',
+    postProp: '',
     postIsPrivate: 0,
     topics: [],
   },
@@ -17,6 +18,9 @@ export default {
     },
     setContent(state, content) {
       state.content = content
+    },
+    setPostProp(state, postProp) {
+      state.postProp = postProp
     },
     setPostIsPrivate(state, postProperty) {
       state.postIsPrivate = postProperty
@@ -37,6 +41,7 @@ export default {
           author: localStorage.getItem('username'),
           title: state.title,
           content: state.content,
+          postProp: state.postProp,
           isPrivate: state.postIsPrivate,
           topics: state.topics,
         };

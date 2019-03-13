@@ -24,8 +24,8 @@
       @on-cancel="cancel">
       <div>
         文章类型：
-        <Select v-model="postIsCopy" style="width:120px">
-          <Option v-for="item in postIsCopyMapper" :value="item.value" :key="item.value">{{ item.label }}</Option>
+        <Select v-model="postProp" style="width:120px">
+          <Option v-for="item in postPropMapper" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
       </div>
       <div style="margin-top: 20px" v-for="(topic, index) in postTopics" :key="index">
@@ -58,8 +58,8 @@
     data() {
       return {
         publishPostModal: false,
-        postIsCopy: 0,
-        postIsCopyMapper: [{value: 0, label: '原创'}, {value: 1, label: '转载'}],
+        postProp: 'ORIGINAL',
+        postPropMapper: [{value: 'ORIGINAL', label: '原创'}, {value: 'COPY', label: '转载'}],
         postTopics: [{}],
         postTopicMapper: [],
         postIsPrivate: false,
@@ -72,10 +72,9 @@
         'setEditPostId',
         'setTitle',
         'setContent',
+        'setPostProp',
         'setPostIsPrivate',
         'setTopics',
-        'setKeywords',
-        'setDescription',
       ]),
       ...mapGetters([
         'getUserAccess',
@@ -121,6 +120,7 @@
         console.log(JSON.stringify(topics));
         this.setTitle(this.postTitle);
         this.setContent(postContent);
+        this.setPostProp(this.postProp);
         this.setPostIsPrivate(this.postIsPrivate ? 1 : 0);
 
         this.setTopics(topics);
