@@ -101,7 +101,6 @@
           return;
         }
         let postContent = this.$refs.markdownEditor.getValue();
-        console.log("postContent: " + postContent);
         if (!postContent) {
           this.$Message.error("文章内容不能为空!");
           return;
@@ -117,7 +116,6 @@
             topics.push(postTopic.value);
           }
         }
-        console.log(JSON.stringify(topics));
         this.setTitle(this.postTitle);
         this.setContent(postContent);
         this.setPostProp(this.postProp);
@@ -126,7 +124,7 @@
         this.setTopics(topics);
         this.publishLoading = true;
 
-        if (this.getEditPostId() > 0) {
+        if (this.getEditPostId()) {
           this.handleEditPost().then(value => {
             this.$Message.success("修改文章成功!");
             this.doAction();
@@ -162,7 +160,7 @@
       },
     },
     mounted() {
-      if (this.getEditPostId() > 0) {
+      if (this.getEditPostId()) {
         this.handlePostInfo().then(value => {
           this.postTitle = value.data.title;
           this.$refs.markdownEditor.setValue(value.data.content);
@@ -171,8 +169,8 @@
     },
     destroyed() {
       console.log("destroy");
-      if (this.getEditPostId() > 0) {
-        this.setEditPostId(-1);
+      if (this.getEditPostId()) {
+        this.setEditPostId('');
         localStorage.markdownContent = '';
       }
     }

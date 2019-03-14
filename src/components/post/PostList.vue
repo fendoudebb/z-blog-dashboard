@@ -49,7 +49,7 @@
                         this.$Modal.confirm(
                           {
                             title: "删除分类",
-                            content: "是否删除《" + params.row.title + "》一文的" + topic + "分类？",
+                            content: "是否删除《" + params.row.title + "》一文的 " + topic + " 分类？",
                             okText: "确认删除",
                             closable: true,
                             onOk: () => {
@@ -195,6 +195,7 @@
               }
               this.newTopic = '';
               this.$Message.success("添加成功！");
+              console.log(JSON.stringify(params));
             });
           }
         })
