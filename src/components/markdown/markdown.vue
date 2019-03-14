@@ -22,23 +22,23 @@
         externalLink: {
           markdown_css: function() {
             // 这是你的markdown css文件路径
-            return 'https://s.maisiji.cn/lib/github-markdown-css/2.10.0/github-markdown.min.css';
+            return 'https://s.zhangbj.com/lib/github-markdown-css/2.10.0/github-markdown.min.css';
           },
           hljs_js: function() {
             // 这是你的hljs文件路径
-            return 'https://s.maisiji.cn/lib/highlight/9.12.0/js/highlight.min.js';
+            return 'https://s.zhangbj.com/lib/highlight/9.12.0/js/highlight.min.js';
           },
           hljs_css: function() {
             // 这是你的代码高亮配色文件路径
-            return 'https://s.maisiji.cn/lib/highlight/9.12.0/css/androidstudio.min.css';
+            return 'https://s.zhangbj.com/lib/highlight/9.12.0/css/androidstudio.min.css';
           },
           katex_css: function() {
             // 这是你的katex配色方案路径路径
-            return 'https://s.maisiji.cn/lib/katex/0.9.0/css/katex.min.css';
+            return 'https://s.zhangbj.com/lib/katex/0.9.0/css/katex.min.css';
           },
           katex_js: function() {
             // 这是你的katex.js路径
-            return 'https://s.maisiji.cn/lib/katex/0.9.0/js/katex.min.js';
+            return 'https://s.zhangbj.com/lib/katex/0.9.0/js/katex.min.js';
           },
         }
       }

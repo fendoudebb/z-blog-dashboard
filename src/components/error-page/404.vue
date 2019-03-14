@@ -11,7 +11,7 @@ export default {
   },
   data () {
     return {
-      src: 'https://s.maisiji.cn/pic/svg/error-404.svg'
+      src: 'https://s.zhangbj.com/pic/svg/error-404.svg'
     }
   }
 }

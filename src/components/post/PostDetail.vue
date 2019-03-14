@@ -1,9 +1,5 @@
 <template>
   <div>
-    <span class="expand-key">作者: </span>
-    <span class="expand-value">{{ row.sysUser.username }}</span>
-    <br>
-    <br>
     <span class="expand-key">评论数: </span>
     <span class="expand-value">{{ row.commentCount }}</span>
     <br>
@@ -17,11 +13,11 @@
     <br>
     <br>
     <span class="expand-key">是否原创: </span>
-    <span class="expand-value">{{ row.isCopy ? '转载' : '原创' }}</span>
+    <span class="expand-value">{{ row.postProp === 'COPY' ? '转载' : '原创' }}</span>
     <br>
     <br>
     <span class="expand-key">是否公开: </span>
-    <span class="expand-value">{{ row.isPrivate ? '个人' : '公开' }}</span>
+    <span class="expand-value">{{ row.postStatus === 'PRIVATE' ? '个人' : '公开' }}</span>
 
   </div>
 </template>

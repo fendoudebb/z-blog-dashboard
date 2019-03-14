@@ -1,0 +1,2 @@
+webpackJsonp([5],{"Km/a":function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("\n  新建\n")])},staticRenderFns:[]};var r=n("VU/8")({name:"topics"},a,!1,function(e){n("xfGP")},"data-v-668f5eda",null);t.default=r.exports},xfGP:function(e,t){}});
+//# sourceMappingURL=5.6780bd43421924890088.js.map

@@ -92,21 +92,24 @@
           // {title: '评论数', key: 'commentCount', align: 'center'},
           // {title: '点赞数', key: 'likeCount', align: 'center'},
           {
-            title: '状态', key: 'status', align: 'center',
+            title: '状态', key: 'postStatus', align: 'center',
             render: (h, params) => {
-              let status = params.row.status;
+              let postStatus = params.row.postStatus;
               let text = '';
               let color = '';
-              if (status === 0) {
+              if (postStatus === 'AUDIT') {
                 text = '待审核';
                 color = 'orange';
-              } else if (status === 1) {
+              } else if (postStatus === 'ONLINE') {
                 text = '上线';
                 color = 'green';
-              } else if (status === 2) {
+              } else if (postStatus === 'OFFLINE') {
                 text = '下线';
                 color = 'red';
-              } else if (status === 3) {
+              } else if (postStatus === 'PRIVATE') {
+                text = '私人';
+                color = 'lightskyblue';
+              } else if (postStatus === 'DRAFT') {
                 text = '草稿';
                 color = 'lightskyblue';
               }
@@ -118,19 +121,15 @@
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
-                let status = params.row.status;
+                let postStatus = params.row.postStatus;
                 //@formatter:off
                   let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
                   let offline = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.offline(params.index)}}}, '下线');
                   //@formatter:on
-                if (status === 0) {
+                if (postStatus === 'AUDIT' || postStatus === 'OFFLINE') {
                   action.push(online);
-                } else if (status === 1) {
+                } else if (postStatus === 'ONLINE') {
                   action.push(offline);
-                } else if (status === 2) {
-                  action.push(online);
-                } else if (status === 3) {
-                  action.push(online);
                 }
               }
               let edit = h('Button', {
@@ -201,10 +200,10 @@
         })
       },
       online(index) {
-        this.modifyPostStatus(index, 1);
+        this.modifyPostStatus(index, 'ONLINE');
       },
       offline(index) {
-        this.modifyPostStatus(index, 2);
+        this.modifyPostStatus(index, 'OFFLINE');
       },
       edit(postId) {
         this.setEditPostId(postId);
@@ -215,10 +214,10 @@
         this.setAuditPostId(post.id);
         this.setAuditStatus(status);
         this.handlePostStatus().then(value => {
-          this.postList[index].status = status;
-          if (status === 1) {
+          this.postList[index].postStatus = status;
+          if (status === 'ONLINE') {
             this.$Message.success("文章上线成功!");
-          } else if (status === 2) {
+          } else if (status === 'OFFLINE') {
             this.$Message.warning("文章已下线!");
           }
         });
