@@ -137,7 +137,6 @@
             this.$Message.success("发布文章成功!");
             this.doAction();
           }).catch(reason => {
-            console.log(reason);
             this.publishLoading = false;
             this.$Message.error("发布文章失败!");
           })
@@ -162,13 +161,24 @@
     mounted() {
       if (this.getEditPostId()) {
         this.handlePostInfo().then(value => {
+          this.setEditPostId(value.data.id);
           this.postTitle = value.data.title;
           this.$refs.markdownEditor.setValue(value.data.content);
+          this.postProp = value.data.postProp;
+          let topics = value.data.topics;
+          if (topics != null) {
+            this.postTopics = [];
+            for(let i = 0; i < topics.length; i ++){
+              this.postTopics.push({'value': topics[i]});
+            }
+          }
+          if (value.data.postStatus === 'PRIVATE') {
+            this.postIsPrivate = true
+          }
         })
       }
     },
     destroyed() {
-      console.log("destroy");
       if (this.getEditPostId()) {
         this.setEditPostId('');
         localStorage.markdownContent = '';

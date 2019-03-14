@@ -38,7 +38,6 @@ export default {
     handlePublishPost({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          author: localStorage.getItem('username'),
           title: state.title,
           content: state.content,
           postProp: state.postProp,
@@ -55,14 +54,14 @@ export default {
     handleEditPost({state, commit}) {
       return new Promise((resolve, reject) => {
         const data = {
-          author: localStorage.getItem('username'),
+          id: state.editPostId,
           title: state.title,
           content: state.content,
-          postIsPrivate: state.postIsPrivate,
+          postProp: state.postProp,
+          isPrivate: state.postIsPrivate,
           topics: state.topics,
         };
-        editPost(state.editPostId, data).then(value => {
-          console.log("editPostId: " + state.editPostId);
+        editPost(data).then(value => {
           resolve(value);
         }).catch(reason => {
           reject(reason);
@@ -75,7 +74,6 @@ export default {
           postId: state.editPostId
         };
         postInfo(data).then(value => {
-          console.log("editPostId: " + state.editPostId);
           resolve(value);
         }).catch(reason => {
           reject(reason);

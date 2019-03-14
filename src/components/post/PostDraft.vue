@@ -62,14 +62,12 @@
         this.$router.push({name: 'publish_index'})
       },
       changePage(index) {
-        console.log('index: ' + index);
         this.setDraftPage(index - 1);
         this.getPostDraft();
       },
       getPostDraft() {
         this.postDraftTableLoading = true;
         this.handlePostDraft().then(value => {
-          console.log("value: " + JSON.stringify(value));
           this.totalElements = value.data.totalCount;
           this.postDraft = value.data.content;
           this.postDraftTableLoading = false;

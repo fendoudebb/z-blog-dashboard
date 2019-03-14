@@ -195,7 +195,6 @@
               }
               this.newTopic = '';
               this.$Message.success("添加成功！");
-              console.log(JSON.stringify(params));
             });
           }
         })
