@@ -17,9 +17,9 @@ export const publishPost = (data) => {
   })
 };
 
-export const editPost = (id, data) => {
+export const editPost = (data) => {
   return axios.request({
-    url: editPostUrl + '/' + id,
+    url: publishPostUrl,
     data,
     method: 'post'
   })
