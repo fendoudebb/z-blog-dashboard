@@ -167,7 +167,9 @@
           this.postProp = value.data.postProp;
           let topics = value.data.topics;
           if (topics != null) {
-            this.postTopics = [];
+            if (topics.length > 0) {
+              this.postTopics = [];
+            }
             for(let i = 0; i < topics.length; i ++){
               this.postTopics.push({'value': topics[i]});
             }
