@@ -29,7 +29,7 @@
         </Layout>
       </Content>
       <Footer style="text-align: center">
-        <p>&copy; 2019 <a href="https://www.zhangbj.com" target="_blank">Z-Blog</a></p>
+        <p>&copy; 2019 <a href="https://www.zhangbj.com" target="_blank">Z-博客</a></p>
       </Footer>
     </Layout>
   </Layout>
@@ -41,8 +41,8 @@ import tagsNav from './components/tags-nav'
 import user from './components/user'
 import { mapMutations, mapActions } from 'vuex'
 import { getNewTagList, getNextName } from '@/libs/util'
-import minLogo from '@/assets/images/logo-min.jpg'
-import maxLogo from '@/assets/images/logo.jpg'
+import minLogo from '@/assets/images/logo-min.png'
+import maxLogo from '@/assets/images/logo.png'
 import Fullscreen from './components/fullscreen'
 import './main.less'
 export default {
