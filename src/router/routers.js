@@ -112,14 +112,14 @@ export default [
         component: () => import('@/components/statistics/PageView')
       },
       {
-        path: 'topic_list',
-        name: 'topic_list',
+        path: 'ip_pool',
+        name: 'ip_pool',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-create',
-          title: '分类列表'
+          icon: 'android-list',
+          title: 'IP列表'
         },
-        component: () => import('@/components/topic/TopicDetail')
+        component: () => import('@/components/statistics/IpPool')
       }
     ]
   },

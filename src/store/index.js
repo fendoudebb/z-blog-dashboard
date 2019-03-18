@@ -9,6 +9,7 @@ import post_audit from './module/post_audit'
 import post_draft from './module/post_draft'
 import post_topic from './module/post_topic'
 import page_view from './module/page_view'
+import ip_pool from './module/ip_pool'
 
 // Vue.use(Vuex);
 
@@ -33,6 +34,7 @@ export default new Vuex.Store({
     post_audit,
     post_draft,
     post_topic,
-    page_view
+    page_view,
+    ip_pool
   }
 })

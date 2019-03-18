@@ -19,6 +19,8 @@ export const postDraftUrl = '/admin/post/draft';
 
 export const pageViewListUrl = '/admin/page_view';
 
+export const ipPoolListUrl = '/admin/ip_pool';
+
 
 
 

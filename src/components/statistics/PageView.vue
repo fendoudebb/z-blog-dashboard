@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border stripe :data="pageViewList" :columns="pvListColumns" :loading="pageViewListTableLoading"></Table>
+    <Table border stripe :data="pageViewList" :columns="pageViewListColumns" :loading="pageViewListTableLoading"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
@@ -24,7 +24,7 @@
         pageSize: this.getPageViewListSize(),
         totalCount: 1,
         currentPage: 1,
-        pvListColumns: [
+        pageViewListColumns: [
           {
             type: 'expand', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
