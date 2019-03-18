@@ -92,31 +92,31 @@ export default [
     ]
   },
   {
-    path: '/topics',
-    name: 'topics',
+    path: '/statistics',
+    name: 'statistics',
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'code',
-      title: '分类管理'
+      title: '访问统计'
     },
     component: Main,
     children: [
       {
-        path: 'topic_new',
-        name: 'topic_new',
+        path: 'page_view',
+        name: 'page_view',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-create',
-          title: '新建分类'
+          icon: 'android-list',
+          title: '页面访问'
         },
-        component: () => import('@/components/topic/Topic')
+        component: () => import('@/components/statistics/PageView')
       },
       {
         path: 'topic_list',
         name: 'topic_list',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'android-create',
           title: '分类列表'
         },
         component: () => import('@/components/topic/TopicDetail')

@@ -17,6 +17,8 @@ export const postAuditUrl = '/admin/post/audit';
 
 export const postDraftUrl = '/admin/post/draft';
 
+export const pageViewListUrl = '/admin/page_view';
+
 
 
 
