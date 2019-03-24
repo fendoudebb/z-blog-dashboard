@@ -29,7 +29,7 @@
         </Layout>
       </Content>
       <Footer style="text-align: center">
-        <p>&copy; 2019 <a href="https://www.zhangbj.com" target="_blank">Z-博客</a></p>
+        <p>&copy; 2019 <a href="https://www.zhangbj.com" target="_blank">程序员技术之旅</a></p>
       </Footer>
     </Layout>
   </Layout>
