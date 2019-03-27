@@ -10,6 +10,7 @@ import post_draft from './module/post_draft'
 import post_topic from './module/post_topic'
 import page_view from './module/page_view'
 import ip_pool from './module/ip_pool'
+import topic from './module/topic'
 
 // Vue.use(Vuex);
 
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     post_draft,
     post_topic,
     page_view,
-    ip_pool
+    ip_pool,
+    topic
   }
 })

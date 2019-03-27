@@ -21,6 +21,14 @@ export const pageViewListUrl = '/admin/page_view';
 
 export const ipPoolListUrl = '/admin/ip_pool';
 
+export const topicListUrl = '/admin/topic';
+
+export const topicAddUrl = '/admin/topic/add';
+
+export const topicDeleteUrl = '/admin/topic/delete';
+
+export const topicModifySortUrl = '/admin/topic/sort/modify';
+
 
 
 

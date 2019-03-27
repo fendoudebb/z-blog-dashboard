@@ -1,11 +1,9 @@
 <template>
-  <div>
+  <div style="margin: 20px;padding:20px;background-color: white">
     <Table border stripe :data="ipPoolList" :columns="ipPoolListColumns" :loading="ipPoolListTableLoading"></Table>
-    <div style="margin: 10px;overflow: hidden">
-      <div style="float: right;">
+    <div style="margin: 20px;overflow: hidden">
         <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
               show-total></Page>
-      </div>
     </div>
   </div>
 </template>
