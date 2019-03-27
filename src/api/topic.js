@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {topicListUrl, topicAddUrl, topicDeleteUrl, topicModifySortUrl} from './url';
+import {topicListUrl, topicAddUrl, topicDeleteUrl, topicModifySortUrl, topicModifyNameUrl} from './url';
 
 export const getTopicList = (page, size) => {
   const data = {
@@ -42,6 +42,18 @@ export const modifyTopicSort = (topicId, sort) => {
   };
   return axios.request({
     url: topicModifySortUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const modifyTopicName = (topicId, name) => {
+  const data = {
+    topicId,
+    name
+  };
+  return axios.request({
+    url: topicModifyNameUrl,
     data,
     method: 'post'
   })

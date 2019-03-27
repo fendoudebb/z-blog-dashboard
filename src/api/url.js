@@ -29,6 +29,8 @@ export const topicDeleteUrl = '/admin/topic/delete';
 
 export const topicModifySortUrl = '/admin/topic/sort/modify';
 
+export const topicModifyNameUrl = '/admin/topic/name/modify';
+
 
 
 

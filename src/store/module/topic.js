@@ -1,10 +1,12 @@
-import {getTopicList, addTopic, deleteTopic, modifyTopicSort} from '@/api/topic';
+import {getTopicList, addTopic, deleteTopic, modifyTopicSort, modifyTopicName} from '@/api/topic';
 
 export default {
   state: {
     page: 1,
     size: 10,
     topic: '',
+    modifyNameTopicId: '',
+    modifyTopicName: '',
     deleteTopicId: '',
     modifySortTopicId: '',
     topicSort: 0,
@@ -15,6 +17,12 @@ export default {
     },
     setTopic(state, topic) {
       state.topic = topic
+    },
+    setModifyNameTopicId(state, modifyNameTopicId) {
+      state.modifyNameTopicId = modifyNameTopicId
+    },
+    setModifyTopicName(state, modifyTopicName) {
+      state.modifyTopicName = modifyTopicName
     },
     setDeleteTopicId(state, deleteTopicId) {
       state.deleteTopicId = deleteTopicId
@@ -62,6 +70,15 @@ export default {
     handleModifyTopicSort({state, commit}) {
       return new Promise((resolve, reject) => {
         modifyTopicSort(state.modifySortTopicId, state.topicSort).then(res => {
+          resolve(res);
+        }).catch(err => {
+          reject(err);
+        });
+      })
+    },
+    handleModifyTopicName({state, commit}) {
+      return new Promise((resolve, reject) => {
+        modifyTopicName(state.modifyNameTopicId, state.modifyTopicName).then(res => {
           resolve(res);
         }).catch(err => {
           reject(err);

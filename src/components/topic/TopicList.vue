@@ -37,12 +37,13 @@
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
-                  let deleteTopic = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteTopic(params)}}}, '删除');
-                  let modifySort = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifySort(params)}}}, '修改排序');
-                  //@formatter:on
-                action.push(deleteTopic);
+                  let modifyName = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifyName(params)}}}, '修改名称');
+                  let modifySort = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifySort(params)}}}, '修改排序');
+                  let deleteTopic = h('Button', {props: {type: 'error', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteTopic(params)}}}, '删除');
+                //@formatter:on
+                action.push(modifyName);
                 action.push(modifySort);
-
+                action.push(deleteTopic);
               }
               return h('div', [action]);
             }
@@ -55,6 +56,8 @@
         'setTopicListPage',
         'setTopic',
         'setDeleteTopicId',
+        'setModifyNameTopicId',
+        'setModifyTopicName',
         'setModifySortTopicId',
         'setTopicSort',
       ]),
@@ -66,6 +69,7 @@
         'handleAddTopic',
         'handleDeleteTopic',
         'handleModifyTopicSort',
+        'handleModifyTopicName',
       ]),
       deleteTopic(params) {
         this.$Modal.confirm(
@@ -82,6 +86,33 @@
               });
             }
           });
+      },
+      modifyName(params) {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: this.modifyTopicName,
+                autofocus: true,
+                placeholder: '请输入名称...'
+              },
+              on: {
+                input: (val) => {
+                  this.modifyTopicName = val;
+                }
+              }
+            })
+          },
+          onOk: () => {
+            this.setModifyNameTopicId(params.row.id);
+            this.setModifyTopicName(this.modifyTopicName);
+            this.handleModifyTopicName().then(value => {
+              this.$Message.success("修改成功！");
+              this.modifyTopicName = '';
+              this.getTopicList();
+            });
+          }
+        })
       },
       modifySort(params) {
         this.$Modal.confirm({
