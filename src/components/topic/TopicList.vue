@@ -84,7 +84,6 @@
           });
       },
       modifySort(params) {
-        this.$Message.success("modifySort！");
         this.$Modal.confirm({
           render: (h) => {
             return h('Input', {
@@ -104,7 +103,7 @@
             this.setModifySortTopicId(params.row.id);
             this.setTopicSort(this.newTopicSort);
             this.handleModifyTopicSort().then(value => {
-              this.$Message.success("添加成功！");
+              this.$Message.success("修改成功！");
               this.newTopicSort = '';
               this.getTopicList();
             });
@@ -136,6 +135,10 @@
             });
           }
         })
+      },
+      changePage(index) {
+        this.setTopicListPage(index);
+        this.getTopicList();
       },
       getTopicList() {
         this.topicListTableLoading = true;
