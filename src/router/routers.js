@@ -60,6 +60,27 @@ export default [
   },
 
   {
+    path: '/message-board',
+    name: '留言板',
+    meta:{
+      title: '',
+    },
+    component: Main,
+    children: [
+      {
+        path: '/message-board',
+        name: 'message-board',
+        meta:{
+          //<Icon type="paintbrush"></Icon>
+          icon: 'android-list',
+          title: '留言板',
+        },
+        component: () => import('@/components/message-board/MessageBoard')
+      },
+    ]
+  },
+
+  {
     path: '/topic',
     name: '标签',
     meta:{

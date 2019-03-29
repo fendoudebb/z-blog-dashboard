@@ -31,6 +31,10 @@ export const topicModifySortUrl = '/admin/topic/sort/modify';
 
 export const topicModifyNameUrl = '/admin/topic/name/modify';
 
+export const messageBoardUrl = '/admin/message/board';
+
+export const deleteMessageUrl = '/admin/message/delete';
+
 
 
 
