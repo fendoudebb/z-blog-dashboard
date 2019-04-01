@@ -35,6 +35,8 @@ export const messageBoardUrl = '/admin/message/board';
 
 export const deleteMessageUrl = '/admin/message/delete';
 
+export const webInfoUrl = '/admin/web_info';
+
 
 
 

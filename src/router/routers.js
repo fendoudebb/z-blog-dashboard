@@ -81,27 +81,6 @@ export default [
   },
 
   {
-    path: '/topic',
-    name: '标签',
-    meta:{
-      title: '',
-    },
-    component: Main,
-    children: [
-      {
-        path: '/topic',
-        name: 'topic',
-        meta:{
-          //<Icon type="paintbrush"></Icon>
-          icon: 'android-list',
-          title: '标签管理',
-        },
-        component: () => import('@/components/topic/TopicList')
-      },
-    ]
-  },
-
-  {
     path: '/post',
     name: 'post',
     meta: {
