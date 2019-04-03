@@ -12,6 +12,7 @@ import page_view from './module/page_view'
 import ip_pool from './module/ip_pool'
 import topic from './module/topic'
 import message_board from './module/message_board'
+import post_comment from './module/post_comment'
 
 // Vue.use(Vuex);
 
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     page_view,
     ip_pool,
     topic,
-    message_board
+    message_board,
+    post_comment
   }
 })

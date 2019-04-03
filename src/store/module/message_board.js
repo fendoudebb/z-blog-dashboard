@@ -1,10 +1,12 @@
-import {getMessageBoardList, deleteMessage} from '@/api/message_board';
+import {getMessageBoardList, deleteMessage, replyMessage} from '@/api/message_board';
 
 export default {
   state: {
     page: 1,
     size: 10,
-    messageId:''
+    messageId:'',
+    replyMessageId:'',
+    replyContent:'',
   },
   mutations: {
     setMessageBoardListPage(state, page) {
@@ -12,6 +14,12 @@ export default {
     },
     setMessageId(state, messageId) {
       state.messageId = messageId
+    },
+    setReplyMessageId(state, replyMessageId) {
+      state.replyMessageId = replyMessageId
+    },
+    setReplyContent(state, replyContent) {
+      state.replyContent = replyContent
     },
   },
   getters: {
@@ -32,6 +40,15 @@ export default {
     handleDeleteMessage({state, commit}) {
       return new Promise((resolve, reject) => {
         deleteMessage(state.messageId).then(res => {
+          resolve(res);
+        }).catch(err => {
+          reject(err);
+        });
+      })
+    },
+    handleReplyMessage({state, commit}) {
+      return new Promise((resolve, reject) => {
+        replyMessage(state.replyMessageId, state.replyContent).then(res => {
           resolve(res);
         }).catch(err => {
           reject(err);

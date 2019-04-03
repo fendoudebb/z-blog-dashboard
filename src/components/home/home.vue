@@ -48,7 +48,6 @@ export default {
       url: webInfoUrl,
       method: 'post'
     }).then(value => {
-      console.log(JSON.stringify(value));
       if (value.code === 200) {
         this.postInfo.count = value.data.webInfo.postCount;
         this.ipInfo.count = value.data.webInfo.ipCount;

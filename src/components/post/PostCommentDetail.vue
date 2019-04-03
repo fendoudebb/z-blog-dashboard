@@ -1,21 +1,26 @@
 <template>
   <div>
     <span class="expand-key">ID: </span>
-    <span class="expand-value">{{ row.id }}</span>
+    <span class="expand-value">{{ row.commentId }}</span>
     <br>
     <br>
-    <span class="expand-key">Referer: </span>
-    <span class="expand-value">{{ row.referer }}</span>
+    <span class="expand-key">IP: </span>
+    <span class="expand-value">{{ row.ip }}</span>
+    <br>
+    <br>
+    <span class="expand-key">评论: </span>
+    <span class="expand-value">{{ row.content }}</span>
     <br>
     <br>
     <span class="expand-key">User-Agent: </span>
     <span class="expand-value">{{ row.userAgent }}</span>
+
   </div>
 </template>
 
 <script>
   export default {
-    name: "page-view-detail",
+    name: "post-comment",
     props: {
       row: Object
     }

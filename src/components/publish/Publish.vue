@@ -29,8 +29,8 @@
         </Select>
       </div>
       <div style="margin-top: 20px" v-for="(topic, index) in postTopics" :key="index">
-        文章分类：
-        <Input v-model="topic.value" placeholder="请输入分类" style="width: 150px;margin-right: 10px"></Input>
+        文章标签：
+        <Input v-model="topic.value" placeholder="请输入标签" style="width: 150px;margin-right: 10px"></Input>
         <Button type="primary" size="small" shape="circle" icon="plus-round" @click="addTopicInput"></Button>
         <Button type="error" size="small" shape="circle" icon="minus-round" @click="deleteTopicInput(index)" v-if="index > 0"></Button>
       </div>

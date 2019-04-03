@@ -28,12 +28,11 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: 'id', align: 'center'},
           {title: 'URL', key: 'url', align: 'center',className:'url-column'},
-          {title: 'IP', key: 'ip', align: 'center'},
           {title: '访问时间', key: 'createTime', align: 'center'},
           {title: '浏览器', key: 'browser', align: 'center'},
           {title: '操作系统', key: 'os', align: 'center'},
+          {title: 'IP', key: 'ip', align: 'center'},
         ]
       }
     },

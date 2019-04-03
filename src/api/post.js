@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {postListUrl, postAuditUrl, postDraftUrl, postAddTopicUrl, postDeleteTopicUrl} from './url';
+import {postListUrl, postAuditUrl, postDraftUrl, postAddTopicUrl, postDeleteTopicUrl, postCommentUrl, deletePostCommentUrl} from './url';
 
 export const getPostList = (page, size) => {
   const data = {
@@ -56,6 +56,31 @@ export const deletePostTopic = (postId, topic) => {
   };
   return axios.request({
     url: postDeleteTopicUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const getPostCommentList = (postId, page, size) => {
+  const data = {
+    postId,
+    page,
+    size,
+  };
+  return axios.request({
+    url: postCommentUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const deletePostComment = (postId, commentId) => {
+  const data = {
+    postId,
+    commentId
+  };
+  return axios.request({
+    url: deletePostCommentUrl,
     data,
     method: 'post'
   })

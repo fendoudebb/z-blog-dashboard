@@ -15,6 +15,10 @@ export const postDeleteTopicUrl = '/admin/post/topic/delete';
 
 export const postAuditUrl = '/admin/post/audit';
 
+export const postCommentUrl = '/admin/post/comment';
+
+export const deletePostCommentUrl = '/admin/post/comment/delete';
+
 export const postDraftUrl = '/admin/post/draft';
 
 export const pageViewListUrl = '/admin/page_view';
@@ -34,6 +38,8 @@ export const topicModifyNameUrl = '/admin/topic/name/modify';
 export const messageBoardUrl = '/admin/message/board';
 
 export const deleteMessageUrl = '/admin/message/delete';
+
+export const replyMessageUrl = '/admin/message/reply';
 
 export const webInfoUrl = '/admin/web_info';
 

@@ -26,13 +26,11 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: 'id', align: 'center'},
+          {title: '楼层', key: 'floor', align: 'center'},
           {title: '昵称', key: 'nickname', align: 'center'},
           {title: '留言时间', key: 'commentTime', align: 'center'},
-          {title: '楼层', key: 'floor', align: 'center'},
           {title: '浏览器', key: 'browser', align: 'center'},
           {title: '操作系统', key: 'os', align: 'center'},
-          {title: 'IP', key: 'ip', align: 'center'},
           {
             title: '状态', key: 'status', align: 'center',
             render: (h, params) => {
@@ -55,8 +53,10 @@
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
+                  let replyMessage = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.replyMessage(params)}}}, '回复');
                   let deleteMessage = h('Button', {props: {type: 'error', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteMessage(params)}}}, '删除');
                 //@formatter:on
+                action.push(replyMessage);
                 action.push(deleteMessage);
               }
               return h('div', [action]);
@@ -69,6 +69,8 @@
       ...mapMutations([
         'setMessageBoardListPage',
         'setMessageId',
+        'setReplyMessageId',
+        'setReplyContent',
       ]),
       ...mapGetters([
         'getMessageBoardListSize'
@@ -76,7 +78,35 @@
       ...mapActions([
         'handleMessageBoardList',
         'handleDeleteMessage',
+        'handleReplyMessage',
       ]),
+      replyMessage(params) {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: this.reply,
+                autofocus: true,
+                placeholder: '请输入回复...'
+              },
+              on: {
+                input: (val) => {
+                  this.reply = val;
+                }
+              }
+            })
+          },
+          onOk: () => {
+            this.setReplyMessageId(params.row.id);
+            this.setReplyContent(this.reply);
+            this.handleReplyMessage().then(value => {
+              this.reply = '';
+              this.$Message.success("回复成功！");
+              this.getMessageBoardList();
+            });
+          }
+        })
+      },
       deleteMessage(params){
         this.$Modal.confirm(
           {
