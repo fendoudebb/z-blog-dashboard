@@ -91,16 +91,6 @@ export default [
     component: Main,
     children: [
       {
-        path: 'post_draft',
-        name: 'post_draft',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
-          title: '标签列表'
-        },
-        component: () => import('@/components/topic/TopicList')
-      },
-      {
         path: 'post_list',
         name: 'post_list',
         meta: {
@@ -109,7 +99,18 @@ export default [
           title: '文章列表'
         },
         component: () => import('@/components/post/PostList')
-      }
+      },
+      {
+        path: 'topic',
+        name: 'topic',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-list',
+          title: '标签列表'
+        },
+        component: () => import('@/components/topic/TopicList')
+      },
+
     ]
   },
   {
