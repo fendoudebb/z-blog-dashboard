@@ -1,13 +1,18 @@
 <template>
-    <mavon-editor :subfield="subfield"
+    <mavon-editor
+                  ref=md
+                  :subfield="subfield"
                   :code_style="code_style"
                   :ishljs="true"
+                  @imgAdd="uploadImg"
+                  @imgDel="delImg"
                   :externalLink="externalLink" v-model="value"></mavon-editor>
 </template>
 
 <script>
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
+  import axios from '@/libs/axios'
 
   export default {
     name: "MarkdownEditor",
@@ -26,11 +31,11 @@
           },
           hljs_js: function() {
             // 这是你的hljs文件路径
-            return 'https://s.zhangbj.com/lib/highlight/9.12.0/js/highlight.min.js';
+            return 'https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js';
           },
           hljs_css: function() {
             // 这是你的代码高亮配色文件路径
-            return 'https://s.zhangbj.com/lib/highlight/9.12.0/css/androidstudio.min.css';
+            return 'https://cdn.bootcss.com/highlight.js/9.15.6/styles/atom-one-dark.min.css';
           },
           katex_css: function() {
             // 这是你的katex配色方案路径路径
@@ -44,6 +49,26 @@
       }
     },
     methods: {
+      delImg(pos, $file) {
+        console.log($file)
+      },
+      // https://github.com/hinesboy/mavonEditor/blob/master/doc/cn/upload-images.md
+      uploadImg(pos, $file){
+        // 第一步.将图片上传到服务器.
+        let formdata = new FormData();
+        formdata.append('image', $file);
+        axios.request({
+          url: '/admin/img/upload',
+          method: 'post',
+          data: formdata,
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }).then((data) => {
+          // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+          // $vm.$img2Url 详情见本页末尾
+          console.log(JSON.stringify(data));
+          this.$refs.md.$img2Url(pos, data.data);
+        })
+      },
       getValue() {
         return this.value;
       },
