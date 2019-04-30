@@ -1,0 +1,2 @@
+webpackJsonp([11],{"cL7/":function(e,r,t){"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={name:"error_404",components:{errorContent:t("snYV").a},data:function(){return{src:"https://s.zhangbj.com/pic/svg/error-404.svg"}}},s={render:function(){var e=this.$createElement;return(this._self._c||e)("error-content",{attrs:{code:"404",desc:"Oh~~您的页面好像飞走了~",src:this.src}})},staticRenderFns:[]},c=t("VU/8")(n,s,!1,null,null,null);r.default=c.exports}});
+//# sourceMappingURL=11.8ab4070a87471ec33533.js.map

@@ -13,6 +13,7 @@ import ip_pool from './module/ip_pool'
 import topic from './module/topic'
 import message_board from './module/message_board'
 import post_comment from './module/post_comment'
+import search_stats from './module/search_stats'
 
 // Vue.use(Vuex);
 
@@ -41,6 +42,7 @@ export default new Vuex.Store({
     ip_pool,
     topic,
     message_board,
-    post_comment
+    post_comment,
+    search_stats,
   }
 })
