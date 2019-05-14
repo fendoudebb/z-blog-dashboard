@@ -300,7 +300,7 @@
       },
       modifyPostStatus(index, status) {
         let post = this.postList[index];
-        this.setAuditPostId(post.id);
+        this.setAuditPostId(post.postId);
         this.setAuditStatus(status);
         this.handlePostStatus().then(value => {
           this.postList[index].postStatus = status;
