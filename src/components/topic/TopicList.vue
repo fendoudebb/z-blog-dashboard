@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 20px;padding:20px;background-color: white">
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1">
       <Button type="primary" @click="addNewTopic">
         <Icon type="plus-round"></Icon>
         新建标签

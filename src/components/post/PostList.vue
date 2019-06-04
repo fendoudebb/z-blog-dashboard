@@ -61,7 +61,7 @@
               if (topics != null) {
                 let tags = topics.map(topic => {
                   return h('Tag', {
-                    props: {color: "green", type: "border", closable: true}, on: {
+                    props: {color: "green", type: "border", closable: this.roles.indexOf("ROLE_ADMIN") > -1}, on: {
                       "on-close": () => {//绑定事件
                         /*this.deleteTopicPost = params.row;
                         this.deleteTopic = topic;
@@ -86,26 +86,29 @@
                     }
                   }, topic)
                 });
-                if (topics.length < 3) {
-                  tags.push(h('Button', {
+                if (this.roles.indexOf("ROLE_ADMIN") > -1) {
+                  if (topics.length < 3) {
+                    tags.push(h('Button', {
+                      props: {type: 'primary', size: 'small'}, on: {
+                        click: () => {
+                          this.addTopicFunc(params.row);
+                        }
+                      }
+                    }, '添加'));
+                  }
+                }
+                return h('div', tags)
+              } else {
+                if (this.roles.indexOf("ROLE_ADMIN") > -1) {
+                  return h('Button', {
                     props: {type: 'primary', size: 'small'}, on: {
                       click: () => {
                         this.addTopicFunc(params.row);
                       }
                     }
-                  }, '添加'));
+                  }, '添加');
                 }
-                return h('div', tags)
-              } else {
-                return h('Button', {
-                  props: {type: 'primary', size: 'small'}, on: {
-                    click: () => {
-                      this.addTopicFunc(params.row);
-                    }
-                  }
-                }, '添加');
               }
-
             }
           },
           {title: '阅读数', key: 'pv', align: 'center'},
