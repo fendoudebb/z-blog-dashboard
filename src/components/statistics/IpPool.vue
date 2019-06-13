@@ -34,7 +34,7 @@
               return h('span',country);
             }
           },
-          {title: '国家', key: 'address', align: 'center',
+          {title: '地区', key: 'address', align: 'center',
             render: (h, params) => {
               let area = params.row.address.area;
               return h('span',area);
