@@ -33,6 +33,7 @@
           {title: '浏览器', key: 'browser', align: 'center'},
           {title: '操作系统', key: 'os', align: 'center'},
           {title: 'IP', key: 'ip', align: 'center'},
+          {title: '地址', key: 'address', align: 'center'},
         ]
       }
     },
