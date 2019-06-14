@@ -24,4 +24,9 @@ export default {
   #app {
     .size;
   }
+
+  .ivu-table {
+    /*overflow-x: auto;*/
+  }
+
 </style>

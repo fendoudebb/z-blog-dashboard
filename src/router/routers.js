@@ -124,16 +124,6 @@ export default [
     component: Main,
     children: [
       {
-        path: 'search_stats',
-        name: 'search_stats',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
-          title: '搜索统计'
-        },
-        component: () => import('@/components/statistics/SearchStats')
-      },
-      {
         path: 'page_view',
         name: 'page_view',
         meta: {
@@ -152,7 +142,17 @@ export default [
           title: 'IP列表'
         },
         component: () => import('@/components/statistics/IpPool')
-      }
+      },
+      {
+        path: 'search_stats',
+        name: 'search_stats',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-list',
+          title: '搜索统计'
+        },
+        component: () => import('@/components/statistics/SearchStats')
+      },
     ]
   },
 

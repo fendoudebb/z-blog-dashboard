@@ -34,6 +34,17 @@
           {title: '操作系统', key: 'os', align: 'center'},
           {title: 'IP', key: 'ip', align: 'center'},
           {title: '地址', key: 'address', align: 'center'},
+          {
+            title: '操作', key: 'action', align: 'center',
+            render: (h, params) => {
+              let watch;
+              let url = params.row.url;
+              if (url != null && url.indexOf('/p/') === 0) {
+                watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看文章');
+              }
+              return h('div', [watch]);
+            }
+          }
         ]
       }
     },
@@ -47,6 +58,9 @@
       ...mapActions([
         'handlePageViewList',
       ]),
+      watchPost(url) {
+        window.open('https://www.zhangbj.com' + url);
+      },
       changePage(index) {
         this.setPageViewListPage(index);
         this.getPageViewList();

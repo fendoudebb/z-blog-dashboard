@@ -1,6 +1,6 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white">
-    <Table border stripe :data="postList" :columns="postListColumns" :loading="postListTableLoading"></Table>
+  <div style="margin: 20px;padding:20px;background-color: white;">
+    <Table border stripe :highlight-row="true" :data="postList" :columns="postListColumns" :loading="postListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">
       <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
             show-total></Page>
@@ -48,14 +48,14 @@
         postList: [],
         postListColumns: [
           {
-            type: 'expand', width: 50, render: (h, params) => {
+            title:"#",type: 'expand',align: 'center', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: 'postId', align: 'center'},
-          {title: '标题', key: 'title', align: 'center'},
+          {title: 'ID', key: 'postId', align: 'center', ellipsis:true, minWidth: 80,},
+          {title: '标题', key: 'title', align: 'center', ellipsis:true, minWidth: 200},
           {
-            title: '标签', key: 'topics', align: 'center',
+            title: '标签', key: 'topics', align: 'center',  minWidth: 300,
             render: (h, params) => {
               let topics = params.row.topics;
               if (topics != null) {
@@ -111,11 +111,11 @@
               }
             }
           },
-          {title: '阅读数', key: 'pv', align: 'center'},
+          {title: '阅读数', key: 'pv', align: 'center', ellipsis:true, minWidth: 100,},
           // {title: '评论数', key: 'commentCount', align: 'center'},
           // {title: '点赞数', key: 'likeCount', align: 'center'},
           {
-            title: '状态', key: 'postStatus', align: 'center',
+            title: '状态', key: 'postStatus', align: 'center', ellipsis:true, minWidth: 100,
             render: (h, params) => {
               let postStatus = params.row.postStatus;
               let text = '';
@@ -140,11 +140,11 @@
             }
           },
           {
-            title: '操作', key: 'action', align: 'center',
+            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 250,
             render: (h, params) => {
+              let postStatus = params.row.postStatus;
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
-                let postStatus = params.row.postStatus;
                 //@formatter:off
                   let watchComment = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchComment(params)}}}, '评论');
                   let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
@@ -160,6 +160,10 @@
                   action.push(offline);
                 }
                 action.push(edit);
+              }
+              if (postStatus === 'ONLINE') {
+                let watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPostById(params.row.postId)}}}, '查看');
+                action.push(watch);
               }
               return h('div', [action]);
             }
@@ -240,6 +244,9 @@
         'handlePostCommentList',
         'handleDeletePostComment',
       ]),
+      watchPostById(postId) {
+        window.open('https://www.zhangbj.com/p/' + postId + ".html");
+      },
       addTopicFunc(params) {
         this.$Modal.confirm({
           render: (h) => {
@@ -355,4 +362,10 @@
 
 <style scoped>
 
+  .ivu-table-column-center {
+    white-space: nowrap !important;
+  }
+  .ivu-table-cell {
+    white-space: nowrap !important;
+  }
 </style>
