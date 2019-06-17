@@ -28,11 +28,11 @@
         totalCount: 1,
         currentPage: 1,
         topicListColumns: [
-          {title: 'ID', key: 'id', align: 'center'},
-          {title: '标签', key: 'name', align: 'center'},
-          {title: '排序', key: 'sort', align: 'center'},
+          {title: 'ID', key: 'id', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '标签', key: 'name', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '排序', key: 'sort', align: 'center', ellipsis:true, minWidth: 150,},
           {
-            title: '操作', key: 'action', align: 'center',
+            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {

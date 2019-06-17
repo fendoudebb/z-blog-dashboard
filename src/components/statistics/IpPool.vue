@@ -27,80 +27,80 @@
             align: 'center',
           },
           // {title: 'ID', key: 'id', align: 'center', sortable: true},
-          {title: 'IP', key: 'ip', align: 'center'},
-          {title: '国家', key: 'address', align: 'center',
+          {title: 'IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150},
+          {title: '国家', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let country = params.row.address.country;
               return h('span',country);
             }
           },
-          {title: '地区', key: 'address', align: 'center',
+          {title: '地区', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let area = params.row.address.area;
               return h('span',area);
             }
           },
-          {title: '省份', key: 'address', align: 'center',
+          {title: '省份', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let region = params.row.address.region;
               return h('span',region);
             }
           },
-          {title: '城市', key: 'address', align: 'center',
+          {title: '城市', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let city = params.row.address.city;
               return h('span',city);
             }
           },
-          {title: '县', key: 'address', align: 'center',
+          {title: '县', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let county = params.row.address.county;
               return h('span',county);
             }
           },
-          {title: '运营商', key: 'address', align: 'center',
+          {title: '运营商', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let isp = params.row.address.isp;
               return h('span',isp);
             }
           },
-          {title: '国家ID', key: 'address', align: 'center',
+          {title: '国家ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let country_id = params.row.address.country_id;
               return h('span',country_id);
             }
           },
-          {title: '地区ID', key: 'address', align: 'center',
+          {title: '地区ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let area_id = params.row.address.area_id;
               return h('span',area_id);
             }
           },
-          {title: '省份ID', key: 'address', align: 'center',
+          {title: '省份ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let region_id = params.row.address.region_id;
               return h('span',region_id);
             }
           },
-          {title: '城市ID', key: 'address', align: 'center',
+          {title: '城市ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let city_id = params.row.address.city_id;
               return h('span',city_id);
             }
           },
-          {title: '县ID', key: 'address', align: 'center',
+          {title: '县ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
               let county_id = params.row.address.county_id;
               return h('span',county_id);
             }
           },
-          {title: '运营商ID', key: 'address', align: 'center',
+          {title: '运营商ID', key: 'address', align: 'center', ellipsis:true, minWidth: 90,
             render: (h, params) => {
               let isp_id = params.row.address.isp_id;
               return h('span',isp_id);
             }
           },
-          {title: '访问时间', key: 'createTime', align: 'center'},
+          {title: '访问时间', key: 'createTime', align: 'center', ellipsis:true, minWidth: 150,},
         ]
       }
     },

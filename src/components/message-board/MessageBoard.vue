@@ -26,13 +26,13 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: '楼层', key: 'floor', align: 'center'},
-          {title: '昵称', key: 'nickname', align: 'center'},
-          {title: '留言时间', key: 'commentTime', align: 'center'},
-          {title: '浏览器', key: 'browser', align: 'center'},
-          {title: '操作系统', key: 'os', align: 'center'},
+          {title: '楼层', key: 'floor', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '昵称', key: 'nickname', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '留言时间', key: 'commentTime', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '浏览器', key: 'browser', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '操作系统', key: 'os', align: 'center', ellipsis:true, minWidth: 150,},
           {
-            title: '状态', key: 'status', align: 'center',
+            title: '状态', key: 'status', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
               let commentStatus = params.row.status;
               let text = '';
@@ -48,7 +48,7 @@
             }
           },
           {
-            title: '操作', key: 'action', align: 'center',
+            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {

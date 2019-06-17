@@ -22,14 +22,14 @@
         currentPage: 1,
         searchStatsListColumns: [
           // {title: 'ID', key: 'id', align: 'center'},
-          {title: '搜索时间', key: 'createTime', align: 'center'},
-          {title: '关键词', key: 'keywords', align: 'center'},
-          {title: '耗时', key: 'took', align: 'center'},
-          {title: '命中', key: 'hits', align: 'center'},
-          {title: '上游地址', key: 'referer', align: 'center'},
-          {title: 'IP', key: 'ip', align: 'center'},
-          {title: '浏览器', key: 'browser', align: 'center'},
-          {title: '操作系统', key: 'os', align: 'center'},
+          {title: '搜索时间', key: 'createTime', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '关键词', key: 'keywords', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '耗时', key: 'took', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '命中', key: 'hits', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '上游地址', key: 'referer', align: 'center', ellipsis:true, minWidth: 250,},
+          {title: 'IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '浏览器', key: 'browser', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '操作系统', key: 'os', align: 'center', ellipsis:true, minWidth: 150,},
         ]
       }
     },
