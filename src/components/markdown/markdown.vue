@@ -25,26 +25,28 @@
         subfield: true,
         code_style: 'solarized-dark',
         externalLink: {
-          markdown_css: function() {
+          /*markdown_css: function() {
             // 这是你的markdown css文件路径
             return 'https://s.zhangbj.com/lib/github-markdown-css/2.10.0/github-markdown.min.css';
-          },
+          },*/
           hljs_js: function() {
             // 这是你的hljs文件路径
-            return 'https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js';
+            return 'https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js';
           },
           hljs_css: function() {
             // 这是你的代码高亮配色文件路径
-            return 'https://cdn.bootcss.com/highlight.js/9.15.6/styles/atom-one-dark.min.css';
+            return 'https://cdn.bootcss.com/highlight.js/9.15.8/styles/atom-one-dark.min.css';
           },
-          katex_css: function() {
+          /*katex_css: function() {
             // 这是你的katex配色方案路径路径
             return 'https://s.zhangbj.com/lib/katex/0.9.0/css/katex.min.css';
-          },
-          katex_js: function() {
+          },*/
+          katex_css: false,
+          katex_js: false
+          /*katex_js: function() {
             // 这是你的katex.js路径
             return 'https://s.zhangbj.com/lib/katex/0.9.0/js/katex.min.js';
-          },
+          },*/
         }
       }
     },

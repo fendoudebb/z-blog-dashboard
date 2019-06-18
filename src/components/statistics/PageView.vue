@@ -33,7 +33,7 @@
           {title: '浏览器', key: 'browser', align: 'center' , ellipsis:true, minWidth: 150,},
           {title: '操作系统', key: 'os', align: 'center' , ellipsis:true, minWidth: 150,},
           {title: 'IP', key: 'ip', align: 'center' , ellipsis:true, minWidth: 150,},
-          {title: '地址', key: 'address', align: 'center' , ellipsis:true, minWidth: 150,},
+          {title: '地址', key: 'address', align: 'center' , ellipsis:true, minWidth: 200,},
           {
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
