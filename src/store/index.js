@@ -10,6 +10,7 @@ import post_draft from './module/post_draft'
 import post_topic from './module/post_topic'
 import page_view from './module/page_view'
 import ip_pool from './module/ip_pool'
+import ip_unrecognized from './module/ip_unrecognized'
 import topic from './module/topic'
 import message_board from './module/message_board'
 import post_comment from './module/post_comment'
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     post_topic,
     page_view,
     ip_pool,
+    ip_unrecognized,
     topic,
     message_board,
     post_comment,

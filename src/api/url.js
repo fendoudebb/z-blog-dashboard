@@ -25,6 +25,8 @@ export const pageViewListUrl = '/admin/page_view';
 
 export const ipPoolListUrl = '/admin/ip_pool';
 
+export const ipUnrecognizedListUrl = '/admin/ip_unrecognized';
+
 export const searchStatsListUrl = '/admin/search_stats';
 
 export const topicListUrl = '/admin/topic';

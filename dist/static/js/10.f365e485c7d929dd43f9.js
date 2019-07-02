@@ -1,2 +1,0 @@
-webpackJsonp([10],{LV6h:function(e,r,t){"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={name:"error_500",components:{errorContent:t("snYV").a},data:function(){return{src:"https://s.zhangbj.com/pic/svg/error-500.svg"}}},s={render:function(){var e=this.$createElement;return(this._self._c||e)("error-content",{attrs:{code:"500",desc:"Oh~~鬼知道服务器经历了什么~",src:this.src}})},staticRenderFns:[]},c=t("C7Lr")(n,s,!1,null,null,null);r.default=c.exports}});
-//# sourceMappingURL=10.f365e485c7d929dd43f9.js.map

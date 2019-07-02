@@ -114,6 +114,39 @@ export default [
     ]
   },
   {
+    path: '/ip',
+    name: 'ip',
+    meta: {
+      //<Icon type="android-compass"></Icon>
+      icon: 'location',
+      title: 'IP管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'ip_pool',
+        name: 'ip_pool',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-list',
+          title: 'IP列表'
+        },
+        component: () => import('@/components/statistics/IpPool')
+      },
+      {
+        path: 'ip_unrecognized',
+        name: 'ip_unrecognized',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-list',
+          title: '未识别IP列表'
+        },
+        component: () => import('@/components/statistics/IpUnrecognized')
+      },
+
+    ]
+  },
+  {
     path: '/statistics',
     name: 'statistics',
     meta: {
@@ -132,16 +165,6 @@ export default [
           title: '页面访问'
         },
         component: () => import('@/components/statistics/PageView')
-      },
-      {
-        path: 'ip_pool',
-        name: 'ip_pool',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
-          title: 'IP列表'
-        },
-        component: () => import('@/components/statistics/IpPool')
       },
       {
         path: 'search_stats',
