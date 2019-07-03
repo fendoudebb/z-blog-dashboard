@@ -131,7 +131,7 @@ export default [
           icon: 'android-list',
           title: 'IP列表'
         },
-        component: () => import('@/components/statistics/IpPool')
+        component: () => import('@/components/ip/IpPool')
       },
       {
         path: 'ip_unrecognized',
@@ -141,7 +141,7 @@ export default [
           icon: 'android-list',
           title: '未识别IP列表'
         },
-        component: () => import('@/components/statistics/IpUnrecognized')
+        component: () => import('@/components/ip/IpUnrecognized')
       },
 
     ]

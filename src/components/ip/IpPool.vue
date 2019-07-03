@@ -30,73 +30,121 @@
           {title: 'IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150},
           {title: '国家', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let country = params.row.address.country;
+              let country = '';
+              let address = params.row.address;
+              if (address != null) {
+                country = address.country;
+              }
               return h('span',country);
             }
           },
           {title: '地区', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let area = params.row.address.area;
+              let area = '';
+              let address = params.row.address;
+              if (address != null) {
+                area = address.area;
+              }
               return h('span',area);
             }
           },
           {title: '省份', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let region = params.row.address.region;
+              let region = '';
+              let address = params.row.address;
+              if (address != null) {
+                region = address.region;
+              }
               return h('span',region);
             }
           },
           {title: '城市', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let city = params.row.address.city;
+              let city = '';
+              let address = params.row.address;
+              if (address != null) {
+                city = address.city;
+              }
               return h('span',city);
             }
           },
           {title: '县', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let county = params.row.address.county;
+              let county = '';
+              let address = params.row.address;
+              if (address != null) {
+                county = address.county;
+              }
               return h('span',county);
             }
           },
           {title: '运营商', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let isp = params.row.address.isp;
+              let isp = '';
+              let address = params.row.address;
+              if (address != null) {
+                isp = address.isp;
+              }
               return h('span',isp);
             }
           },
           {title: '国家ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let country_id = params.row.address.country_id;
+              let country_id = '';
+              let address = params.row.address;
+              if (address != null) {
+                country_id = address.country_id;
+              }
               return h('span',country_id);
             }
           },
           {title: '地区ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let area_id = params.row.address.area_id;
+              let area_id = '';
+              let address = params.row.address;
+              if (address != null) {
+                area_id = address.area_id;
+              }
               return h('span',area_id);
             }
           },
           {title: '省份ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let region_id = params.row.address.region_id;
+              let region_id = '';
+              let address = params.row.address;
+              if (address != null) {
+                let region_id = address.region_id;
+              }
               return h('span',region_id);
             }
           },
           {title: '城市ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let city_id = params.row.address.city_id;
+              let city_id = '';
+              let address = params.row.address;
+              if (address != null) {
+                city_id = address.city_id;
+              }
               return h('span',city_id);
             }
           },
           {title: '县ID', key: 'address', align: 'center', ellipsis:true, minWidth: 80,
             render: (h, params) => {
-              let county_id = params.row.address.county_id;
+              let county_id = '';
+              let address = params.row.address;
+              if (address != null) {
+                county_id = address.county_id;
+              }
               return h('span',county_id);
             }
           },
           {title: '运营商ID', key: 'address', align: 'center', ellipsis:true, minWidth: 90,
             render: (h, params) => {
-              let isp_id = params.row.address.isp_id;
+              let isp_id = '';
+              let address = params.row.address;
+              if (address != null) {
+                isp_id = address.isp_id;
+              }
               return h('span',isp_id);
             }
           },
