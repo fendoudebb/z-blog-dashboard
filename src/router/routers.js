@@ -72,7 +72,7 @@ export default [
         name: 'message-board',
         meta:{
           //<Icon type="paintbrush"></Icon>
-          icon: 'android-list',
+          icon: 'chatbubble-working',
           title: '留言板',
         },
         component: () => import('@/components/message-board/MessageBoard')
@@ -85,7 +85,7 @@ export default [
     name: 'post',
     meta: {
       //<Icon type="android-compass"></Icon>
-      icon: 'navigate',
+      icon: 'ios-book',
       title: '文章管理'
     },
     component: Main,
@@ -95,7 +95,7 @@ export default [
         name: 'post_list',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'document',
           title: '文章列表'
         },
         component: () => import('@/components/post/PostList')
@@ -105,7 +105,7 @@ export default [
         name: 'topic',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'android-bookmark',
           title: '标签列表'
         },
         component: () => import('@/components/topic/TopicList')
@@ -118,7 +118,7 @@ export default [
     name: 'ip',
     meta: {
       //<Icon type="android-compass"></Icon>
-      icon: 'location',
+      icon: 'ios-world-outline',
       title: 'IP管理'
     },
     component: Main,
@@ -128,7 +128,7 @@ export default [
         name: 'ip_pool',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'document',
           title: 'IP列表'
         },
         component: () => import('@/components/ip/IpPool')
@@ -138,7 +138,7 @@ export default [
         name: 'ip_unrecognized',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'document',
           title: '未识别IP列表'
         },
         component: () => import('@/components/ip/IpUnrecognized')
@@ -151,7 +151,7 @@ export default [
     name: 'statistics',
     meta: {
       //<Icon type="android-compass"></Icon>
-      icon: 'code',
+      icon: 'stats-bars',
       title: '访问统计'
     },
     component: Main,
@@ -161,7 +161,7 @@ export default [
         name: 'page_view',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'document',
           title: '页面访问'
         },
         component: () => import('@/components/statistics/PageView')
@@ -171,7 +171,7 @@ export default [
         name: 'search_stats',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-list',
+          icon: 'document',
           title: '搜索统计'
         },
         component: () => import('@/components/statistics/SearchStats')
