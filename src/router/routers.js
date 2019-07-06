@@ -60,8 +60,50 @@ export default [
   },
 
   {
+    path: '/post',
+    name: 'post',
+    meta: {
+      title: ''
+    },
+    component: Main,
+    children: [
+      {
+        path: '/post',
+        name: 'post',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'ios-book',
+          title: '文章管理'
+        },
+        component: () => import('@/components/post/PostList')
+      }
+    ]
+  },
+
+  {
+    path: '/topic',
+    name: 'topic',
+    meta:{
+      title: '',
+    },
+    component: Main,
+    children: [
+      {
+        path: '/topic',
+        name: 'topic',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'android-bookmark',
+          title: '标签管理'
+        },
+        component: () => import('@/components/topic/TopicList')
+      },
+    ]
+  },
+
+  {
     path: '/message-board',
-    name: '留言板',
+    name: 'message-board',
     meta:{
       title: '',
     },
@@ -81,39 +123,6 @@ export default [
   },
 
   {
-    path: '/post',
-    name: 'post',
-    meta: {
-      //<Icon type="android-compass"></Icon>
-      icon: 'ios-book',
-      title: '文章管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'post_list',
-        name: 'post_list',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          icon: 'document',
-          title: '文章列表'
-        },
-        component: () => import('@/components/post/PostList')
-      },
-      {
-        path: 'topic',
-        name: 'topic',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          icon: 'android-bookmark',
-          title: '标签列表'
-        },
-        component: () => import('@/components/topic/TopicList')
-      },
-
-    ]
-  },
-  {
     path: '/ip',
     name: 'ip',
     meta: {
@@ -128,7 +137,7 @@ export default [
         name: 'ip_pool',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'document',
+          // icon: 'document',
           title: 'IP列表'
         },
         component: () => import('@/components/ip/IpPool')
@@ -138,7 +147,7 @@ export default [
         name: 'ip_unrecognized',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'document',
+          // icon: 'document',
           title: '未识别IP列表'
         },
         component: () => import('@/components/ip/IpUnrecognized')
@@ -152,7 +161,7 @@ export default [
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'stats-bars',
-      title: '访问统计'
+      title: '统计信息'
     },
     component: Main,
     children: [
@@ -161,8 +170,8 @@ export default [
         name: 'page_view',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'document',
-          title: '页面访问'
+          // icon: 'document',
+          title: '访问统计'
         },
         component: () => import('@/components/statistics/PageView')
       },
@@ -171,7 +180,7 @@ export default [
         name: 'search_stats',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
-          icon: 'document',
+          // icon: 'document',
           title: '搜索统计'
         },
         component: () => import('@/components/statistics/SearchStats')
