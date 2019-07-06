@@ -15,6 +15,7 @@ import topic from './module/topic'
 import message_board from './module/message_board'
 import post_comment from './module/post_comment'
 import search_stats from './module/search_stats'
+import links from './module/links'
 
 // Vue.use(Vuex);
 
@@ -46,5 +47,6 @@ export default new Vuex.Store({
     message_board,
     post_comment,
     search_stats,
+    links,
   }
 })

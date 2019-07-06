@@ -39,7 +39,7 @@ export default [
   },
 
   {
-    path: '/publish_index',
+    path: '/publish',
     name: '编辑',
     meta:{
       title: '',
@@ -48,7 +48,7 @@ export default [
     children: [
       {
         path: '/publish',
-        name: 'publish_index',
+        name: 'publish',
         meta:{
           //<Icon type="paintbrush"></Icon>
           icon: 'android-create',
@@ -61,7 +61,7 @@ export default [
 
   {
     path: '/post',
-    name: 'post',
+    name: '文章',
     meta: {
       title: ''
     },
@@ -82,7 +82,7 @@ export default [
 
   {
     path: '/topic',
-    name: 'topic',
+    name: '标签',
     meta:{
       title: '',
     },
@@ -103,7 +103,7 @@ export default [
 
   {
     path: '/message-board',
-    name: 'message-board',
+    name: '留言板',
     meta:{
       title: '',
     },
@@ -123,8 +123,29 @@ export default [
   },
 
   {
+    path: '/links',
+    name: '友链',
+    meta: {
+      title: ''
+    },
+    component: Main,
+    children: [
+      {
+        path: '/links',
+        name: 'links',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'link',
+          title: '友链管理'
+        },
+        component: () => import('@/components/links/LinksList')
+      }
+    ]
+  },
+
+  {
     path: '/ip',
-    name: 'ip',
+    name: 'IP',
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'ios-world-outline',

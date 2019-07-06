@@ -49,6 +49,16 @@ export const replyMessageUrl = '/admin/message/reply';
 
 export const webInfoUrl = '/admin/web_info';
 
+export const linksUrl = '/admin/links';
+
+export const linksModifySortUrl = '/admin/links/modify/sort';
+
+export const linksAddUrl = '/admin/links/add';
+
+export const linksEditUrl = '/admin/links/edit';
+
+export const linksAuditUrl = '/admin/links/audit';
+
 
 
 
