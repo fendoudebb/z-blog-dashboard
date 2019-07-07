@@ -306,7 +306,7 @@
       },
       edit(postId) {
         this.setEditPostId(postId);
-        this.$router.push({name: 'publish_index'})
+        this.$router.push({name: 'publish'})
       },
       modifyPostStatus(index, status) {
         let post = this.postList[index];
