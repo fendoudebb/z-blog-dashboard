@@ -88,7 +88,7 @@ export default {
     },
     handleAddNewLink({state, commit}) {
       return new Promise((resolve, reject) => {
-        addNewLink(state.editWebsiteName, state.editLink, state.editOwner, state.editOwnerEmail).then(res => {
+        addNewLink(state.addWebsiteName, state.addNewLink, state.addOwner, state.addOwnerEmail).then(res => {
           resolve(res);
         }).catch(err => {
           reject(err);
