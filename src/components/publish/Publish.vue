@@ -155,7 +155,7 @@
             name: 'article_list'
           };
         }*/
-        this.$router.push({name:'post_list'});
+        this.$router.push({name:'post'});
       },
     },
     mounted() {
