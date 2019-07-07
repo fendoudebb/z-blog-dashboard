@@ -181,7 +181,7 @@
 
       addNewLink() {
         this.linkTitle = "新建友链";
-        this.false = true;
+        this.isModify = true;
         this.showLinkModal = true;
       },
 
