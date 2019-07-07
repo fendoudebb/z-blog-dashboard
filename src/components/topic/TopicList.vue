@@ -28,17 +28,17 @@
         totalCount: 1,
         currentPage: 1,
         topicListColumns: [
+          {title: '排序', key: 'sort', align: 'center', ellipsis:true, minWidth: 150,},
           {title: 'ID', key: 'id', align: 'center', ellipsis:true, minWidth: 150,},
           {title: '标签', key: 'name', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '排序', key: 'sort', align: 'center', ellipsis:true, minWidth: 150,},
           {
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
-                  let modifyName = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifyName(params)}}}, '修改名称');
-                  let modifySort = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifySort(params)}}}, '修改排序');
+                  let modifyName = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifyName(params)}}}, '修改');
+                  let modifySort = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifySort(params)}}}, '排序');
                   let deleteTopic = h('Button', {props: {type: 'error', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteTopic(params)}}}, '删除');
                 //@formatter:on
                 action.push(modifyName);

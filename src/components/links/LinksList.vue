@@ -87,7 +87,7 @@
                 //@formatter:off
                   let isOnline = params.row.status === "ONLINE";
                   let audit = h('Button', {props: {type: isOnline ? 'error' : 'success' , size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.auditLink(isOnline, params)}}}, isOnline ? '下线' : '上线');
-                  let modifyContent = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifyContent(params)}}}, '修改');
+                  let modifyContent = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifyContent(params)}}}, '修改');
                   let modifySort = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifySort(params)}}}, '排序');
                 //@formatter:on
                 action.push(audit);
