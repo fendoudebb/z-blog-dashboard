@@ -81,6 +81,48 @@ export default [
   },
 
   {
+    path: '/rank',
+    name: 'rank',
+    meta: {
+      icon: 'podium',
+      title: '排行榜'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'pv',
+        name: 'pv',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'podium',
+          title: '访问数'
+        },
+        component: () => import('@/components/rank/PostPvList')
+      },
+      {
+        path: 'likes',
+        name: 'likes',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'podium',
+          title: '点赞数'
+        },
+        component: () => import('@/components/rank/PostLikesList')
+      },
+      {
+        path: 'comments',
+        name: 'comments',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'podium',
+          title: '评论数'
+        },
+        component: () => import('@/components/rank/PostCommentsList')
+      },
+    ]
+  },
+
+  {
     path: '/topic',
     name: '标签',
     meta:{

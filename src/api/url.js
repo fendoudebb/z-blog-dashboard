@@ -59,6 +59,12 @@ export const linksEditUrl = '/admin/links/edit';
 
 export const linksAuditUrl = '/admin/links/audit';
 
+export const rankPvUrl = '/admin/rank/pv';
+
+export const rankLikesUrl = '/admin/rank/likes';
+
+export const rankCommentsUrl = '/admin/rank/comments';
+
 
 
 
