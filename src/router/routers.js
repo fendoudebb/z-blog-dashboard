@@ -168,7 +168,8 @@ export default [
     path: '/links',
     name: '友链',
     meta: {
-      title: ''
+      title: '',
+      roles: ['ROLE_ADMIN']
     },
     component: Main,
     children: [
@@ -255,7 +256,8 @@ export default [
     path: '/administrator',
     name: '管理员列表',
     meta: {
-      title: ''
+      title: '',
+      roles: ['ROLE_ADMIN']
     },
     component: Main,
     children: [

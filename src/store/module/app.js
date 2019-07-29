@@ -7,7 +7,7 @@ export default {
     homeRoute: getHomeRoute(routers)
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(routers, localStorage.getItem('roles'))
+    menuList: (state, getters, rootState) => getMenuByRouter(routers, localStorage.getItem('roles').split(","))
   },
   mutations: {
     setBreadCrumb (state, routeMetched) {
