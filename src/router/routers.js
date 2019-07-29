@@ -252,6 +252,27 @@ export default [
   },
 
   {
+    path: '/administrator',
+    name: '管理员列表',
+    meta: {
+      title: ''
+    },
+    component: Main,
+    children: [
+      {
+        path: '/administrator',
+        name: 'administrator',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'ios-people',
+          title: '管理员列表'
+        },
+        component: () => import('@/components/administrator/AdministratorList')
+      }
+    ]
+  },
+
+  {
     path: '/401',
     name: 'error_401',
     component: () => import('@/components/error-page/401.vue')

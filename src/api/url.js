@@ -65,6 +65,10 @@ export const rankLikesUrl = '/admin/rank/likes';
 
 export const rankCommentsUrl = '/admin/rank/comments';
 
+export const administratorInfoUrl = '/admin/administrator/info';
+
+export const administratorAddUrl = '/admin/administrator/add';
+
 
 
 

@@ -19,6 +19,7 @@ import links from './module/links'
 import rank_post_pv_list from './module/rank_post_pv_list'
 import rank_post_likes_list from './module/rank_post_likes_list'
 import rank_post_comments_list from './module/rank_post_comments_list'
+import administrator from './module/administrator'
 
 // Vue.use(Vuex);
 
@@ -54,5 +55,6 @@ export default new Vuex.Store({
     rank_post_pv_list,
     rank_post_likes_list,
     rank_post_comments_list,
+    administrator,
   }
 })
