@@ -53,7 +53,25 @@
             }
           },
           {title: 'ID', key: 'postId', align: 'center', ellipsis:true, minWidth: 80,},
-          {title: '标题', key: 'title', align: 'center', ellipsis:true, minWidth: 200},
+          {title: '标题', key: 'title', align: 'center', ellipsis:true, minWidth: 300,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.title
+                  }
+                }, params.row.title)
+              ])
+            }
+          },
+          {title: '阅读数', key: 'pv', align: 'center', ellipsis:true, minWidth: 100,},
           {
             title: '标签', key: 'topics', align: 'center',  minWidth: 300,
             render: (h, params) => {
@@ -111,7 +129,6 @@
               }
             }
           },
-          {title: '阅读数', key: 'pv', align: 'center', ellipsis:true, minWidth: 100,},
           // {title: '评论数', key: 'commentCount', align: 'center'},
           // {title: '点赞数', key: 'likeCount', align: 'center'},
           {
@@ -322,10 +339,12 @@
         });
       },
       commentChangePage(index) {
+        this.commentCurrentPage = index;
         this.setPostCommentListPage(index);
         this.getCommentList();
       },
       changePage(index) {
+        this.currentPage = index;
         this.setListPage(index);
         this.getPostList();
       },
