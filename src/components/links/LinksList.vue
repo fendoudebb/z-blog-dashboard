@@ -79,7 +79,7 @@
             }
           },
           {
-            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
+            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 250,
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
@@ -93,6 +93,8 @@
                 action.push(modifyContent);
                 action.push(modifySort);
               }
+              let visit = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.visitLink(params.row.link)}}}, '访问');
+              action.push(visit);
               return h('div', [action]);
             }
           }
@@ -232,7 +234,9 @@
           }
         })
       },
-
+      visitLink(link) {
+        window.open(link);
+      },
       changePage(index) {
         this.setLinksListPage(index);
         this.getLinksList();
