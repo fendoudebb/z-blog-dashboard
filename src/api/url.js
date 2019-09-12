@@ -19,6 +19,8 @@ export const postCommentUrl = '/admin/post/comment';
 
 export const deletePostCommentUrl = '/admin/post/comment/delete';
 
+export const replyPostCommentUrl = '/admin/post/comment/reply';
+
 export const postDraftUrl = '/admin/post/draft';
 
 export const pageViewListUrl = '/admin/page_view';
