@@ -41,6 +41,8 @@
               let url = params.row.url;
               if (url != null && url.indexOf('/p/') === 0) {
                 watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看文章');
+              } else {
+                watch = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看页面');
               }
               return h('div', [watch]);
             }
