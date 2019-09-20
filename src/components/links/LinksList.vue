@@ -93,7 +93,7 @@
                 action.push(modifyContent);
                 action.push(modifySort);
               }
-              let visit = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.visitLink(params.row.link)}}}, '访问');
+              let visit = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.visitLink(params.row.link)}}}, '访问');
               action.push(visit);
               return h('div', [action]);
             }

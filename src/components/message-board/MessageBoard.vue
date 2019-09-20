@@ -5,6 +5,13 @@
       <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
             show-total></Page>
     </div>
+
+    <Modal
+      :width="1000"
+      v-model="messageReplyModal"
+      title="留言回复">
+      <Table stripe border :columns="messageReplyColumns" :data="messageReplyList"></Table>
+    </Modal>
   </div>
 </template>
 
@@ -18,6 +25,32 @@
     data() {
       return {
         roles: localStorage.getItem('roles'),
+        messageReplyModal:false,
+        messageReplyList:[],
+        messageReplyColumns:[
+          {title: '回复', key: 'replyContent', align: 'center', ellipsis:true, minWidth: 300,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.replyContent
+                  }
+                }, params.row.replyContent)
+              ])
+            }
+          },
+          {title: '回复时间', key: 'replyTime', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '浏览器', key: 'browser', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '操作系统', key: 'os', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '回复IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150,}
+        ],
         messageListTableLoading:false,
         messageList:[],
         messageListColumns: [
@@ -26,13 +59,32 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: '楼层', key: 'floor', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '楼层', key: 'floor', align: 'center', ellipsis:true, minWidth: 80,},
           {title: '昵称', key: 'nickname', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '留言', key: 'content', align: 'center', ellipsis:true, minWidth: 300,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.content
+                  }
+                }, params.row.content)
+              ])
+            }
+          },
           {title: '留言时间', key: 'commentTime', align: 'center', ellipsis:true, minWidth: 150,},
           {title: '浏览器', key: 'browser', align: 'center', ellipsis:true, minWidth: 150,},
           {title: '操作系统', key: 'os', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '留言IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150,},
           {
-            title: '状态', key: 'status', align: 'center', ellipsis:true, minWidth: 150,
+            title: '状态', key: 'status', align: 'center', ellipsis:true, minWidth: 100,
             render: (h, params) => {
               let commentStatus = params.row.status;
               let text = '';
@@ -53,9 +105,13 @@
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
+                  let watchReplyMessage = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchReplyMessage(params)}}}, '查看回复');
                   let replyMessage = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.replyMessage(params)}}}, '回复');
                   let deleteMessage = h('Button', {props: {type: 'error', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteMessage(params)}}}, '删除');
                 //@formatter:on
+                if (params.row.replies != null) {
+                  action.push(watchReplyMessage);
+                }
                 action.push(replyMessage);
                 action.push(deleteMessage);
               }
@@ -80,6 +136,11 @@
         'handleDeleteMessage',
         'handleReplyMessage',
       ]),
+      watchReplyMessage(params) {
+        this.messageReplyModal = true;
+        this.messageReplyList = params.row.replies
+      },
+
       replyMessage(params) {
         this.$Modal.confirm({
           render: (h) => {
