@@ -220,6 +220,7 @@
         'setCommentsListPage',
         'setCommentPostId',
         'setCommentId',
+        'setPostCommentListPage'
       ]),
       ...mapGetters([
         'getCommentsListSize',
