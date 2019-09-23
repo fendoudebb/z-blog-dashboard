@@ -72,65 +72,8 @@
             }
           },
           {title: '阅读数', key: 'pv', align: 'center', ellipsis:true, minWidth: 100,},
-          {
-            title: '标签', key: 'topics', align: 'center',  minWidth: 300,
-            render: (h, params) => {
-              let topics = params.row.topics;
-              if (topics != null) {
-                let tags = topics.map(topic => {
-                  return h('Tag', {
-                    props: {color: "green", type: "border", closable: this.roles.indexOf("ROLE_ADMIN") > -1}, on: {
-                      "on-close": () => {//绑定事件
-                        /*this.deleteTopicPost = params.row;
-                        this.deleteTopic = topic;
-                        this.deleteTopicModal = true;*/
-                        this.$Modal.confirm(
-                          {
-                            title: "删除分类",
-                            content: "是否删除《" + params.row.title + "》一文的 " + topic + " 分类？",
-                            okText: "确认删除",
-                            closable: true,
-                            onOk: () => {
-                              this.setDeleteTopicPostId(params.row.id);
-                              this.setDeleteTopic(topic);
-                              this.handleDeletePostTopic().then(value => {
-                                params.row.topics.splice(params.row.topics.indexOf(topic), 1);
-                                this.$Message.success("删除成功！");
-                              });
-                            }
-                          });
-
-                      }
-                    }
-                  }, topic)
-                });
-                if (this.roles.indexOf("ROLE_ADMIN") > -1) {
-                  if (topics.length < 3) {
-                    tags.push(h('Button', {
-                      props: {type: 'primary', size: 'small'}, on: {
-                        click: () => {
-                          this.addTopicFunc(params.row);
-                        }
-                      }
-                    }, '添加'));
-                  }
-                }
-                return h('div', tags)
-              } else {
-                if (this.roles.indexOf("ROLE_ADMIN") > -1) {
-                  return h('Button', {
-                    props: {type: 'primary', size: 'small'}, on: {
-                      click: () => {
-                        this.addTopicFunc(params.row);
-                      }
-                    }
-                  }, '添加');
-                }
-              }
-            }
-          },
-          // {title: '评论数', key: 'commentCount', align: 'center'},
-          // {title: '点赞数', key: 'likeCount', align: 'center'},
+          {title: '评论数', key: 'commentCount', align: 'center', ellipsis:true, minWidth: 100,},
+          {title: '点赞数', key: 'likeCount', align: 'center', ellipsis:true, minWidth: 100,},
           {
             title: '状态', key: 'postStatus', align: 'center', ellipsis:true, minWidth: 100,
             render: (h, params) => {
@@ -241,10 +184,6 @@
         'setAuditPostId',
         'setAuditStatus',
         'setEditPostId',
-        'setAddTopicPostId',
-        'setDeleteTopicPostId',
-        'setAddTopic',
-        'setDeleteTopic',
         'setCommentPostId',
         'setPostCommentListPage',
         'setCommentId',
@@ -256,44 +195,11 @@
       ...mapActions([
         'handlePostList',
         'handlePostStatus',
-        'handleAddPostTopic',
-        'handleDeletePostTopic',
         'handlePostCommentList',
         'handleDeletePostComment',
       ]),
       watchPostById(postId) {
         window.open('https://www.zhangbj.com/p/' + postId + ".html");
-      },
-      addTopicFunc(params) {
-        this.$Modal.confirm({
-          render: (h) => {
-            return h('Input', {
-              props: {
-                value: this.newTopic,
-                autofocus: true,
-                placeholder: '请输入标签名...'
-              },
-              on: {
-                input: (val) => {
-                  this.newTopic = val;
-                }
-              }
-            })
-          },
-          onOk: () => {
-            this.setAddTopicPostId(params.id);
-            this.setAddTopic(this.newTopic);
-            this.handleAddPostTopic().then(value => {
-              if (params.hasOwnProperty('topics')) {
-                params.topics.push(this.newTopic);
-              } else {
-                params.topics = [this.newTopic];
-              }
-              this.newTopic = '';
-              this.$Message.success("添加成功！");
-            });
-          }
-        })
       },
       onVisibleChange(isShow) {
         if (!isShow) {
