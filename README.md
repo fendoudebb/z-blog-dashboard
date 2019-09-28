@@ -11,6 +11,17 @@
 - [node: 包管理器](https://github.com/nodejs/node)
 - [webpack: 打包工具](https://github.com/webpack/webpack)
 
+## 主要功能
+- 文章管理
+- 阅读、点赞、评论排行榜
+- 标签管理
+- 留言板
+- 友链管理
+- IP列表
+- 未识别IP列表
+- 访问统计
+- 搜索统计
+
 ## 页面展示
 
 ### 首页
