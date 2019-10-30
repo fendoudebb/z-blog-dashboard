@@ -147,6 +147,25 @@
           {title: '留言时间', key: 'commentTime', align: 'center', minWidth: 150},
           {title: '浏览器', key: 'browser', align: 'center', minWidth: 150},
           {title: '操作系统', key: 'os', align: 'center', minWidth: 100},
+          {title: 'IP', key: 'ip', align: 'center', minWidth: 150},
+          {title: 'IP归属地', key: 'address', align: 'center', minWidth: 150,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.address
+                  }
+                }, params.row.address)
+              ])
+            }
+          },
           {
             title: '状态', key: 'status', align: 'center', minWidth: 100,
             render: (h, params) => {
@@ -248,6 +267,8 @@
               props: {
                 value: this.replyContent,
                 autofocus: true,
+                type:'textarea',
+                rows:10,
                 placeholder: '请输入回复...'
               },
               on: {
