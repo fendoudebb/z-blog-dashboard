@@ -9,13 +9,13 @@
       </Col>
       <Col span="5" offset="1" style="height: 120px;padding-bottom: 10px;">
         <info-card shadow :color="ipInfo.color" :icon="ipInfo.icon" :icon-size="36" :left="30">
-          <count-to :end="ipInfo.count" count-class="count-style"/>
+          <count-to :simplify=true :end="ipInfo.count" count-class="count-style"/>
           <p>{{ ipInfo.title }}</p>
         </info-card>
       </Col>
       <Col span="5" offset="1" style="height: 120px;padding-bottom: 10px;">
         <info-card shadow :color="pvInfo.color" :icon="pvInfo.icon" :icon-size="36" :left="30">
-          <count-to :end="pvInfo.count" count-class="count-style"/>
+          <count-to :simplify=true :end="pvInfo.count" count-class="count-style"/>
           <p>{{ pvInfo.title }}</p>
         </info-card>
       </Col>
