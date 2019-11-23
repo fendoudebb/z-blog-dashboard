@@ -161,7 +161,7 @@
     mounted() {
       if (this.getEditPostId()) {
         this.handlePostInfo().then(value => {
-          this.setEditPostId(value.data.id);
+          this.setEditPostId(value.data.postId);
           this.postTitle = value.data.title;
           this.$refs.markdownEditor.setValue(value.data.content);
           this.postProp = value.data.postProp;
