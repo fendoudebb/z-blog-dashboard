@@ -148,6 +148,8 @@
               props: {
                 value: this.reply,
                 autofocus: true,
+                type:'textarea',
+                rows:10,
                 placeholder: '请输入回复...'
               },
               on: {
