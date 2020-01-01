@@ -123,6 +123,27 @@ export default [
   },
 
   {
+    path: '/english',
+    name: '单词',
+    meta: {
+      title: ''
+    },
+    component: Main,
+    children: [
+      {
+        path: '/english',
+        name: 'english',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          icon: 'waterdrop',
+          title: '单词管理'
+        },
+        component: () => import('@/components/english/EnglishList')
+      }
+    ]
+  },
+
+  {
     path: '/topic',
     name: '标签',
     meta:{

@@ -71,6 +71,12 @@ export const administratorInfoUrl = '/admin/administrator/info';
 
 export const administratorAddUrl = '/admin/administrator/add';
 
+export const englishListUrl = '/admin/english';
+
+export const englishAddUrl = '/admin/english/add';
+
+export const englishUpdateUrl = '/admin/english/update';
+
 
 
 
