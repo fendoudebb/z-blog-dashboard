@@ -5,6 +5,12 @@
       <span class="expand-value" style="margin-left: 5px">{{ t.explanation }}</span>
     </div>
     <br>
+    <div v-if="row.synonyms">
+      <span class="expand-key">同义词: </span>
+      <span class="expand-value">{{ row.synonyms }}</span>
+      <br>
+      <br>
+    </div>
     <span class="expand-key">例句: </span>
     <span class="expand-value">{{ row.example_sentence }}</span>
     <br>

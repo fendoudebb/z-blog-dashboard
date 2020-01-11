@@ -14,9 +14,9 @@ export const getEnglishList = (word, page, size) => {
   })
 };
 
-export const addEnglish = (word, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source) => {
+export const addEnglish = (word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source) => {
   const data = {
-    word, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source
+    word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source
   };
   return axios.request({
     url: englishAddUrl,
@@ -25,9 +25,9 @@ export const addEnglish = (word, english_phonetic, american_phonetic, translatio
   })
 };
 
-export const updateEnglish = (wordId, word, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source) => {
+export const updateEnglish = (wordId, word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source) => {
   const data = {
-    wordId, word, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source,
+    wordId, word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source,
   };
   return axios.request({
     url: englishUpdateUrl,

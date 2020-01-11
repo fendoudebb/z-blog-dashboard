@@ -48,7 +48,10 @@
         例句译文：<Input v-model="sentence_translation" clearable placeholder="请输入例句译文" style="width: 400px;margin-right: 10px"></Input>
       </div>
       <div style="margin-top: 20px">
-        单词来源：<Input v-model="source" clearable placeholder="请输入单词来源" style="width: 400px;margin-right: 10px"></Input>
+        词语来源：<Input v-model="source" clearable placeholder="请输入词语来源" style="width: 400px;margin-right: 10px"></Input>
+      </div>
+      <div style="margin-top: 20px">
+        同义词：<Input v-model="synonyms" clearable placeholder="请输入同义词" style="width: 400px;margin-right: 10px"></Input>
       </div>
     </Modal>
   </div>
@@ -80,9 +83,14 @@
             value: 'adv',//adverbial
             label: '副词'
           },
+          {
+            value: 'prep',//preposition
+            label: '介词'
+          },
         ],
         searchWord: '',
         word: '',
+        synonyms: '',
         english_phonetic: '',
         american_phonetic: '',
         translation: [{'property':'', 'explanation':''}],
@@ -107,7 +115,6 @@
           {title: '单词', key: 'word', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '英文音标', key: 'english_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '美式音标', key: 'american_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
-          {title: '权重', key: 'score', align: 'center', ellipsis: true, minWidth: 150},
           // {title: '翻译', key: 'translation', align: 'center', ellipsis: true, minWidth: 150,},
           {
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
@@ -142,6 +149,7 @@
         this.showAddNewWordModal = true;
         if (this.modifyWordId) {
           this.word = '';
+          this.synonyms = '';
           this.english_phonetic = '';
           this.american_phonetic = '';
           this.translation = [{'property':'', 'explanation':''}];
@@ -156,6 +164,7 @@
         this.showAddNewWordModal = true;
         this.modifyWordId = param._id;
         this.word = param.word;
+        this.synonyms = param.synonyms;
         this.english_phonetic = param.english_phonetic;
         this.american_phonetic = param.american_phonetic;
         this.translation = param.translation;
@@ -186,14 +195,15 @@
           }
         }
         if (this.modifyWordId) {
-          updateEnglish(this.modifyWordId, this.word, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
+          updateEnglish(this.modifyWordId, this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
             this.$Message.success("修改成功!");
             this.getEnglish();
           })
         } else {
-          addEnglish(this.word, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
+          addEnglish(this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
             this.$Message.success("添加成功!");
             this.word = '';
+            this.synonyms = '';
             this.english_phonetic = '';
             this.american_phonetic = '';
             this.translation = [{'property':'', 'explanation':''}];
