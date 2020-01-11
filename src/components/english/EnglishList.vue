@@ -1,8 +1,11 @@
 <template>
   <div style="margin: 20px;padding:20px;background-color: white">
-    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1">
-      <Button type="primary" @click="addNewWord">
-        <Icon type="plus-round"></Icon>
+    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
+      <Input v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
+      <Button type="primary" icon="ios-search" @click="findWord"></Button>
+      <Button type="info" @click="resetSearch">重置</Button>
+
+      <Button type="primary" icon="plus-round" @click="addNewWord" style="float: right">
         添加单词
       </Button>
     </div>
@@ -62,22 +65,23 @@
         roles: localStorage.getItem('roles'),
         wordProperties: [
           {
-            value: 'adjective',//adj
+            value: 'adj',//adjective
             label: '形容词'
           },
           {
-            value: 'noun',//n
+            value: 'n',//noun
             label: '名词'
           },
           {
-            value: 'verb',//v
+            value: 'v',//verb
             label: '动词'
           },
           {
-            value: 'adverbial',//adv
+            value: 'adv',//adverbial
             label: '副词'
           },
         ],
+        searchWord: '',
         word: '',
         english_phonetic: '',
         american_phonetic: '',
@@ -90,7 +94,7 @@
         modifyWordId: '',
         wordListTableLoading: false,
         wordList: [],
-        pageSize: 20,
+        pageSize: 10,
         totalCount: 1,
         currentPage: 1,
         wordListColumns: [
@@ -99,10 +103,11 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: '_id', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: 'ID', key: '_id', align: 'center', ellipsis: true, minWidth: 200,},
           {title: '单词', key: 'word', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '英文音标', key: 'english_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '美式音标', key: 'american_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: '权重', key: 'score', align: 'center', ellipsis: true, minWidth: 150},
           // {title: '翻译', key: 'translation', align: 'center', ellipsis: true, minWidth: 150,},
           {
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
@@ -119,6 +124,19 @@
       }
     },
     methods:{
+      resetSearch() {
+        this.currentPage = 1;
+        this.searchWord = '';
+        this.getEnglish();
+      },
+      findWord() {
+        if (!this.searchWord) {
+          this.$Message.error("搜索单词不能为空");
+          return;
+        }
+        this.currentPage = 1;
+        this.getEnglish();
+      },
       addNewWord() {
         this.wordModalTitle = '添加单词';
         this.showAddNewWordModal = true;
@@ -192,7 +210,11 @@
       },
       getEnglish() {
         this.wordListTableLoading = true;
-        getEnglishList(this.currentPage, this.pageSize).then(res => {
+        let word = null;
+        if (this.searchWord) {
+          word = this.searchWord;
+        }
+        getEnglishList(word, this.currentPage, this.pageSize).then(res => {
           this.totalCount = res.data.totalCount;
           this.wordList = res.data.english;
           this.wordListTableLoading = false;

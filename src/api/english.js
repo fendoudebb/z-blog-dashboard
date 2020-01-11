@@ -1,8 +1,9 @@
 import axios from '@/libs/axios'
 import {englishListUrl, englishAddUrl, englishUpdateUrl} from './url';
 
-export const getEnglishList = (page, size) => {
+export const getEnglishList = (word, page, size) => {
   const data = {
+    word,
     page,
     size
   };
