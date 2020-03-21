@@ -1,81 +1,81 @@
 
-export const loginUrl = '/admin/login';
+export const loginUrl = '/login';
 
-export const logoutUrl = '/admin/logout';
+export const logoutUrl = '/logout';
 
-export const postListUrl = '/admin/post';
+export const postListUrl = '/post';
 
-export const publishPostUrl = '/admin/post/publish';
+export const publishPostUrl = '/post/publish';
 
-export const postInfoUrl = '/admin/post/info';
+export const postInfoUrl = '/post/info';
 
-export const postAddTopicUrl = '/admin/post/topic/add';
+export const postAddTopicUrl = '/post/topic/add';
 
-export const postDeleteTopicUrl = '/admin/post/topic/delete';
+export const postDeleteTopicUrl = '/post/topic/delete';
 
-export const postAuditUrl = '/admin/post/audit';
+export const postAuditUrl = '/post/audit';
 
-export const postCommentUrl = '/admin/post/comment';
+export const postCommentUrl = '/post/comment';
 
-export const deletePostCommentUrl = '/admin/post/comment/delete';
+export const deletePostCommentUrl = '/post/comment/delete';
 
-export const replyPostCommentUrl = '/admin/post/comment/reply';
+export const replyPostCommentUrl = '/post/comment/reply';
 
-export const postDraftUrl = '/admin/post/draft';
+export const postDraftUrl = '/post/draft';
 
-export const pageViewListUrl = '/admin/page_view';
+export const pageViewListUrl = '/page_view';
 
-export const ipPoolListUrl = '/admin/ip_pool';
+export const ipPoolListUrl = '/ip_pool';
 
-export const ipUnrecognizedListUrl = '/admin/ip_unrecognized';
+export const ipUnrecognizedListUrl = '/ip_unrecognized';
 
-export const queryUnrecognizedIp = '/admin/ip_unrecognized/query';
+export const queryUnrecognizedIp = '/ip_unrecognized/query';
 
-export const searchStatsListUrl = '/admin/search_stats';
+export const searchStatsListUrl = '/search_stats';
 
-export const topicListUrl = '/admin/topic';
+export const topicListUrl = '/topic';
 
-export const topicAddUrl = '/admin/topic/add';
+export const topicAddUrl = '/topic/add';
 
-export const topicDeleteUrl = '/admin/topic/delete';
+export const topicDeleteUrl = '/topic/delete';
 
-export const topicModifySortUrl = '/admin/topic/sort/modify';
+export const topicModifySortUrl = '/topic/sort/modify';
 
-export const topicModifyNameUrl = '/admin/topic/name/modify';
+export const topicModifyNameUrl = '/topic/name/modify';
 
-export const messageBoardUrl = '/admin/message/board';
+export const messageBoardUrl = '/message/board';
 
-export const deleteMessageUrl = '/admin/message/delete';
+export const deleteMessageUrl = '/message/delete';
 
-export const replyMessageUrl = '/admin/message/reply';
+export const replyMessageUrl = '/message/reply';
 
-export const webInfoUrl = '/admin/web_info';
+export const webInfoUrl = '/web_info';
 
-export const linksUrl = '/admin/links';
+export const linksUrl = '/links';
 
-export const linksModifySortUrl = '/admin/links/modify/sort';
+export const linksModifySortUrl = '/links/modify/sort';
 
-export const linksAddUrl = '/admin/links/add';
+export const linksAddUrl = '/links/add';
 
-export const linksEditUrl = '/admin/links/edit';
+export const linksEditUrl = '/links/edit';
 
-export const linksAuditUrl = '/admin/links/audit';
+export const linksAuditUrl = '/links/audit';
 
-export const rankPvUrl = '/admin/rank/pv';
+export const rankPvUrl = '/rank/pv';
 
-export const rankLikesUrl = '/admin/rank/likes';
+export const rankLikesUrl = '/rank/likes';
 
-export const rankCommentsUrl = '/admin/rank/comments';
+export const rankCommentsUrl = '/rank/comments';
 
-export const administratorInfoUrl = '/admin/administrator/info';
+export const administratorInfoUrl = '/administrator/info';
 
-export const administratorAddUrl = '/admin/administrator/add';
+export const administratorAddUrl = '/administrator/add';
 
-export const englishListUrl = '/admin/english';
+export const englishListUrl = '/english';
 
-export const englishAddUrl = '/admin/english/add';
+export const englishAddUrl = '/english/add';
 
-export const englishUpdateUrl = '/admin/english/update';
+export const englishUpdateUrl = '/english/update';
 
 
 

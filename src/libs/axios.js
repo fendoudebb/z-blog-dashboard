@@ -33,7 +33,7 @@ class httpRequest {
 
     // 添加响应拦截器
     instance.interceptors.response.use((res) => {
-      // console.log("intercept: " + JSON.stringify(res));
+      console.log("intercept: " + JSON.stringify(res));
       let {data} = res;
       const is = this.destroy(url);
       if (!is) {
@@ -41,8 +41,8 @@ class httpRequest {
           Spin.hide()
         }, 500)*/
       }
-      if (data.code !== 200) {
-        if (parseInt(data.code) === 401) {
+      if (res.status !== 200) {
+        if (res.status === 401) {
           localStorage.setItem('username', '');
           Message.error('登录状态过期,请重新登录!');
           setTimeout(() => {
@@ -52,6 +52,11 @@ class httpRequest {
           Message.error(data.msg);
         }
         return Promise.reject(data.msg);
+      } else {
+        if (data.code !== 0) {
+          Message.error(data.msg);
+          return Promise.reject(data.msg);
+        }
       }
       return data
     }, (error) => {

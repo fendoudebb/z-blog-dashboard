@@ -5,10 +5,10 @@
 <template>
   <div class="login">
     <div class="login-con">
-      <Card icon="log-in" title="欢迎登录" :bordered="false">
+      <Card title="程序员技术之旅管理平台" :bordered="false">
         <div class="form-con">
           <login-form></login-form>
-          <p class="login-tip">输入任意用户名和密码即可</p>
+          <p class="login-tip">请输入用户名和密码</p>
         </div>
       </Card>
     </div>
