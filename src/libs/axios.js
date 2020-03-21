@@ -28,12 +28,12 @@ class httpRequest {
       return config
     }, error => {
       // 对请求错误做些什么
+      console.log("error: " + JSON.stringify(error));
       return Promise.reject(error)
     });
 
     // 添加响应拦截器
     instance.interceptors.response.use((res) => {
-      console.log("intercept: " + JSON.stringify(res));
       let {data} = res;
       const is = this.destroy(url);
       if (!is) {
@@ -41,26 +41,23 @@ class httpRequest {
           Spin.hide()
         }, 500)*/
       }
-      if (res.status !== 200) {
-        if (res.status === 401) {
-          localStorage.setItem('username', '');
-          Message.error('登录状态过期,请重新登录!');
-          setTimeout(() => {
-            router.push({name: 'login'})
-          }, 1500);
-        } else {
-          Message.error(data.msg);
-        }
+      if (data.code !== 0) {
+        Message.error(data.msg);
         return Promise.reject(data.msg);
-      } else {
-        if (data.code !== 0) {
-          Message.error(data.msg);
-          return Promise.reject(data.msg);
-        }
       }
       return data
     }, (error) => {
       // 对响应错误做点什么
+      let res = error.response;
+      if (res.status === 401) {
+        localStorage.setItem('username', '');
+        Message.error('登录状态过期,请重新登录!');
+        setTimeout(() => {
+          router.push({name: 'login'})
+        }, 1500);
+      } else {
+        Message.error(res.statusText);
+      }
       return Promise.reject(error)
     })
   }

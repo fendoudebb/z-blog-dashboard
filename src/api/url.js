@@ -49,7 +49,7 @@ export const deleteMessageUrl = '/message/delete';
 
 export const replyMessageUrl = '/message/reply';
 
-export const webInfoUrl = '/web_info';
+export const webInfoUrl = '/web-stat';
 
 export const linksUrl = '/links';
 
