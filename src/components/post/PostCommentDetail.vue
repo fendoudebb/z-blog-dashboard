@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="expand-key">ID: </span>
-    <span class="expand-value">{{ row.commentId }}</span>
+    <span class="expand-value">{{ row.id }}</span>
     <br>
     <br>
     <span class="expand-key">IP: </span>
@@ -13,7 +13,7 @@
     <br>
     <br>
     <span class="expand-key">User-Agent: </span>
-    <span class="expand-value">{{ row.userAgent }}</span>
+    <span class="expand-value">{{ row.ua }}</span>
 
   </div>
 </template>

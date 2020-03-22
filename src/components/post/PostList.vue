@@ -29,6 +29,7 @@
   import {mapMutations, mapGetters, mapActions} from 'vuex';
   import {getPostList} from '@/api/post';
   import {modifyPostStatus} from '@/api/post';
+  import {getPostCommentList, deletePostComment} from '@/api/post';
 
   export default {
     name: "post-list",
@@ -36,15 +37,15 @@
     data() {
       return {
         watchCommentPostId: '',
-        commentPageSize: this.getPostCommentListSize(),
         commentTotalCount: 1,
         commentCurrentPage: 1,
+        commentPageSize: 10,
         commentListTableLoading: false,
         commentModal: false,
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
         postListTableLoading: false,
         roles: localStorage.getItem('roles'),
-        pageSize: 20,
+        pageSize: 10,
         totalCount: 1,
         currentPage: 1,
         postList: [],
@@ -134,7 +135,7 @@
           },
           {title: '楼层', key: 'floor', align: 'center'},
           {title: '昵称', key: 'nickname', align: 'center'},
-          {title: '留言时间', key: 'commentTime', align: 'center'},
+          {title: '留言时间', key: 'comment_date', align: 'center'},
           {title: '浏览器', key: 'browser', align: 'center'},
           {title: '操作系统', key: 'os', align: 'center'},
           {
@@ -177,16 +178,6 @@
     methods: {
       ...mapMutations([
         'setEditPostId',
-        'setCommentPostId',
-        'setPostCommentListPage',
-        'setCommentId',
-      ]),
-      ...mapGetters([
-        'getPostCommentListSize',
-      ]),
-      ...mapActions([
-        'handlePostCommentList',
-        'handleDeletePostComment',
       ]),
       watchPostById(postId) {
         window.open('https://www.zhangbj.com/p/' + postId + ".html");
@@ -200,16 +191,15 @@
         }
       },
       deleteComment(params) {
-        this.setCommentId(params.row.commentId);
-        this.handleDeletePostComment().then(value => {
+        deletePostComment(this.watchCommentPostId, params.row.id).then(res => {
           this.$Message.success("删除成功!");
-          this.getCommentList()
+          this.requestCommentList()
         });
       },
       watchComment(params) {
         this.watchCommentPostId = params.row.id;
         this.commentModal = true;
-        this.getCommentList();
+        this.requestCommentList();
       },
       online(postId) {
         this.requestModifyPostStatus(postId, 0);
@@ -223,24 +213,21 @@
       },
       commentChangePage(index) {
         this.commentCurrentPage = index;
-        this.setPostCommentListPage(index);
-        this.getCommentList();
+        this.requestCommentList();
       },
       changePage(index) {
         this.currentPage = index;
         this.requestPostList();
       },
-      getCommentList() {
+      requestCommentList() {
         this.commentListTableLoading = true;
-        this.setCommentPostId(this.watchCommentPostId);
-        this.handlePostCommentList().then(value => {
-          this.commentTotalCount = value.data.commentCount;
-          this.commentList = value.data.postComment;
+        getPostCommentList(this.watchCommentPostId, this.commentCurrentPage, this.commentPageSize).then(res => {
+          this.commentTotalCount = res.data.count;
+          this.commentList = res.data.comments;
           this.commentListTableLoading = false;
         }).catch(err => {
           this.commentListTableLoading = false;
-          this.$Message.error(err);
-        })
+        });
       },
       requestModifyPostStatus(postId, status) {
         modifyPostStatus(postId, status).then(res => {
@@ -256,7 +243,7 @@
         this.postListTableLoading = true;
         getPostList(this.currentPage, this.pageSize).then(res => {
           this.totalCount = res.data.count;
-          this.postList = res.data.post;
+          this.postList = res.data.posts;
           this.postListTableLoading = false;
         }).catch(err => {
           this.postListTableLoading = false;

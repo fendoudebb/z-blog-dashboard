@@ -15,7 +15,7 @@ export const postDeleteTopicUrl = '/post/topic/delete';
 
 export const postAuditUrl = '/post/audit';
 
-export const postCommentUrl = '/post/comment';
+export const postCommentUrl = '/post/comment/list';
 
 export const deletePostCommentUrl = '/post/comment/delete';
 

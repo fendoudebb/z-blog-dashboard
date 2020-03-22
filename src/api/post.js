@@ -61,9 +61,9 @@ export const deletePostTopic = (post_id, topic) => {
   })
 };
 
-export const getPostCommentList = (postId, page, size) => {
+export const getPostCommentList = (post_id, page, size) => {
   const data = {
-    postId,
+    post_id,
     page,
     size,
   };
@@ -74,10 +74,10 @@ export const getPostCommentList = (postId, page, size) => {
   })
 };
 
-export const deletePostComment = (postId, commentId) => {
+export const deletePostComment = (post_id, comment_id) => {
   const data = {
-    postId,
-    commentId
+    post_id,
+    comment_id
   };
   return axios.request({
     url: deletePostCommentUrl,
