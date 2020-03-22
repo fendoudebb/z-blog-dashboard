@@ -77,7 +77,6 @@
         'setTopics',
       ]),
       ...mapGetters([
-        'getUserAccess',
         'getEditPostId'
       ]),
       ...mapActions([

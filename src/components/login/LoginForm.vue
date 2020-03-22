@@ -22,7 +22,8 @@
   </div>
 </template>
 <script>
-  import { mapActions } from 'vuex'
+  import { login } from '@/api/user'
+
   export default {
     name: 'LoginForm',
     props: {
@@ -60,18 +61,23 @@
       }
     },
     methods: {
-      ...mapActions([
-        'handleLogin'
-      ]),
       submitLogin() {
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             const username = this.form.username;
             const password = this.form.password;
-            this.handleLogin({ username, password }).then(res => {
+            login({
+              username,
+              password
+            }).then(res => {
+              localStorage.setItem('username', username);
+              localStorage.setItem('token', res.data.token);
+              localStorage.setItem('roles', res.data.roles);
               this.$router.push({
                 name: '首页'
               })
+            }).catch(err => {
+              this.$Message.error(err);
             })
           }
         })

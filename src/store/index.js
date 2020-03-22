@@ -1,7 +1,6 @@
 // import Vue from 'vue'
 import Vuex from 'vuex'
 
-import user from './module/user'
 import app from './module/app'
 import publish from './module/publish'
 import post_list from './module/post_list'
@@ -37,7 +36,6 @@ export default new Vuex.Store({
     //
   },
   modules: {
-    user,
     app,
     publish,
     post_list,

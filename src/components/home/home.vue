@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 20px;padding:20px;">
+  <div>
     <Row>
       <Col span="5"  style="height: 120px;padding-bottom: 10px;">
         <info-card shadow :color="postInfo.color" :icon="postInfo.icon" :icon-size="36" :left="30">

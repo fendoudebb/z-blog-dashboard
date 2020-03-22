@@ -17,13 +17,13 @@
         </header-bar>
       </Header>
       <Content>
-        <Layout>
-          <div class="tag-nav-wrapper">
-            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
-          </div>
+        <Layout style="margin: 20px;">
+<!--          <div class="tag-nav-wrapper">-->
+<!--            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>-->
+<!--          </div>-->
           <Content>
             <keep-alive :include="cacheList">
-              <router-view/>
+              <router-view style="padding:20px;background: white"/>
             </keep-alive>
           </Content>
         </Layout>
@@ -39,7 +39,7 @@ import sideMenu from './components/side-menu'
 import headerBar from './components/header-bar'
 import tagsNav from './components/tags-nav'
 import user from './components/user'
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import { getNewTagList, getNextName } from '@/libs/util'
 import minLogo from '@/assets/images/logo-min.png'
 import maxLogo from '@/assets/images/logo.png'
@@ -56,7 +56,7 @@ export default {
   },
   data () {
     return {
-      collapsed: false,
+      collapsed: localStorage.getItem('collapsed') === 'true',
       minLogo,
       maxLogo,
       isFullscreen: false
@@ -85,16 +85,14 @@ export default {
       'setTagNavList',
       'addTag'
     ]),
-    ...mapActions([
-      'handleLogin'
-    ]),
     turnToPage (name) {
       this.$router.push({
         name: name
       })
     },
     handleCollapsedChange (state) {
-      this.collapsed = state
+      this.collapsed = state;
+      localStorage.setItem('collapsed', state)
     },
     handleCloseTag (res, type, name) {
       const nextName = getNextName(this.tagNavList, name)
