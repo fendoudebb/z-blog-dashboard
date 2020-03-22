@@ -25,10 +25,10 @@ export const getPostDraft = (page, size) => {
   })
 };
 
-export const modifyPostStatus = (postId, auditStatus) => {
+export const modifyPostStatus = (id, status) => {
   const data = {
-    postId,
-    auditStatus
+    id,
+    status
   };
   return axios.request({
     url: postAuditUrl,
@@ -37,9 +37,9 @@ export const modifyPostStatus = (postId, auditStatus) => {
   })
 };
 
-export const addPostTopic = (postId, topic) => {
+export const addPostTopic = (post_id, topic) => {
   const data = {
-    postId,
+    post_id,
     topic
   };
   return axios.request({
@@ -49,9 +49,9 @@ export const addPostTopic = (postId, topic) => {
   })
 };
 
-export const deletePostTopic = (postId, topic) => {
+export const deletePostTopic = (post_id, topic) => {
   const data = {
-    postId,
+    post_id,
     topic
   };
   return axios.request({

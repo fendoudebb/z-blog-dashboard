@@ -76,8 +76,6 @@
               this.$router.push({
                 name: '首页'
               })
-            }).catch(err => {
-              this.$Message.error(err);
             })
           }
         })

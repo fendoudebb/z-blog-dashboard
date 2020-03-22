@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white;">
+  <div>
     <Table border stripe :highlight-row="true" :data="postList" :columns="postListColumns" :loading="postListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">
       <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
@@ -27,6 +27,8 @@
   import expandRow from './PostDetail';
   import expandRow2 from './PostCommentDetail';
   import {mapMutations, mapGetters, mapActions} from 'vuex';
+  import {getPostList} from '@/api/post';
+  import {modifyPostStatus} from '@/api/post';
 
   export default {
     name: "post-list",
@@ -42,7 +44,7 @@
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
         postListTableLoading: false,
         roles: localStorage.getItem('roles'),
-        pageSize: this.getListSize(),
+        pageSize: 20,
         totalCount: 1,
         currentPage: 1,
         postList: [],
@@ -52,7 +54,7 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: 'postId', align: 'center', ellipsis:true, minWidth: 80,},
+          {title: 'ID', key: 'id', align: 'center', ellipsis:true, minWidth: 80,},
           {title: '标题', key: 'title', align: 'center', ellipsis:true, minWidth: 300,
             render: (h, params) => {
               return h('div', [
@@ -72,28 +74,22 @@
             }
           },
           {title: '阅读数', key: 'pv', align: 'center', ellipsis:true, minWidth: 100,},
-          {title: '评论数', key: 'commentCount', align: 'center', ellipsis:true, minWidth: 100,},
-          {title: '点赞数', key: 'likeCount', align: 'center', ellipsis:true, minWidth: 100,},
+          {title: '评论数', key: 'comment_count', align: 'center', ellipsis:true, minWidth: 100,},
+          {title: '点赞数', key: 'like_count', align: 'center', ellipsis:true, minWidth: 100,},
           {
-            title: '状态', key: 'postStatus', align: 'center', ellipsis:true, minWidth: 100,
+            title: '状态', key: 'post_status', align: 'center', ellipsis:true, minWidth: 100,
             render: (h, params) => {
-              let postStatus = params.row.postStatus;
+              let postStatus = params.row.post_status;
               let text = '';
               let color = '';
-              if (postStatus === 'AUDIT') {
-                text = '待审核';
-                color = 'orange';
-              } else if (postStatus === 'ONLINE') {
+              if (postStatus === 0) {
                 text = '上线';
                 color = 'green';
-              } else if (postStatus === 'OFFLINE') {
+              } else if (postStatus === 1) {
                 text = '下线';
                 color = 'red';
-              } else if (postStatus === 'PRIVATE') {
+              } else if (postStatus === 2) {
                 text = '私人';
-                color = 'lightskyblue';
-              } else if (postStatus === 'DRAFT') {
-                text = '草稿';
                 color = 'lightskyblue';
               }
               return h('Tag', {props: {color: color}}, text);
@@ -102,26 +98,26 @@
           {
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 250,
             render: (h, params) => {
-              let postStatus = params.row.postStatus;
+              let postStatus = params.row.post_status;
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
                   let watchComment = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchComment(params)}}}, '评论');
-                  let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.index)}}}, '上线');
-                  let offline = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.offline(params.index)}}}, '下线');
-                  let edit = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.edit(params.row.postId)}}}, '编辑');
+                  let online = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.online(params.row.id)}}}, '上线');
+                  let offline = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.offline(params.row.id)}}}, '下线');
+                  let edit = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.edit(params.row.id)}}}, '编辑');
                   //@formatter:on
-                if (params.row.commentCount > 0) {
+                if (params.row.comment_count > 0) {
                   action.push(watchComment);
                 }
-                if (postStatus === 'AUDIT' || postStatus === 'OFFLINE') {
+                if (postStatus === 1) {
                   action.push(online);
-                } else if (postStatus === 'ONLINE') {
+                } else if (postStatus === 0) {
                   action.push(offline);
                 }
                 action.push(edit);
               }
-              if (postStatus === 'ONLINE') {
+              if (postStatus === 0) {
                 let watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPostById(params.row.postId)}}}, '查看');
                 action.push(watch);
               }
@@ -180,21 +176,15 @@
     },
     methods: {
       ...mapMutations([
-        'setListPage',
-        'setAuditPostId',
-        'setAuditStatus',
         'setEditPostId',
         'setCommentPostId',
         'setPostCommentListPage',
         'setCommentId',
       ]),
       ...mapGetters([
-        'getListSize',
         'getPostCommentListSize',
       ]),
       ...mapActions([
-        'handlePostList',
-        'handlePostStatus',
         'handlePostCommentList',
         'handleDeletePostComment',
       ]),
@@ -221,28 +211,15 @@
         this.commentModal = true;
         this.getCommentList();
       },
-      online(index) {
-        this.modifyPostStatus(index, 'ONLINE');
+      online(postId) {
+        this.requestModifyPostStatus(postId, 0);
       },
-      offline(index) {
-        this.modifyPostStatus(index, 'OFFLINE');
+      offline(postId) {
+        this.requestModifyPostStatus(postId, 1);
       },
       edit(postId) {
         this.setEditPostId(postId);
         this.$router.push({name: 'publish'})
-      },
-      modifyPostStatus(index, status) {
-        let post = this.postList[index];
-        this.setAuditPostId(post.postId);
-        this.setAuditStatus(status);
-        this.handlePostStatus().then(value => {
-          this.postList[index].postStatus = status;
-          if (status === 'ONLINE') {
-            this.$Message.success("文章上线成功!");
-          } else if (status === 'OFFLINE') {
-            this.$Message.warning("文章已下线!");
-          }
-        });
       },
       commentChangePage(index) {
         this.commentCurrentPage = index;
@@ -251,8 +228,7 @@
       },
       changePage(index) {
         this.currentPage = index;
-        this.setListPage(index);
-        this.getPostList();
+        this.requestPostList();
       },
       getCommentList() {
         this.commentListTableLoading = true;
@@ -261,23 +237,34 @@
           this.commentTotalCount = value.data.commentCount;
           this.commentList = value.data.postComment;
           this.commentListTableLoading = false;
-        }).catch(reason => {
+        }).catch(err => {
           this.commentListTableLoading = false;
+          this.$Message.error(err);
         })
       },
-      getPostList() {
+      requestModifyPostStatus(postId, status) {
+        modifyPostStatus(postId, status).then(res => {
+          if (status === 0) {
+            this.$Message.success("文章上线成功");
+          } else if (status === 1) {
+            this.$Message.success("文章下线成功");
+          }
+          this.requestPostList();
+        });
+      },
+      requestPostList() {
         this.postListTableLoading = true;
-        this.handlePostList().then(value => {
-          this.totalCount = value.data.totalCount;
-          this.postList = value.data.post;
+        getPostList(this.currentPage, this.pageSize).then(res => {
+          this.totalCount = res.data.count;
+          this.postList = res.data.post;
           this.postListTableLoading = false;
-        }).catch(reason => {
+        }).catch(err => {
           this.postListTableLoading = false;
-        })
+        });
       }
     },
     created() {
-      this.getPostList();
+      this.requestPostList();
     },
     mounted() {
 

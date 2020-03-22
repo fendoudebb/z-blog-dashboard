@@ -10,22 +10,22 @@
     </div>
     <br>
     <span class="expand-key">创建时间: </span>
-    <span class="expand-value">{{ row.postTime }}</span>
+    <span class="expand-value">{{ row.create_ts }}</span>
     <br>
     <br>
     <span class="expand-key">是否原创: </span>
-    <span class="expand-value">{{ row.postProp === 'COPY' ? '转载' : '原创' }}</span>
+    <span class="expand-value">{{ row.prop === 0 ? '原创' : '转载' }}</span>
     <br>
     <br>
     <span class="expand-key">是否公开: </span>
-    <span class="expand-value">{{ row.postStatus === 'PRIVATE' ? '个人' : '公开' }}</span>
+    <span class="expand-value">{{ row.post_status === 1 ? '个人' : '公开' }}</span>
     <br>
     <br>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapActions} from 'vuex';
+  import {addPostTopic, deletePostTopic} from '@/api/post';
 
   export default {
     name: "post-detail",
@@ -38,17 +38,6 @@
       }
     },
     methods:{
-      ...mapMutations([
-        'setAddTopicPostId',
-        'setDeleteTopicPostId',
-        'setAddTopic',
-        'setDeleteTopic',
-      ]),
-      ...mapActions([
-        'handleAddPostTopic',
-        'handleDeletePostTopic',
-      ]),
-
       handleClose(topic) {
         this.$Modal.confirm(
           {
@@ -57,9 +46,7 @@
             okText: "确认删除",
             closable: true,
             onOk: () => {
-              this.setDeleteTopicPostId(this.row.id);
-              this.setDeleteTopic(topic);
-              this.handleDeletePostTopic().then(value => {
+              deletePostTopic(this.row.id, topic).then(res => {
                 this.row.topics.splice(this.row.topics.indexOf(topic), 1);
                 this.$Message.success("删除成功！");
               });
@@ -83,9 +70,7 @@
             })
           },
           onOk: () => {
-            this.setAddTopicPostId(this.row.id);
-            this.setAddTopic(this.newTopic);
-            this.handleAddPostTopic().then(value => {
+            addPostTopic(this.row.id, this.newTopic).then(res => {
               if (this.row.hasOwnProperty('topics')) {
                 this.row.topics.push(this.newTopic);
               } else {
