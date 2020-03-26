@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
+      <InputNumber clearable :min="1" v-model="searchPostId" number placeholder="请输入文章id" style="width: 150px;"/>
+      <Select clearable v-model="rankType" style="width:150px">
+        <Option v-for="item in rankTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>
+      <Button type="primary" @click="searchPostById">搜索</Button>
+      <Button type="ghost" @click="resetSearch">重置</Button>
+    </div>
     <Table border stripe :highlight-row="true" :data="postList" :columns="postListColumns" :loading="postListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">
       <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
@@ -20,28 +28,50 @@
       </div>
     </Modal>
 
+    <Modal
+      :width="1000"
+      v-model="commentReplyModal"
+      title="评论回复">
+      <Table stripe border :columns="commentReplyColumns" :data="commentReplyList"></Table>
+    </Modal>
+
   </div>
 </template>
 
 <script>
   import expandRow from './PostDetail';
   import expandRow2 from './PostCommentDetail';
-  import {mapMutations, mapGetters, mapActions} from 'vuex';
-  import {getPostList} from '@/api/post';
-  import {modifyPostStatus} from '@/api/post';
-  import {getPostCommentList, deletePostComment} from '@/api/post';
+  import {mapMutations} from 'vuex';
+  import {getPostList, modifyPostStatus, getPostCommentList, deletePostComment, replyPostComment} from '@/api/post';
 
   export default {
     name: "post-list",
     components: {expandRow, expandRow2},
     data() {
       return {
-        watchCommentPostId: '',
+        rankType : null,
+        rankTypeList: [
+          {
+            value: "comment_count",
+            label: "评论数"
+          },
+          {
+            value: "like_count",
+            label: "点赞数"
+          },
+          {
+            value: "pv",
+            label: "阅读数"
+          },
+        ],
+        searchPostId: null,
+        watchCommentPostId: null,
         commentTotalCount: 1,
         commentCurrentPage: 1,
         commentPageSize: 10,
         commentListTableLoading: false,
         commentModal: false,
+        commentReplyModal: false,
         //  h('Tag', {props: {color: params.row.original ? 'green' : 'blue'}}, params.row.original ? '原创' : '转载')
         postListTableLoading: false,
         roles: localStorage.getItem('roles'),
@@ -160,18 +190,48 @@
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
+                  let watchCommentReply = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchCommentReply(params)}}}, '查看回复');
+                  let replyComment = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.replyComment(params)}}}, '回复');
                   let deleteMessage = h('Button', {props: {type: 'error', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteComment(params)}}}, '删除');
                 //@formatter:on
+                if (params.row.replies != null) {
+                  action.push(watchCommentReply);
+                }
                 let commentStatus = params.row.status;
                 if (commentStatus === 'OFFLINE') {
 
                 } else {
+                  action.push(replyComment);
                   action.push(deleteMessage);
                 }
               }
               return h('div', [action]);
             }
           }
+        ],
+        commentReplyList:[],
+        commentReplyColumns:[
+          {title: '内容', key: 'content', align: 'center', ellipsis:true, minWidth: 300,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.content
+                  }
+                }, params.row.content)
+              ])
+            }
+          },
+          {title: '留言时间', key: 'reply_date', align: 'center', minWidth: 150},
+          {title: '浏览器', key: 'browser', align: 'center', minWidth: 150},
+          {title: '操作系统', key: 'os', align: 'center', minWidth: 100},
         ]
       };
     },
@@ -179,8 +239,49 @@
       ...mapMutations([
         'setEditPostId',
       ]),
+      resetSearch() {
+        this.currentPage = 1;
+        this.searchPostId = null;
+        this.rankType = null;
+        this.requestPostList();
+      },
+      searchPostById() {
+        this.currentPage = 1;
+        this.requestPostList();
+      },
       watchPostById(postId) {
         window.open('https://www.zhangbj.com/p/' + postId + ".html");
+      },
+      watchCommentReply(params) {
+        this.commentReplyModal = true;
+        this.commentReplyList = params.row.replies
+      },
+      replyComment(params) {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: this.replyContent,
+                autofocus: true,
+                type:'textarea',
+                rows:10,
+                placeholder: '请输入回复...'
+              },
+              on: {
+                input: (val) => {
+                  this.replyContent = val;
+                }
+              }
+            })
+          },
+          onOk: () => {
+            replyPostComment(this.watchCommentPostId, params.row.id, this.replyContent).then(res => {
+              this.replyContent = '';
+              this.$Message.success("回复成功！");
+              this.requestCommentList();
+            });
+          }
+        })
       },
       onVisibleChange(isShow) {
         if (!isShow) {
@@ -241,9 +342,13 @@
       },
       requestPostList() {
         this.postListTableLoading = true;
-        getPostList(this.currentPage, this.pageSize).then(res => {
+        getPostList(this.searchPostId, this.rankType, this.currentPage, this.pageSize).then(res => {
           this.totalCount = res.data.count;
-          this.postList = res.data.posts;
+          if (this.totalCount > 0) {
+            this.postList = res.data.posts;
+          } else {
+            this.postList = [];
+          }
           this.postListTableLoading = false;
         }).catch(err => {
           this.postListTableLoading = false;

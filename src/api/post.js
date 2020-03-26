@@ -1,25 +1,23 @@
 import axios from '@/libs/axios'
-import {postListUrl, postAuditUrl, postDraftUrl, postAddTopicUrl, postDeleteTopicUrl, postCommentUrl, deletePostCommentUrl} from './url';
+import {
+  postListUrl,
+  postAuditUrl,
+  postAddTopicUrl,
+  postDeleteTopicUrl,
+  postCommentUrl,
+  deletePostCommentUrl,
+  replyPostCommentUrl
+} from './url';
 
-export const getPostList = (page, size) => {
+export const getPostList = (post_id, rank_type, page, size) => {
   const data = {
+    post_id,
+    rank_type,
     page,
     size
   };
   return axios.request({
     url: postListUrl,
-    data,
-    method: 'post'
-  })
-};
-
-export const getPostDraft = (page, size) => {
-  const data = {
-    page,
-    size
-  };
-  return axios.request({
-    url: postDraftUrl,
     data,
     method: 'post'
   })
@@ -81,6 +79,19 @@ export const deletePostComment = (post_id, comment_id) => {
   };
   return axios.request({
     url: deletePostCommentUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const replyPostComment = (post_id, comment_id, content) => {
+  const data = {
+    post_id,
+    comment_id,
+    content
+  };
+  return axios.request({
+    url: replyPostCommentUrl,
     data,
     method: 'post'
   })

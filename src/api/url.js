@@ -21,8 +21,6 @@ export const deletePostCommentUrl = '/post/comment/delete';
 
 export const replyPostCommentUrl = '/post/comment/reply';
 
-export const postDraftUrl = '/post/draft';
-
 export const pageViewListUrl = '/page_view';
 
 export const ipPoolListUrl = '/ip_pool';
