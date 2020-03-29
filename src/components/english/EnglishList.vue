@@ -5,7 +5,7 @@
       <Button type="primary" icon="ios-search" @click="findWord"></Button>
       <Button type="info" @click="resetSearch">重置</Button>
 
-      <Button type="primary" icon="plus-round" @click="addNewWord" style="float: right">
+      <Button type="primary" @click="addNewWord" style="float: right">
         添加单词
       </Button>
     </div>
