@@ -27,7 +27,6 @@ export default {
       switch (name) {
         case 'logout':
           logout().then(() => {
-            localStorage.setItem('username', '');
             localStorage.setItem('roles', '');
             this.$router.push({
               name: 'login'

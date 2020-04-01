@@ -22,9 +22,7 @@
 <!--            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>-->
 <!--          </div>-->
           <Content>
-            <keep-alive>
               <router-view style="padding:20px;background: white"/>
-            </keep-alive>
           </Content>
         </Layout>
       </Content>

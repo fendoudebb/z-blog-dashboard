@@ -1,20 +1,14 @@
 import Main from '@/components/main/Main'
-import HelloWorld from '@/components/HelloWorld'
 
 export default [
   {
     path: '/login',
     name: 'login',
     meta: {
-      title: 'Login - 登录',
+      title: '登录',
       hideInMenu: true
     },
     component: () => import('@/components/login/Login')
-  },
-  {
-    path: '/hello',
-    name: 'HelloWorld',
-    component: HelloWorld
   },
   {
     path: '/',
