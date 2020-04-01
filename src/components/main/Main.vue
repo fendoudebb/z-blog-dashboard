@@ -22,7 +22,7 @@
 <!--            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>-->
 <!--          </div>-->
           <Content>
-            <keep-alive :include="cacheList">
+            <keep-alive>
               <router-view style="padding:20px;background: white"/>
             </keep-alive>
           </Content>
@@ -37,10 +37,8 @@
 <script>
 import sideMenu from './components/side-menu'
 import headerBar from './components/header-bar'
-import tagsNav from './components/tags-nav'
 import user from './components/user'
 import { mapMutations } from 'vuex'
-import { getNewTagList, getNextName } from '@/libs/util'
 import minLogo from '@/assets/images/logo-min.png'
 import maxLogo from '@/assets/images/logo.png'
 import Fullscreen from './components/fullscreen'
@@ -50,7 +48,6 @@ export default {
   components: {
     sideMenu,
     headerBar,
-    tagsNav,
     user,
     Fullscreen
   },
@@ -63,17 +60,8 @@ export default {
     }
   },
   computed: {
-    tagNavList () {
-      return this.$store.state.app.tagNavList
-    },
-    tagRouter () {
-      return this.$store.state.app.tagRouter
-    },
     userName () {
       return localStorage.getItem('username')
-    },
-    cacheList () {
-      return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)) : []
     },
     menuList () {
       return this.$store.getters.menuList
@@ -81,9 +69,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setBreadCrumb',
-      'setTagNavList',
-      'addTag'
+      'setBreadCrumb'
     ]),
     turnToPage (name) {
       this.$router.push({
@@ -94,12 +80,6 @@ export default {
       this.collapsed = state;
       localStorage.setItem('collapsed', state)
     },
-    handleCloseTag (res, type, name) {
-      const nextName = getNextName(this.tagNavList, name)
-      this.setTagNavList(res)
-      if (type === 'all') this.turnToPage('首页')
-      else if (this.$route.name === name) this.$router.push({ name: nextName })
-    },
     handleClick (item) {
       this.turnToPage(item.name)
     }
@@ -107,15 +87,12 @@ export default {
   watch: {
     '$route' (newRoute) {
       this.setBreadCrumb(newRoute.matched)
-      this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
     }
   },
   mounted () {
     /**
      * @description 初始化设置面包屑导航和标签导航
      */
-    this.setTagNavList()
-    this.addTag(this.$store.state.app.homeRoute)
     this.setBreadCrumb(this.$route.matched)
   }
 }
