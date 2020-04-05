@@ -50,7 +50,7 @@ class httpRequest {
       // 对响应错误做点什么
       let res = error.response;
       if (res.status === 401) {
-        localStorage.setItem('roles', '');
+        localStorage.setItem('token', '');
         Message.error('登录状态过期，请重新登录');
         setTimeout(() => {
           router.push({name: 'login'})
