@@ -1,9 +1,9 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white">
+  <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
       <Input v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
-      <Button type="primary" icon="ios-search" @click="findWord"></Button>
-      <Button type="info" @click="resetSearch">重置</Button>
+      <Button type="primary" @click="findWord">搜索</Button>
+      <Button type="ghost" @click="resetSearch">重置</Button>
 
       <Button type="primary" @click="addNewWord" style="float: right">
         添加单词
@@ -88,18 +88,18 @@
             label: '介词'
           },
         ],
-        searchWord: '',
-        word: '',
-        synonyms: '',
-        english_phonetic: '',
-        american_phonetic: '',
-        translation: [{'property':'', 'explanation':''}],
-        example_sentence: '',
-        sentence_translation:'',
-        source: '',
+        searchWord: null,
+        word: null,
+        synonyms: null,
+        english_phonetic: null,
+        american_phonetic: null,
+        translation: [{'property':null, 'explanation':null}],
+        example_sentence: null,
+        sentence_translation:null,
+        source: null,
         showAddNewWordModal: false,
-        wordModalTitle: '',
-        modifyWordId: '',
+        wordModalTitle: null,
+        modifyWordId: null,
         wordListTableLoading: false,
         wordList: [],
         pageSize: 10,
@@ -111,7 +111,7 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: '_id', align: 'center', ellipsis: true, minWidth: 200,},
+          {title: 'ID', key: 'id', align: 'center', ellipsis: true, minWidth: 50,},
           {title: '单词', key: 'word', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '英文音标', key: 'english_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '美式音标', key: 'american_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
@@ -134,7 +134,7 @@
       resetSearch() {
         this.currentPage = 1;
         this.searchWord = '';
-        this.getEnglish();
+        this.requestEnglishList();
       },
       findWord() {
         if (!this.searchWord) {
@@ -142,27 +142,20 @@
           return;
         }
         this.currentPage = 1;
-        this.getEnglish();
+        this.requestEnglishList();
       },
       addNewWord() {
         this.wordModalTitle = '添加单词';
         this.showAddNewWordModal = true;
         if (this.modifyWordId) {
-          this.word = '';
-          this.synonyms = '';
-          this.english_phonetic = '';
-          this.american_phonetic = '';
-          this.translation = [{'property':'', 'explanation':''}];
-          this.example_sentence = '';
-          this.sentence_translation = '';
-          this.source = '';
+          this.resetEntity();
+          this.modifyWordId = null;
         }
-        this.modifyWordId = '';
       },
       updateWord(param) {
         this.wordModalTitle = '修改单词';
         this.showAddNewWordModal = true;
-        this.modifyWordId = param._id;
+        this.modifyWordId = param.id;
         this.word = param.word;
         this.synonyms = param.synonyms;
         this.english_phonetic = param.english_phonetic;
@@ -197,45 +190,51 @@
         if (this.modifyWordId) {
           updateEnglish(this.modifyWordId, this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
             this.$Message.success("修改成功!");
-            this.getEnglish();
+            this.requestEnglishList();
           })
         } else {
           addEnglish(this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
             this.$Message.success("添加成功!");
-            this.word = '';
-            this.synonyms = '';
-            this.english_phonetic = '';
-            this.american_phonetic = '';
-            this.translation = [{'property':'', 'explanation':''}];
-            this.example_sentence = '';
-            this.sentence_translation = '';
-            this.source = '';
-            this.getEnglish();
+            this.resetEntity();
+            this.requestEnglishList();
           })
         }
       },
+      resetEntity() {
+        this.word = null;
+        this.synonyms = null;
+        this.english_phonetic = null;
+        this.american_phonetic = null;
+        this.translation = [{'property':null, 'explanation':null}];
+        this.example_sentence = null;
+        this.sentence_translation = null;
+        this.source = null;
+      },
       changePage(index) {
         this.currentPage = index;
-        this.getEnglish();
+        this.requestEnglishList();
       },
-      getEnglish() {
+      requestEnglishList() {
         this.wordListTableLoading = true;
         let word = null;
         if (this.searchWord) {
           word = this.searchWord;
         }
         getEnglishList(word, this.currentPage, this.pageSize).then(res => {
-          this.totalCount = res.data.totalCount;
-          this.wordList = res.data.english;
+          this.totalCount = res.data.count;
+          if (this.totalCount > 0) {
+            this.wordList = res.data.english;
+          } else {
+            this.wordList = [];
+          }
           this.wordListTableLoading = false;
         }).catch(err => {
           this.wordListTableLoading = false;
-          this.$Message.error(err);
         });
       },
     },
     created() {
-      this.getEnglish();
+      this.requestEnglishList();
     },
   }
 </script>

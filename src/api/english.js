@@ -25,9 +25,9 @@ export const addEnglish = (word, synonyms, english_phonetic, american_phonetic, 
   })
 };
 
-export const updateEnglish = (wordId, word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source) => {
+export const updateEnglish = (id, word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source) => {
   const data = {
-    wordId, word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source,
+    id, word, synonyms, english_phonetic, american_phonetic, translation, example_sentence, sentence_translation, source,
   };
   return axios.request({
     url: englishUpdateUrl,
