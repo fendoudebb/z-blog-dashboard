@@ -1,8 +1,9 @@
 import axios from '@/libs/axios'
-import {topicListUrl, topicAddUrl, topicDeleteUrl, topicModifySortUrl, topicModifyNameUrl} from './url';
+import {topicListUrl, topicAddUrl, topicDeleteUrl, topicUpdateUrl} from './url';
 
-export const getTopicList = (page, size) => {
+export const getTopicList = (name, page, size) => {
   const data = {
+    name,
     page,
     size
   };
@@ -13,9 +14,9 @@ export const getTopicList = (page, size) => {
   })
 };
 
-export const addTopic = (topic) => {
+export const addTopic = (name) => {
   const data = {
-    topic
+    name
   };
   return axios.request({
     url: topicAddUrl,
@@ -24,36 +25,14 @@ export const addTopic = (topic) => {
   })
 };
 
-export const deleteTopic = (topicId) => {
+export const updateTopic = (id, name, sort) => {
   const data = {
-    topicId,
-  };
-  return axios.request({
-    url: topicDeleteUrl,
-    data,
-    method: 'post'
-  })
-};
-
-export const modifyTopicSort = (topicId, sort) => {
-  const data = {
-    topicId,
+    id,
+    name,
     sort
   };
   return axios.request({
-    url: topicModifySortUrl,
-    data,
-    method: 'post'
-  })
-};
-
-export const modifyTopicName = (topicId, name) => {
-  const data = {
-    topicId,
-    name
-  };
-  return axios.request({
-    url: topicModifyNameUrl,
+    url: topicUpdateUrl,
     data,
     method: 'post'
   })

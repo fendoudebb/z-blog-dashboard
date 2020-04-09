@@ -1,9 +1,12 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white">
-    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1">
-      <Button type="primary" @click="addNewTopic">
-        <Icon type="plus-round"></Icon>
-        新建标签
+  <div>
+    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
+      <Input v-model="searchTopic" placeholder="搜索" style="width: 150px;"/>
+      <Button type="primary" @click="findTopic">搜索</Button>
+      <Button type="ghost" @click="resetSearch">重置</Button>
+
+      <Button type="primary" @click="addNewTopic" style="float: right">
+        添加标签
       </Button>
     </div>
     <Table border stripe :data="topicList" :columns="topicListColumns" :loading="topicListTableLoading"></Table>
@@ -11,39 +14,65 @@
         <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
               show-total></Page>
     </div>
+
+    <Modal
+      v-model="showUpsertTopicModal"
+      :title="topicModalTitle"
+      @on-ok="onUpsertTopicModalOkClick">
+
+      <div>
+        标签：<Input v-model="topicName" clearable placeholder="请输入标签" style="width: 400px;margin-right: 10px"></Input>
+      </div>
+      <div style="margin-top: 20px" v-if="modifyTopicId">
+        排序：<InputNumber clearable :min="1" v-model="topicSort" number placeholder="请输入排序" style="width: 400px;margin-right: 10px"/>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapGetters, mapActions} from 'vuex';
+  import {mapMutations, mapActions} from 'vuex';
+  import {getTopicList, addTopic, updateTopic} from "@/api/topic";
 
   export default {
     name: "topic",
     data() {
       return {
         roles: localStorage.getItem('roles'),
+        topicName: null,
+        topicSort: null,
+        modifyTopicId: null,
+        showUpsertTopicModal: false,
+        topicModalTitle: null,
+        searchTopic: null,
         topicListTableLoading: false,
         topicList: [],
-        pageSize: this.getTopicListSize(),
+        pageSize: 10,
         totalCount: 1,
         currentPage: 1,
         topicListColumns: [
-          {title: '排序', key: 'sort', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: 'ID', key: 'id', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '标签', key: 'name', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: 'ID', key: 'id', align: 'center', ellipsis: true, minWidth: 50,},
+          {title: '标签', key: 'name', align: 'center', ellipsis: true, minWidth: 100,},
+          {title: '排序', key: 'sort', align: 'center', ellipsis: true, minWidth: 50,},
+          {title: '创建时间', key: 'create_ts', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: '更新时间', key: 'update_ts', align: 'center', ellipsis: true, minWidth: 150,},
           {
-            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
+            title: '操作', key: 'action', align: 'center', ellipsis: true, minWidth: 50,
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
                 //@formatter:off
-                  let modifyName = h('Button', {props: {type: 'info', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifyName(params)}}}, '修改');
-                  let modifySort = h('Button', {props: {type: 'warning', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.modifySort(params)}}}, '排序');
-                  let deleteTopic = h('Button', {props: {type: 'error', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.deleteTopic(params)}}}, '删除');
+                let updateTopic = h('Button', {
+                  props: {type: 'primary', size: 'small'},
+                  style: {marginRight: '5px'},
+                  on: {
+                    click: () => {
+                      this.updateOldTopic(params.row)
+                    }
+                  }
+                }, '修改');
                 //@formatter:on
-                action.push(modifyName);
-                action.push(modifySort);
-                action.push(deleteTopic);
+                action.push(updateTopic);
               }
               return h('div', [action]);
             }
@@ -52,138 +81,81 @@
       };
     },
     methods: {
-      ...mapMutations([
-        'setTopicListPage',
-        'setTopic',
-        'setDeleteTopicId',
-        'setModifyNameTopicId',
-        'setModifyTopicName',
-        'setModifySortTopicId',
-        'setTopicSort',
-      ]),
-      ...mapGetters([
-        'getTopicListSize'
-      ]),
-      ...mapActions([
-        'handleTopicList',
-        'handleAddTopic',
-        'handleDeleteTopic',
-        'handleModifyTopicSort',
-        'handleModifyTopicName',
-      ]),
-      deleteTopic(params) {
-        this.$Modal.confirm(
-          {
-            title: "删除标签",
-            content: "是否删除《" + params.row.name + "》分类？",
-            okText: "确认删除",
-            closable: true,
-            onOk: () => {
-              this.setDeleteTopicId(params.row.id);
-              this.handleDeleteTopic().then(value => {
-                this.$Message.success("删除成功！");
-                this.getTopicList();
-              });
-            }
-          });
+      resetSearch() {
+        this.currentPage = 1;
+        this.searchTopic = null;
+        this.requestTopicList();
       },
-      modifyName(params) {
-        this.$Modal.confirm({
-          render: (h) => {
-            return h('Input', {
-              props: {
-                value: this.modifyTopicName,
-                autofocus: true,
-                placeholder: '请输入名称...'
-              },
-              on: {
-                input: (val) => {
-                  this.modifyTopicName = val;
-                }
-              }
-            })
-          },
-          onOk: () => {
-            this.setModifyNameTopicId(params.row.id);
-            this.setModifyTopicName(this.modifyTopicName);
-            this.handleModifyTopicName().then(value => {
-              this.$Message.success("修改成功！");
-              this.modifyTopicName = '';
-              this.getTopicList();
-            });
-          }
-        })
+      findTopic() {
+        if (!this.searchTopic) {
+          this.$Message.error("搜索标签不能为空");
+          return;
+        }
+        this.currentPage = 1;
+        this.requestTopicList();
       },
-      modifySort(params) {
-        this.$Modal.confirm({
-          render: (h) => {
-            return h('Input', {
-              props: {
-                value: this.newTopicSort,
-                autofocus: true,
-                placeholder: '请输入排序...'
-              },
-              on: {
-                input: (val) => {
-                  this.newTopicSort = val;
-                }
-              }
-            })
-          },
-          onOk: () => {
-            this.setModifySortTopicId(params.row.id);
-            this.setTopicSort(this.newTopicSort);
-            this.handleModifyTopicSort().then(value => {
-              this.$Message.success("修改成功！");
-              this.newTopicSort = '';
-              this.getTopicList();
-            });
-          }
-        })
+
+      onUpsertTopicModalOkClick() {
+        if (!this.topicName) {
+          this.$Message.error("标签不能为空");
+          return;
+        }
+        if (this.modifyTopicId && !this.topicSort) {
+          this.$Message.error("排序不能为空");
+          return;
+        }
+        if (this.modifyTopicId) {
+          updateTopic(this.modifyTopicId, this.topicName, this.topicSort).then(value => {
+            this.$Message.success("修改成功");
+            this.resetTopicEntity();
+            this.requestTopicList();
+          })
+        } else {
+          addTopic(this.topicName).then(value => {
+            this.$Message.success("添加成功");
+            this.resetTopicEntity();
+            this.requestTopicList();
+          })
+        }
+      },
+      updateOldTopic(params) {
+        this.showUpsertTopicModal = true;
+        this.topicModalTitle = "修改标签";
+        this.modifyTopicId = params.id;
+        this.topicName = params.name;
+        this.topicSort = params.sort;
       },
       addNewTopic() {
-        this.$Modal.confirm({
-          render: (h) => {
-            return h('Input', {
-              props: {
-                value: this.newTopic,
-                autofocus: true,
-                placeholder: '请输入标签名...'
-              },
-              on: {
-                input: (val) => {
-                  this.newTopic = val;
-                }
-              }
-            })
-          },
-          onOk: () => {
-            this.setTopic(this.newTopic);
-            this.handleAddTopic().then(value => {
-              this.$Message.success("添加成功！");
-              this.newTopic = '';
-              this.getTopicList();
-            });
-          }
-        })
+        this.showUpsertTopicModal = true;
+        this.topicModalTitle = "添加标签";
+        this.resetTopicEntity();
+      },
+      resetTopicEntity() {
+        this.modifyTopicId = null;
+        this.topicName = null;
+        this.topicSort = null;
       },
       changePage(index) {
-        this.setTopicListPage(index);
-        this.getTopicList();
+        this.currentPage = index;
+        this.requestTopicList();
       },
-      getTopicList() {
+      requestTopicList() {
         this.topicListTableLoading = true;
-        this.handleTopicList().then(value => {
-          this.totalCount = value.data.totalCount;
-          this.topicList = value.data.topic;
+        getTopicList(this.searchTopic, this.currentPage, this.pageSize).then(res => {
+          this.totalCount = res.data.count;
+          if (this.totalCount > 0) {
+            this.topicList = res.data.topics;
+          } else {
+            this.topicList = [];
+          }
           this.topicListTableLoading = false;
-        }).catch(reason => {
+        }).catch(err => {
           this.topicListTableLoading = false;
-        })
+        });
       }
     },
     created() {
-      this.getTopicList();
+      this.requestTopicList();
     },
 
   }

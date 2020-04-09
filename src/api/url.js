@@ -31,15 +31,11 @@ export const queryUnrecognizedIp = '/ip_unrecognized/query';
 
 export const searchStatsListUrl = '/search_stats';
 
-export const topicListUrl = '/topic';
+export const topicListUrl = '/topic/list';
 
 export const topicAddUrl = '/topic/add';
 
-export const topicDeleteUrl = '/topic/delete';
-
-export const topicModifySortUrl = '/topic/sort/modify';
-
-export const topicModifyNameUrl = '/topic/name/modify';
+export const topicUpdateUrl = '/topic/update';
 
 export const messageBoardUrl = '/message/board';
 

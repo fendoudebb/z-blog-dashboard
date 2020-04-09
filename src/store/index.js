@@ -6,7 +6,6 @@ import publish from './module/publish'
 import page_view from './module/page_view'
 import ip_pool from './module/ip_pool'
 import ip_unrecognized from './module/ip_unrecognized'
-import topic from './module/topic'
 import message_board from './module/message_board'
 import search_stats from './module/search_stats'
 import links from './module/links'
@@ -33,7 +32,6 @@ export default new Vuex.Store({
     page_view,
     ip_pool,
     ip_unrecognized,
-    topic,
     message_board,
     search_stats,
     links,
