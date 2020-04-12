@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Input v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
+      <Input clearable v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
       <Button type="primary" @click="findWord">搜索</Button>
       <Button type="ghost" @click="resetSearch">重置</Button>
 
