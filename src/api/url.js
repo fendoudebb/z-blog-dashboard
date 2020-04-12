@@ -45,15 +45,11 @@ export const replyMessageUrl = '/message/reply';
 
 export const webInfoUrl = '/web-stat';
 
-export const linksUrl = '/links';
+export const linkListUrl = '/link/list';
 
-export const linksModifySortUrl = '/links/modify/sort';
+export const linkUpsertUrl = '/link/upsert';
 
-export const linksAddUrl = '/links/add';
-
-export const linksEditUrl = '/links/edit';
-
-export const linksAuditUrl = '/links/audit';
+export const linkAuditUrl = '/link/audit';
 
 export const administratorInfoUrl = '/administrator/info';
 

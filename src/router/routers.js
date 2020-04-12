@@ -138,7 +138,7 @@ export default [
   },
 
   {
-    path: '/links',
+    path: '/link',
     name: '友链',
     meta: {
       title: '',
@@ -147,14 +147,14 @@ export default [
     component: Main,
     children: [
       {
-        path: '/links',
+        path: '/link',
         name: 'links',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'link',
           title: '友链管理'
         },
-        component: () => import('@/components/links/LinksList')
+        component: () => import('@/components/link/LinkList')
       }
     ]
   },

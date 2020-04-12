@@ -8,7 +8,6 @@ import ip_pool from './module/ip_pool'
 import ip_unrecognized from './module/ip_unrecognized'
 import message_board from './module/message_board'
 import search_stats from './module/search_stats'
-import links from './module/links'
 import administrator from './module/administrator'
 
 // Vue.use(Vuex);
@@ -34,7 +33,6 @@ export default new Vuex.Store({
     ip_unrecognized,
     message_board,
     search_stats,
-    links,
     administrator,
   }
 })
