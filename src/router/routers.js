@@ -148,7 +148,7 @@ export default [
     children: [
       {
         path: '/link',
-        name: 'links',
+        name: 'link',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'link',

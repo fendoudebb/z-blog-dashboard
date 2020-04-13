@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Input clearable v-model="searchTopic" placeholder="搜索" style="width: 150px;"/>
+    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1">
+      <label>
+        <Input clearable v-model="searchTopic" placeholder="搜索" style="width: 150px;"/>
+      </label>
       <Button type="primary" @click="findTopic">搜索</Button>
       <Button type="ghost" @click="resetSearch">重置</Button>
 
@@ -11,8 +13,8 @@
     </div>
     <Table border stripe :data="topicList" :columns="topicListColumns" :loading="topicListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">
-        <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
-              show-total></Page>
+      <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
+            show-total></Page>
     </div>
 
     <Modal
@@ -21,18 +23,22 @@
       @on-ok="onUpsertTopicModalOkClick">
 
       <div>
-        标签：<Input v-model="topicName" clearable placeholder="请输入标签" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          标签：
+          <Input v-model="topicName" clearable placeholder="请输入标签" style="width: 400px;margin-right: 10px"></Input>
+        </label>
       </div>
       <div style="margin-top: 20px" v-if="modifyTopicId">
-        排序：<InputNumber clearable :min="1" v-model="topicSort" number placeholder="请输入排序" style="width: 400px;margin-right: 10px"/>
+        排序：
+        <InputNumber clearable :min="1" v-model="topicSort" number placeholder="请输入排序"
+                     style="width: 400px;margin-right: 10px"/>
       </div>
     </Modal>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapActions} from 'vuex';
-  import {getTopicList, addTopic, updateTopic} from "@/api/topic";
+  import {getTopicList, upsertTopic} from "@/api/topic";
 
   export default {
     name: "topic",
@@ -104,19 +110,15 @@
           this.$Message.error("排序不能为空");
           return;
         }
-        if (this.modifyTopicId) {
-          updateTopic(this.modifyTopicId, this.topicName, this.topicSort).then(value => {
+        upsertTopic(this.modifyTopicId, this.topicName, this.topicSort).then(() => {
+          if (this.modifyTopicId) {
             this.$Message.success("修改成功");
-            this.resetTopicEntity();
-            this.requestTopicList();
-          })
-        } else {
-          addTopic(this.topicName).then(value => {
+          } else {
             this.$Message.success("添加成功");
-            this.resetTopicEntity();
-            this.requestTopicList();
-          })
-        }
+          }
+          this.resetTopicEntity();
+          this.requestTopicList();
+        })
       },
       updateOldTopic(params) {
         this.showUpsertTopicModal = true;
@@ -149,7 +151,7 @@
             this.topicList = [];
           }
           this.topicListTableLoading = false;
-        }).catch(err => {
+        }).catch(() => {
           this.topicListTableLoading = false;
         });
       }

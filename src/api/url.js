@@ -33,9 +33,7 @@ export const searchStatsListUrl = '/search_stats';
 
 export const topicListUrl = '/topic/list';
 
-export const topicAddUrl = '/topic/add';
-
-export const topicUpdateUrl = '/topic/update';
+export const topicUpsertUrl = '/topic/upsert';
 
 export const messageBoardUrl = '/message/board';
 
@@ -57,9 +55,7 @@ export const administratorAddUrl = '/administrator/add';
 
 export const englishListUrl = '/english/list';
 
-export const englishAddUrl = '/english/add';
-
-export const englishUpdateUrl = '/english/update';
+export const englishUpsertUrl = '/english/upsert';
 
 
 

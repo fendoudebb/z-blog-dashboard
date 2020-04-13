@@ -1,7 +1,9 @@
 <template>
   <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Input clearable v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
+      <label>
+        <Input clearable v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
+      </label>
       <Button type="primary" @click="findWord">搜索</Button>
       <Button type="ghost" @click="resetSearch">重置</Button>
 
@@ -21,20 +23,33 @@
       @on-ok="onModalOkClick">
 
       <div>
-        英文单词：<Input v-model="word" clearable placeholder="请输入英文单词" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          英文单词：
+          <Input v-model="word" clearable placeholder="请输入英文单词" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
       <div style="margin-top: 20px">
-        英式音标：<Input v-model="english_phonetic" clearable placeholder="请输入英式音标" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          英式音标：
+          <Input v-model="english_phonetic" clearable placeholder="请输入英式音标" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
       <div style="margin-top: 20px">
-        美式音标：<Input v-model="american_phonetic" clearable placeholder="请输入美式音标" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          美式音标：
+          <Input v-model="american_phonetic" clearable placeholder="请输入美式音标" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
       <div style="margin-top: 20px" v-for="(t, index) in translation" :key="index">
-        单词翻译：
-        <Select v-model="t.property" placeholder="词性" style="width:80px">
-          <Option v-for="item in wordProperties" :value="item.value" :key="item.value">{{ item.label }}</Option>
-        </Select>
-        <Input v-model="t.explanation" placeholder="翻译" style="width: 250px;margin-right: 10px"></Input>
+        <label>
+          单词翻译：
+          <Select v-model="t.property" placeholder="词性" style="width:80px">
+            <Option v-for="item in wordProperties" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+        </label>
+        <label>
+          <Input v-model="t.explanation" placeholder="翻译" style="width: 250px;margin-right: 10px"/>
+        </label>
         <Button type="primary" size="small" shape="circle" icon="plus-round" @click="addTranslationInput"></Button>
         <Button type="error" size="small" shape="circle" icon="minus-round" @click="deleteTranslationInput(index)" v-if="index > 0"></Button>
       </div>
@@ -42,16 +57,28 @@
         单词翻译：<Input v-model="translation" clearable placeholder="请输入单词翻译" style="width: 250px;margin-right: 10px"></Input>
       </div>-->
       <div style="margin-top: 20px">
-        单词例句：<Input v-model="example_sentence" clearable placeholder="请输入单词例句" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          单词例句：
+          <Input v-model="example_sentence" clearable placeholder="请输入单词例句" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
       <div style="margin-top: 20px">
-        例句译文：<Input v-model="sentence_translation" clearable placeholder="请输入例句译文" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          例句译文：
+          <Input v-model="sentence_translation" clearable placeholder="请输入例句译文" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
       <div style="margin-top: 20px">
-        词语来源：<Input v-model="source" clearable placeholder="请输入词语来源" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          词语来源：
+          <Input v-model="source" clearable placeholder="请输入词语来源" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
       <div style="margin-top: 20px">
-        同义词：<Input v-model="synonyms" clearable placeholder="请输入同义词" style="width: 400px;margin-right: 10px"></Input>
+        <label>
+          同义词：
+          <Input v-model="synonyms" clearable placeholder="请输入同义词" style="width: 400px;margin-right: 10px"/>
+        </label>
       </div>
     </Modal>
   </div>
@@ -59,7 +86,7 @@
 
 <script>
   import expandRow from './EnglishDetail';
-  import {getEnglishList, addEnglish, updateEnglish} from '@/api/english';
+  import {getEnglishList, upsertEnglish} from '@/api/english';
   export default {
     name: "english-list",
     components: {expandRow},
@@ -148,7 +175,7 @@
         this.wordModalTitle = '添加单词';
         this.showAddNewWordModal = true;
         if (this.modifyWordId) {
-          this.resetEntity();
+          this.resetEnglishEntity();
           this.modifyWordId = null;
         }
       },
@@ -187,20 +214,17 @@
             return;
           }
         }
-        if (this.modifyWordId) {
-          updateEnglish(this.modifyWordId, this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
-            this.$Message.success("修改成功!");
-            this.requestEnglishList();
-          })
-        } else {
-          addEnglish(this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
-            this.$Message.success("添加成功!");
-            this.resetEntity();
-            this.requestEnglishList();
-          })
-        }
+        upsertEnglish(this.modifyWordId, this.word, this.synonyms, this.english_phonetic, this.american_phonetic, this.translation, this.example_sentence, this.sentence_translation, this.source).then(value => {
+          if (this.modifyWordId) {
+            this.$Message.success("修改成功");
+          } else {
+            this.$Message.success("添加成功");
+          }
+          this.resetEnglishEntity();
+          this.requestEnglishList();
+        })
       },
-      resetEntity() {
+      resetEnglishEntity() {
         this.word = null;
         this.synonyms = null;
         this.english_phonetic = null;
@@ -228,7 +252,7 @@
             this.wordList = [];
           }
           this.wordListTableLoading = false;
-        }).catch(err => {
+        }).catch(() => {
           this.wordListTableLoading = false;
         });
       },

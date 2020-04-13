@@ -145,9 +145,9 @@
           } else {
             this.$Message.success("添加成功");
           }
+          this.resetLinkEntity()
           this.requestLinkList();
         });
-        this.resetLinkEntity()
       },
 
       resetLinkEntity() {
