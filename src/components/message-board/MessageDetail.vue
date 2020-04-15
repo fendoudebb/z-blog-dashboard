@@ -1,11 +1,11 @@
 <template>
   <div>
-    <span class="expand-key">ID: </span>
-    <span class="expand-value">{{ row.id }}</span>
+    <span class="expand-key">IP: </span>
+    <span class="expand-value">{{ row.ip_id }}</span>
     <br>
     <br>
     <span class="expand-key">User-Agent: </span>
-    <span class="expand-value">{{ row.userAgent }}</span>
+    <span class="expand-value">{{ row.ua }}</span>
     <br>
     <br>
   </div>

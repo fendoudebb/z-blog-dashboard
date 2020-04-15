@@ -35,11 +35,13 @@ export const topicListUrl = '/topic/list';
 
 export const topicUpsertUrl = '/topic/upsert';
 
-export const messageBoardUrl = '/message/board';
+export const messageBoardListUrl = '/message-board/list';
 
-export const deleteMessageUrl = '/message/delete';
+export const messageBoardAuditUrl = '/message-board/audit';
 
-export const replyMessageUrl = '/message/reply';
+export const messageBoardReplyUrl = '/message-board/reply';
+
+export const messageBoardReplyListUrl = '/message-board/reply-list';
 
 export const webInfoUrl = '/web-stat';
 

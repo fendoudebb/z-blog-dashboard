@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {messageBoardUrl, deleteMessageUrl, replyMessageUrl} from './url';
+import {messageBoardListUrl, messageBoardAuditUrl, messageBoardReplyUrl, messageBoardReplyListUrl} from "@/api/url";
 
 export const getMessageBoardList = (page, size) => {
   const data = {
@@ -7,30 +7,44 @@ export const getMessageBoardList = (page, size) => {
     size
   };
   return axios.request({
-    url: messageBoardUrl,
+    url: messageBoardListUrl,
     data,
     method: 'post'
   })
 };
 
-export const deleteMessage = (commentId) => {
+export const getMessageBoardReplyList = (id, page, size) => {
   const data = {
-    commentId
+    id,
+    page,
+    size
   };
   return axios.request({
-    url: deleteMessageUrl,
+    url: messageBoardReplyListUrl,
     data,
     method: 'post'
   })
 };
 
-export const replyMessage = (commentId, content) => {
+export const auditMessageBoard = (id, status) => {
   const data = {
-    commentId,
+    id,
+    status
+  };
+  return axios.request({
+    url: messageBoardAuditUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const replyMessageBoard = (reply_id, content) => {
+  const data = {
+    reply_id,
     content
   };
   return axios.request({
-    url: replyMessageUrl,
+    url: messageBoardReplyUrl,
     data,
     method: 'post'
   })
