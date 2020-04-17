@@ -134,17 +134,17 @@
         currentPage: 1,
         wordListColumns: [
           {
-            type: 'expand', width: 50, render: (h, params) => {
+            title:"#", type: 'expand', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'ID', key: 'id', align: 'center', ellipsis: true, minWidth: 50,},
+          {title: 'ID', key: 'id', align: 'center', ellipsis: true, minWidth: 60,},
           {title: '单词', key: 'word', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '英文音标', key: 'english_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '美式音标', key: 'american_phonetic', align: 'center', ellipsis: true, minWidth: 150,},
           // {title: '翻译', key: 'translation', align: 'center', ellipsis: true, minWidth: 150,},
           {
-            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
+            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 70, fixed: 'right',
             render: (h, params) => {
               let action = [];
               //@formatter:off

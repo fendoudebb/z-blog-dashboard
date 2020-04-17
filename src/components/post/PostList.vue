@@ -127,7 +127,7 @@
             }
           },
           {
-            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 250,
+            title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 250, fixed: 'right',
             render: (h, params) => {
               let postStatus = params.row.post_status;
               let action = [];

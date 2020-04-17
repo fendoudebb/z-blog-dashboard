@@ -59,11 +59,11 @@
         topicListColumns: [
           {title: 'ID', key: 'id', align: 'center', ellipsis: true, minWidth: 50,},
           {title: '标签', key: 'name', align: 'center', ellipsis: true, minWidth: 100,},
-          {title: '排序', key: 'sort', align: 'center', ellipsis: true, minWidth: 50,},
+          {title: '排序', key: 'sort', align: 'center', ellipsis: true, minWidth: 70,},
           {title: '创建时间', key: 'create_ts', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '更新时间', key: 'update_ts', align: 'center', ellipsis: true, minWidth: 150,},
           {
-            title: '操作', key: 'action', align: 'center', ellipsis: true, minWidth: 50,
+            title: '操作', key: 'action', align: 'center', ellipsis: true, minWidth: 70, fixed: 'right',
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {

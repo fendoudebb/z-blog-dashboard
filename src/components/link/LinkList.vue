@@ -71,7 +71,7 @@
         currentPage: 1,
         linkListColumns: [
           {
-            type: 'expand', width: 50, render: (h, params) => {
+            title:"#", type: 'expand', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
             }
           },
@@ -97,7 +97,7 @@
             }
           },
           {
-            title: '操作', key: 'action', align: 'center', ellipsis: true, minWidth: 200,
+            title: '操作', key: 'action', align: 'center', ellipsis: true, minWidth: 160, fixed: 'right',
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {

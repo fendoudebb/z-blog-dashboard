@@ -126,7 +126,7 @@
         messageBoardList: [],
         messageBoardListColumns: [
           {
-            type: 'expand', width: 50, render: (h, params) => {
+            title:"#", type: 'expand', width: 50, render: (h, params) => {
               return h(expandRow, {props: {row: params.row}})
             }
           },
