@@ -51,9 +51,9 @@ export const linkUpsertUrl = '/link/upsert';
 
 export const linkAuditUrl = '/link/audit';
 
-export const administratorInfoUrl = '/administrator/info';
+export const dashboardUserListUrl = '/dashboard-user/list';
 
-export const administratorAddUrl = '/administrator/add';
+export const dashboardUserUpsertUrl = '/dashboard-user/upsert';
 
 export const englishListUrl = '/english/list';
 

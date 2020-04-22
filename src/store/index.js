@@ -7,7 +7,6 @@ import page_view from './module/page_view'
 import ip_pool from './module/ip_pool'
 import ip_unrecognized from './module/ip_unrecognized'
 import search_stats from './module/search_stats'
-import administrator from './module/administrator'
 
 // Vue.use(Vuex);
 
@@ -31,6 +30,5 @@ export default new Vuex.Store({
     ip_pool,
     ip_unrecognized,
     search_stats,
-    administrator,
   }
 })

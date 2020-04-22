@@ -160,7 +160,7 @@
     methods:{
       resetSearch() {
         this.currentPage = 1;
-        this.searchWord = '';
+        this.searchWord = null;
         this.requestEnglishList();
       },
       findWord() {

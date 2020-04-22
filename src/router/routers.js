@@ -226,7 +226,7 @@ export default [
   },
 
   {
-    path: '/administrator',
+    path: '/dashboard-user',
     name: '管理员列表',
     meta: {
       title: '',
@@ -235,14 +235,14 @@ export default [
     component: Main,
     children: [
       {
-        path: '/administrator',
+        path: '/dashboard-user',
         name: 'administrator',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           icon: 'ios-people',
           title: '管理员列表'
         },
-        component: () => import('@/components/administrator/AdministratorList')
+        component: () => import('@/components/dashboard-user/DashboardUserList')
       }
     ]
   },
