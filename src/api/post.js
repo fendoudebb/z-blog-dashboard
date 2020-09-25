@@ -6,7 +6,8 @@ import {
   postDeleteTopicUrl,
   postCommentUrl,
   deletePostCommentUrl,
-  replyPostCommentUrl
+  replyPostCommentUrl,
+  postImgUploadUrl
 } from './url';
 
 export const getPostList = (post_id, rank_type, page, size) => {
@@ -94,5 +95,14 @@ export const replyPostComment = (post_id, comment_id, content) => {
     url: replyPostCommentUrl,
     data,
     method: 'post'
+  })
+};
+
+export const uploadPostImg = (formData) => {
+  return axios.request({
+    url: postImgUploadUrl,
+    data: formData,
+    method: 'post',
+    headers: { 'Content-Type': 'multipart/form-data' }
   })
 };

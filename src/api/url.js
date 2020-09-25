@@ -3,9 +3,13 @@ export const loginUrl = '/login';
 
 export const logoutUrl = '/logout';
 
-export const postListUrl = '/post';
+export const postListUrl = '/post/list';
+
+export const postAuditUrl = '/post/audit';
 
 export const publishPostUrl = '/post/publish';
+
+export const postImgUploadUrl = '/post/img/upload';
 
 export const postInfoUrl = '/post/info';
 
@@ -13,19 +17,19 @@ export const postAddTopicUrl = '/post/topic/add';
 
 export const postDeleteTopicUrl = '/post/topic/delete';
 
-export const postAuditUrl = '/post/audit';
-
 export const postCommentUrl = '/post/comment/list';
 
 export const deletePostCommentUrl = '/post/comment/delete';
 
 export const replyPostCommentUrl = '/post/comment/reply';
 
-export const pageViewListUrl = '/page_view';
+export const pageViewListUrl = '/page-view/list';
 
-export const ipPoolListUrl = '/ip_pool';
+export const pageViewInvalidListUrl = '/page-view/invalid-list';
 
-export const ipUnrecognizedListUrl = '/ip_unrecognized';
+export const ipPoolListUrl = '/ip-pool/list';
+
+export const ipUnknownListUrl = '/ip-pool/unknown-list';
 
 export const queryUnrecognizedIp = '/ip_unrecognized/query';
 

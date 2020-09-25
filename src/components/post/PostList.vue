@@ -275,7 +275,7 @@
             })
           },
           onOk: () => {
-            replyPostComment(this.watchCommentPostId, params.row.id, this.replyContent).then(res => {
+            replyPostComment(this.watchCommentPostId, params.row.id, this.replyContent).then(() => {
               this.replyContent = '';
               this.$Message.success("回复成功！");
               this.requestCommentList();
@@ -292,7 +292,7 @@
         }
       },
       deleteComment(params) {
-        deletePostComment(this.watchCommentPostId, params.row.id).then(res => {
+        deletePostComment(this.watchCommentPostId, params.row.id).then(() => {
           this.$Message.success("删除成功!");
           this.requestCommentList()
         });
@@ -326,12 +326,12 @@
           this.commentTotalCount = res.data.count;
           this.commentList = res.data.comments;
           this.commentListTableLoading = false;
-        }).catch(err => {
+        }).catch(() => {
           this.commentListTableLoading = false;
         });
       },
       requestModifyPostStatus(postId, status) {
-        modifyPostStatus(postId, status).then(res => {
+        modifyPostStatus(postId, status).then(() => {
           if (status === 0) {
             this.$Message.success("文章上线成功");
           } else if (status === 1) {
@@ -350,7 +350,7 @@
             this.postList = [];
           }
           this.postListTableLoading = false;
-        }).catch(err => {
+        }).catch(() => {
           this.postListTableLoading = false;
         });
       }

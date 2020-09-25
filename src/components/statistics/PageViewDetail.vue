@@ -9,7 +9,7 @@
     <br>
     <br>
     <span class="expand-key">User-Agent: </span>
-    <span class="expand-value">{{ row.userAgent }}</span>
+    <span class="expand-value">{{ row.ua }}</span>
   </div>
 </template>
 

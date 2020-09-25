@@ -115,6 +115,7 @@ export default {
   },
   created() {
     const data = {
+      token: localStorage.getItem('token')
     };
     axios.request({
       url: webInfoUrl,

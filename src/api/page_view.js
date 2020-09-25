@@ -1,13 +1,13 @@
 import axios from '@/libs/axios'
-import {pageViewListUrl} from './url';
+import {pageViewListUrl, pageViewInvalidListUrl} from './url';
 
-export const getPageViewList = (page, size) => {
+export const getPageViewList = (type, page, size) => {
   const data = {
     page,
     size
   };
   return axios.request({
-    url: pageViewListUrl,
+    url: type === 0 ? pageViewListUrl : pageViewInvalidListUrl,
     data,
     method: 'post'
   })

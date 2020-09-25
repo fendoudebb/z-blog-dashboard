@@ -12,7 +12,7 @@
 <script>
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
-  import axios from '@/libs/axios'
+  import {uploadPostImg} from "@/api/post";
 
   export default {
     name: "MarkdownEditor",
@@ -59,17 +59,12 @@
         // 第一步.将图片上传到服务器.
         let formdata = new FormData();
         formdata.append('image', $file);
-        axios.request({
-          url: '/admin/img/upload',
-          method: 'post',
-          data: formdata,
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }).then((data) => {
+        uploadPostImg(formdata).then(data => {
           // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
           // $vm.$img2Url 详情见本页末尾
           console.log(JSON.stringify(data));
           this.$refs.md.$img2Url(pos, data.data);
-        })
+        });
       },
       getValue() {
         return this.value;

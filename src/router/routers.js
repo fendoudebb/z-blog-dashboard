@@ -180,14 +180,14 @@ export default [
         component: () => import('@/components/ip/IpPool')
       },
       {
-        path: 'ip_unrecognized',
-        name: 'ip_unrecognized',
+        path: 'ip_unknown',
+        name: 'ip_unknown',
         meta: {
           //<Icon type="checkmark-circled"></Icon>
           // icon: 'document',
           title: '未识别IP列表'
         },
-        component: () => import('@/components/ip/IpUnrecognized')
+        component: () => import('@/components/ip/IpUnknown')
       },
 
     ]

@@ -1,12 +1,12 @@
 <template>
   <div style="margin: 20px;padding:20px;background-color: white;">
-    <div style="margin-bottom: 20px">
+    <!--<div style="margin-bottom: 20px">
       <Button type="primary" @click="queryAllIp" :loading="queryLoading">
         <Icon type="ios-search"></Icon>
         查询全部
       </Button>
-    </div>
-    <Table border stripe :data="ipUnrecognizedList" :columns="ipUnrecognizedListColumns" :loading="ipUnrecognizedListTableLoading"></Table>
+    </div>-->
+    <Table border stripe :data="ipUnknownList" :columns="ipUnrecognizedListColumns" :loading="ipUnknownListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">
         <Page :page-size="pageSize" :total="totalCount" :current="currentPage" @on-change="changePage" show-elevator
               show-total></Page>
@@ -15,16 +15,16 @@
 </template>
 
 <script>
-  import {mapMutations, mapGetters, mapActions} from 'vuex';
+  import {getIpUnknownList} from "@/api/ip_pool";
 
   export default {
-    name: "ip-unrecognized",
+    name: "ip-unknown",
     data() {
       return {
         queryLoading: false,
-        ipUnrecognizedListTableLoading: false,
-        ipUnrecognizedList: [],
-        pageSize: this.getIpUnrecognizedListSize(),
+        ipUnknownListTableLoading: false,
+        ipUnknownList: [],
+        pageSize: 10,
         totalCount: 1,
         currentPage: 1,
         ipUnrecognizedListColumns: [
@@ -33,10 +33,10 @@
             width: 60,
             align: 'center',
           },
-          {title: 'ID', key: 'id', align: 'center', sortable: true,ellipsis:true, minWidth: 150},
           {title: 'IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150},
-          {title: '访问时间', key: 'createTime', align: 'center', ellipsis:true, minWidth: 150,},
-          {
+          {title: '访问时间', key: 'create_ts', align: 'center', ellipsis:true, minWidth: 150,},
+          {title: '最新查询时间', key: 'update_ts', align: 'center', ellipsis:true, minWidth: 150,},
+          /*{
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
               let action = [];
@@ -46,26 +46,15 @@
                 action.push(replyMessage);
               return h('div', [action]);
             }
-          }
+          }*/
         ]
       }
     },
     methods: {
-      ...mapMutations([
-        'setIpUnrecognizedListPage',
-        'setUnrecognizedIp',
-      ]),
-      ...mapGetters([
-        'getIpUnrecognizedListSize'
-      ]),
-      ...mapActions([
-        'handleIpUnrecognizedList',
-        'handleQueryUnrecognizedIp',
-      ]),
-      queryAllIp() {
+      /*queryAllIp() {
         this.queryLoading = true;
         let ips = [];
-        this.ipUnrecognizedList.forEach(value => {
+        this.ipUnknownList.forEach(value => {
           ips.push(value.ip);
         });
         this.setUnrecognizedIp(ips);
@@ -76,8 +65,8 @@
           } else {
             this.$Message.success(value.data);
           }
-          this.getIpUnrecognizedList();
-        }).catch(reason => {
+          this.requestIpUnknownList();
+        }).catch(() => {
           this.queryLoading = false;
         })
       },
@@ -91,28 +80,28 @@
           } else {
             this.$Message.success(value.data);
           }
-          this.getIpUnrecognizedList();
+          this.requestIpUnknownList();
         }).catch(reason => {
           this.queryLoading = false;
         })
-      },
+      },*/
       changePage(index) {
-        this.setIpUnrecognizedListPage(index);
-        this.getIpUnrecognizedList();
+        this.currentPage = index;
+        this.requestIpUnknownList();
       },
-      getIpUnrecognizedList() {
-        this.ipUnrecognizedListTableLoading = true;
-        this.handleIpUnrecognizedList().then(value => {
-          this.totalCount = value.data.totalCount;
-          this.ipUnrecognizedList = value.data.unrecognizedIp;
-          this.ipUnrecognizedListTableLoading = false;
-        }).catch(reason => {
-          this.ipUnrecognizedListTableLoading = false;
+      requestIpUnknownList() {
+        this.ipUnknownListTableLoading = true;
+        getIpUnknownList(this.currentPage, this.pageSize).then(value => {
+          this.totalCount = value.data.count;
+          this.ipUnknownList = value.data.ip_unknown;
+          this.ipUnknownListTableLoading = false;
+        }).catch(() => {
+          this.ipUnknownListTableLoading = false;
         })
       },
     },
     created() {
-      this.getIpUnrecognizedList();
+      this.requestIpUnknownList();
     },
   }
 </script>

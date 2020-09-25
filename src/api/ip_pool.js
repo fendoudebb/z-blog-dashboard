@@ -1,13 +1,26 @@
 import axios from '@/libs/axios'
-import {ipPoolListUrl} from './url';
+import {ipPoolListUrl, ipUnknownListUrl} from './url';
 
-export const getIpPoolList = (page, size) => {
+export const getIpPoolList = (ip, page, size) => {
   const data = {
+    ip,
     page,
     size
   };
   return axios.request({
     url: ipPoolListUrl,
+    data,
+    method: 'post'
+  })
+};
+
+export const getIpUnknownList = (page, size) => {
+  const data = {
+    page,
+    size
+  };
+  return axios.request({
+    url: ipUnknownListUrl,
     data,
     method: 'post'
   })
