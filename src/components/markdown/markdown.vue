@@ -31,11 +31,11 @@
           },*/
           hljs_js: function() {
             // 这是你的hljs文件路径
-            return 'https://cdn.staticfile.org/highlight.js/9.15.8/highlight.min.js';
+            return 'https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.1/highlight.min.js';
           },
           hljs_css: function() {
             // 这是你的代码高亮配色文件路径
-            return 'https://cdn.staticfile.org/highlight.js/9.15.8/styles/atom-one-dark.min.css';
+            return 'https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.1/styles/atom-one-dark.min.css';
           },
           /*katex_css: function() {
             // 这是你的katex配色方案路径路径
