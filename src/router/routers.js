@@ -193,8 +193,8 @@ export default [
     ]
   },
   {
-    path: '/statistics',
-    name: 'statistics',
+    path: '/record',
+    name: 'record',
     meta: {
       //<Icon type="android-compass"></Icon>
       icon: 'stats-bars',
@@ -210,7 +210,7 @@ export default [
           // icon: 'document',
           title: '访问统计'
         },
-        component: () => import('@/components/statistics/PageView')
+        component: () => import('@/components/record/PageView')
       },
       {
         path: 'search_stats',
@@ -220,7 +220,7 @@ export default [
           // icon: 'document',
           title: '搜索统计'
         },
-        component: () => import('@/components/statistics/SearchStats')
+        component: () => import('@/components/record/Search')
       },
     ]
   },

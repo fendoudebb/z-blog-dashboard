@@ -2,7 +2,7 @@
   <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
       <InputNumber clearable :min="1" v-model="searchPostId" number placeholder="请输入文章id" style="width: 150px;"/>
-      <Select clearable v-model="rankType" style="width:150px">
+      <Select v-model="rankType" style="width:150px">
         <Option v-for="item in rankTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
       <Button type="primary" @click="searchPostById">搜索</Button>
@@ -41,7 +41,6 @@
 <script>
   import expandRow from './PostDetail';
   import expandRow2 from './PostCommentDetail';
-  import {mapMutations} from 'vuex';
   import {getPostList, modifyPostStatus, getPostCommentList, deletePostComment, replyPostComment} from '@/api/post';
 
   export default {
@@ -149,7 +148,7 @@
                 action.push(edit);
               }
               if (postStatus === 0) {
-                let watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPostById(params.row.postId)}}}, '查看');
+                let watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPostById(params.row.id)}}}, '查看');
                 action.push(watch);
               }
               return h('div', [action]);
@@ -236,9 +235,6 @@
       };
     },
     methods: {
-      ...mapMutations([
-        'setEditPostId',
-      ]),
       resetSearch() {
         this.currentPage = 1;
         this.searchPostId = null;
@@ -309,8 +305,7 @@
         this.requestModifyPostStatus(postId, 1);
       },
       edit(postId) {
-        this.setEditPostId(postId);
-        this.$router.push({name: 'publish'})
+        this.$router.push({path: 'publish', query: {postId: postId}})
       },
       commentChangePage(index) {
         this.commentCurrentPage = index;

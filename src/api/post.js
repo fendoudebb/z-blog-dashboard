@@ -8,7 +8,7 @@ import {
   deletePostCommentUrl,
   replyPostCommentUrl,
   postImgUploadUrl
-} from './url';
+} from '@/api/url';
 
 export const getPostList = (post_id, rank_type, page, size) => {
   const data = {

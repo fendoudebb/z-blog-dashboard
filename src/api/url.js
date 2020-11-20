@@ -33,7 +33,9 @@ export const ipUnknownListUrl = '/ip-pool/unknown-list';
 
 export const queryUnrecognizedIp = '/ip_unrecognized/query';
 
-export const searchStatsListUrl = '/search_stats';
+export const searchRecordListUrl = '/search/record/web';
+
+export const searchRecordWxListUrl = '/search/record/wx';
 
 export const topicListUrl = '/topic/list';
 

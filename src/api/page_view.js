@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {pageViewListUrl, pageViewInvalidListUrl} from './url';
+import {pageViewListUrl, pageViewInvalidListUrl} from '@/api/url';
 
 export const getPageViewList = (type, page, size) => {
   const data = {

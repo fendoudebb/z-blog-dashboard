@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {linkListUrl, linkUpsertUrl, linkAuditUrl} from './url';
+import {linkListUrl, linkUpsertUrl, linkAuditUrl} from '@/api/url';
 
 export const getLinkList = (page, size) => {
   const data = {

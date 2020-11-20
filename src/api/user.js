@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {loginUrl, logoutUrl} from './url';
+import {loginUrl, logoutUrl} from '@/api/url';
 
 export const login = ({username, password}) => {
   const data = {

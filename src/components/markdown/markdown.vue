@@ -23,7 +23,7 @@
       return {
         value:'',
         subfield: true,
-        code_style: 'solarized-dark',
+        code_style: 'atom-one-dark',
         externalLink: {
           /*markdown_css: function() {
             // 这是你的markdown css文件路径
@@ -31,21 +31,21 @@
           },*/
           hljs_js: function() {
             // 这是你的hljs文件路径
-            return 'https://cdn.staticfile.org/highlight.js/9.15.8/highlight.min.js';
+            return 'https://cdn.bootcdn.net/ajax/libs/highlight.js/10.3.2/highlight.min.js';
           },
           hljs_css: function() {
             // 这是你的代码高亮配色文件路径
-            return 'https://cdn.staticfile.org/highlight.js/9.15.8/styles/atom-one-dark.min.css';
+            return 'https://cdn.bootcdn.net/ajax/libs/highlight.js/10.3.2/styles/atom-one-dark.min.css';
           },
           /*katex_css: function() {
             // 这是你的katex配色方案路径路径
-            return 'https://s.zhangbj.com/lib/katex/0.9.0/css/katex.min.css';
+            return 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.12.0/katex.min.css';
           },*/
           katex_css: false,
           katex_js: false
           /*katex_js: function() {
             // 这是你的katex.js路径
-            return 'https://s.zhangbj.com/lib/katex/0.9.0/js/katex.min.js';
+            return 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.12.0/katex.min.js';
           },*/
         }
       }
@@ -65,6 +65,9 @@
           console.log(JSON.stringify(data));
           this.$refs.md.$img2Url(pos, data.data);
         });
+      },
+      getHtml() {
+        return this.$refs.md.d_render;
       },
       getValue() {
         return this.value;

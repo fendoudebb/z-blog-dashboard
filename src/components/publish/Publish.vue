@@ -36,10 +36,10 @@
       </div>
 
       <div style="margin-top: 20px">
-        私人文章：
-        <i-switch v-model="postIsPrivate" size="large">
-          <span slot="open">私人</span>
-          <span slot="close">公开</span>
+        是否公开：
+        <i-switch v-model="postIsPublic" size="large">
+          <span slot="open">公开</span>
+          <span slot="close">私人</span>
         </i-switch>
       </div>
     </Modal>
@@ -48,7 +48,7 @@
 
 <script>
   import MarkdownEditor from '@/components/markdown';
-  import {mapMutations, mapGetters, mapActions} from 'vuex';
+  import {getPostInfo, publishPost} from "@/api/publish";
 
   export default {
     name: "publish",
@@ -58,32 +58,16 @@
     data() {
       return {
         publishPostModal: false,
-        postProp: 'ORIGINAL',
-        postPropMapper: [{value: 'ORIGINAL', label: '原创'}, {value: 'COPY', label: '转载'}],
+        postProp: 0,
+        postPropMapper: [{value: 0, label: '原创'}, {value: 1, label: '转载'}],
         postTopics: [{}],
         postTopicMapper: [],
-        postIsPrivate: false,
+        postIsPublic: true,
         publishLoading: false,
         postTitle: '',
       }
     },
     methods: {
-      ...mapMutations([
-        'setEditPostId',
-        'setTitle',
-        'setContent',
-        'setPostProp',
-        'setPostIsPrivate',
-        'setTopics',
-      ]),
-      ...mapGetters([
-        'getEditPostId'
-      ]),
-      ...mapActions([
-        'handlePublishPost',
-        'handleEditPost',
-        'handlePostInfo',
-      ]),
       deleteTopicInput(index) {
         this.postTopics.splice(index,1)
       },
@@ -115,27 +99,31 @@
             topics.push(postTopic.value);
           }
         }
-        this.setTitle(this.postTitle);
-        this.setContent(postContent);
-        this.setPostProp(this.postProp);
-        this.setPostIsPrivate(this.postIsPrivate ? 1 : 0);
+        // this.setTitle(this.postTitle);
+        // this.setContent(postContent);
+        // this.setPostProp(this.postProp);
+        // this.setPostIsPrivate(this.postIsPrivate ? 1 : 0);
 
-        this.setTopics(topics);
+        // this.setTopics(topics);
         this.publishLoading = true;
 
-        if (this.getEditPostId()) {
-          this.handleEditPost().then(value => {
+        if (this.$route.query.postId) {
+          console.log(this.$refs.markdownEditor.getHtml());
+          publishPost({content_html:this.$refs.markdownEditor.getHtml()}).then(res => {
+
+          });
+          /*this.handleEditPost().then(value => {
             this.$Message.success("修改文章成功!");
             this.doAction();
-          }).catch(reason => {
+          }).catch(() => {
             this.publishLoading = false;
             this.$Message.error("修改文章失败!");
-          })
+          })*/
         } else {
           this.handlePublishPost().then(value => {
             this.$Message.success("发布文章成功!");
             this.doAction();
-          }).catch(reason => {
+          }).catch(() => {
             this.publishLoading = false;
             this.$Message.error("发布文章失败!");
           })
@@ -143,7 +131,7 @@
       },
       doAction() {
         this.publishLoading = false;
-        localStorage.markdownContent = '';
+        // localStorage.markdownContent = '';
         let location;
         /*if (articleProperty === 'DRAFT') {
           location = {
@@ -157,14 +145,14 @@
         this.$router.push({name:'post'});
       },
     },
-    mounted() {
-      if (this.getEditPostId()) {
-        this.handlePostInfo().then(value => {
-          this.setEditPostId(value.data.postId);
-          this.postTitle = value.data.title;
-          this.$refs.markdownEditor.setValue(value.data.content);
-          this.postProp = value.data.postProp;
-          let topics = value.data.topics;
+    created() {
+      console.log("传递的id#" + this.$route.query.postId);
+      if (this.$route.query.postId) {
+        getPostInfo(parseInt(this.$route.query.postId)).then(res => {
+          this.postTitle = res.data.title;
+          this.$refs.markdownEditor.setValue(res.data.content);
+          this.postProp = res.data.prop;
+          let topics = res.data.topics;
           if (topics != null) {
             if (topics.length > 0) {
               this.postTopics = [];
@@ -173,16 +161,15 @@
               this.postTopics.push({'value': topics[i]});
             }
           }
-          if (value.data.postStatus === 'PRIVATE') {
-            this.postIsPrivate = true
+          if (res.data.post_status === 0) {
+            this.postIsPublic = true
           }
         })
       }
     },
     destroyed() {
-      if (this.getEditPostId()) {
-        this.setEditPostId('');
-        localStorage.markdownContent = '';
+      if (this.$route.query.postId) {
+        // localStorage.markdownContent = '';
       }
     }
   }

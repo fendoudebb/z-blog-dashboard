@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {topicListUrl, topicUpsertUrl} from './url';
+import {topicListUrl, topicUpsertUrl} from '@/api/url';
 
 export const getTopicList = (name, page, size) => {
   const data = {

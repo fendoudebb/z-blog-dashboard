@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 20px;padding:20px;background-color: white">
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Select clearable v-model="pvType" style="width:150px">
+      <Select v-model="pvType" style="width:150px">
         <Option v-for="item in pvTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
       <Button type="primary" @click="watchPv">查看</Button>
