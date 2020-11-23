@@ -1,11 +1,7 @@
 <template>
   <div style="margin: 20px;padding:20px;background-color: white">
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Select v-model="recordType" style="width:150px">
-        <Option v-for="item in recordTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-      </Select>
-      <Button type="primary" @click="watchRecord">查看</Button>
-      <Button type="ghost" @click="resetWatchRecord">重置</Button>
+      <Button type="ghost" @click="resetWatchRecord">刷新</Button>
     </div>
     <Table border stripe :data="searchRecordList" :columns="searchRecordListColumns" :loading="searchRecordListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">
@@ -23,17 +19,6 @@
     data() {
       return {
         roles: localStorage.getItem('roles'),
-        recordType : 0,
-        recordTypeList: [
-          {
-            value: 0,
-            label: "网页"
-          },
-          {
-            value: 1,
-            label: "微信小程序"
-          },
-        ],
         searchRecordListTableLoading: false,
         searchRecordList: [],
         pageSize: 10,
@@ -58,18 +43,13 @@
         this.currentPage = index;
         this.requestSearchRecordList();
       },
-      watchRecord() {
-        this.currentPage = 1;
-        this.requestSearchRecordList();
-      },
       resetWatchRecord() {
         this.currentPage = 1;
-        this.recordType = 0;
         this.requestSearchRecordList();
       },
       requestSearchRecordList() {
         this.searchRecordListTableLoading = true;
-        getSearchRecordList(this.recordType, this.currentPage, this.pageSize).then(res => {
+        getSearchRecordList(this.currentPage, this.pageSize).then(res => {
           this.totalCount = res.data.count;
           this.searchRecordList = res.data.search_record;
           this.searchRecordListTableLoading = false;

@@ -35,8 +35,6 @@ export const queryUnrecognizedIp = '/ip_unrecognized/query';
 
 export const searchRecordListUrl = '/search/record/web';
 
-export const searchRecordWxListUrl = '/search/record/wx';
-
 export const topicListUrl = '/topic/list';
 
 export const topicUpsertUrl = '/topic/upsert';

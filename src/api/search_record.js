@@ -1,5 +1,5 @@
 import axios from '@/libs/axios'
-import {searchRecordListUrl, searchRecordWxListUrl} from '@/api/url';
+import {searchRecordListUrl} from '@/api/url';
 
 export const getSearchRecordList = (type, page, size) => {
   const data = {
@@ -7,7 +7,7 @@ export const getSearchRecordList = (type, page, size) => {
     size
   };
   return axios.request({
-    url: type === 0 ? searchRecordListUrl : searchRecordWxListUrl,
+    url: searchRecordListUrl,
     data,
     method: 'post'
   })
