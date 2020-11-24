@@ -69,7 +69,8 @@
           {title: '回复时间', key: 'create_ts', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '浏览器', key: 'browser', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '操作系统', key: 'os', align: 'center', ellipsis: true, minWidth: 150,},
-          {title: '回复IP', key: 'ip_id', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: 'IP', key: 'ip', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: 'IP地址', key: 'address', align: 'center', ellipsis: true, minWidth: 150,},
           {
             title: '状态', key: 'status', align: 'center', ellipsis: true, minWidth: 100,
             render: (h, params) => {
@@ -155,6 +156,8 @@
           {title: '留言时间', key: 'create_ts', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '浏览器', key: 'browser', align: 'center', ellipsis: true, minWidth: 150,},
           {title: '操作系统', key: 'os', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: 'IP', key: 'ip', align: 'center', ellipsis: true, minWidth: 150,},
+          {title: 'IP地址', key: 'address', align: 'center', ellipsis: true, minWidth: 150,},
           {
             title: '状态', key: 'status', align: 'center', ellipsis: true, minWidth: 100,
             render: (h, params) => {

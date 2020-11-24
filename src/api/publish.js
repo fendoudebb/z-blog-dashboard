@@ -1,7 +1,10 @@
 import axios from '@/libs/axios'
-import {postInfoUrl, publishPostUrl, editPostUrl} from './url';
+import {postInfoUrl, publishPostUrl} from '@/api/url';
 
-export const postInfo = (data) => {
+export const getPostInfo = (id) => {
+  const data = {
+    id
+  };
   return axios.request({
     url: postInfoUrl,
     data,

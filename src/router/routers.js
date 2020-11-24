@@ -75,6 +75,94 @@ export default [
   },
 
   {
+    path: '/message-board',
+    name: '留言板',
+    meta:{
+      title: '',
+    },
+    component: Main,
+    children: [
+      {
+        path: '/message-board',
+        name: 'message-board',
+        meta:{
+          //<Icon type="paintbrush"></Icon>
+          icon: 'chatbubble-working',
+          title: '留言板',
+        },
+        component: () => import('@/components/message-board/MessageBoard')
+      },
+    ]
+  },
+
+  {
+    path: '/record',
+    name: 'record',
+    meta: {
+      //<Icon type="android-compass"></Icon>
+      icon: 'stats-bars',
+      title: '统计信息'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'page_view',
+        name: 'page_view',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'document',
+          title: '访问统计'
+        },
+        component: () => import('@/components/record/PageView')
+      },
+      {
+        path: 'search_stats',
+        name: 'search_stats',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'document',
+          title: '搜索统计'
+        },
+        component: () => import('@/components/record/Search')
+      },
+    ]
+  },
+
+  {
+    path: '/ip',
+    name: 'IP',
+    meta: {
+      //<Icon type="android-compass"></Icon>
+      icon: 'ios-world-outline',
+      title: 'IP管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'ip_pool',
+        name: 'ip_pool',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'document',
+          title: 'IP列表'
+        },
+        component: () => import('@/components/ip/IpPool')
+      },
+      {
+        path: 'ip_unknown',
+        name: 'ip_unknown',
+        meta: {
+          //<Icon type="checkmark-circled"></Icon>
+          // icon: 'document',
+          title: '未识别IP列表'
+        },
+        component: () => import('@/components/ip/IpUnknown')
+      },
+
+    ]
+  },
+
+  {
     path: '/english',
     name: '单词',
     meta: {
@@ -117,27 +205,6 @@ export default [
   },
 
   {
-    path: '/message-board',
-    name: '留言板',
-    meta:{
-      title: '',
-    },
-    component: Main,
-    children: [
-      {
-        path: '/message-board',
-        name: 'message-board',
-        meta:{
-          //<Icon type="paintbrush"></Icon>
-          icon: 'chatbubble-working',
-          title: '留言板',
-        },
-        component: () => import('@/components/message-board/MessageBoard')
-      },
-    ]
-  },
-
-  {
     path: '/link',
     name: '友链',
     meta: {
@@ -156,72 +223,6 @@ export default [
         },
         component: () => import('@/components/link/LinkList')
       }
-    ]
-  },
-
-  {
-    path: '/ip',
-    name: 'IP',
-    meta: {
-      //<Icon type="android-compass"></Icon>
-      icon: 'ios-world-outline',
-      title: 'IP管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'ip_pool',
-        name: 'ip_pool',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          // icon: 'document',
-          title: 'IP列表'
-        },
-        component: () => import('@/components/ip/IpPool')
-      },
-      {
-        path: 'ip_unknown',
-        name: 'ip_unknown',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          // icon: 'document',
-          title: '未识别IP列表'
-        },
-        component: () => import('@/components/ip/IpUnknown')
-      },
-
-    ]
-  },
-  {
-    path: '/record',
-    name: 'record',
-    meta: {
-      //<Icon type="android-compass"></Icon>
-      icon: 'stats-bars',
-      title: '统计信息'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'page_view',
-        name: 'page_view',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          // icon: 'document',
-          title: '访问统计'
-        },
-        component: () => import('@/components/record/PageView')
-      },
-      {
-        path: 'search_stats',
-        name: 'search_stats',
-        meta: {
-          //<Icon type="checkmark-circled"></Icon>
-          // icon: 'document',
-          title: '搜索统计'
-        },
-        component: () => import('@/components/record/Search')
-      },
     ]
   },
 

@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 20px;padding:20px;background-color: white">
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Button type="ghost" @click="resetWatchRecord">刷新</Button>
+      <Button type="primary" @click="resetWatchRecord">刷新</Button>
     </div>
     <Table border stripe :data="searchRecordList" :columns="searchRecordListColumns" :loading="searchRecordListTableLoading"></Table>
     <div style="margin: 20px;overflow: hidden">

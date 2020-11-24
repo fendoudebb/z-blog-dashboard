@@ -351,6 +351,9 @@
       }
     },
     created() {
+      if (this.$route.params.postId) {
+        this.searchPostId = this.$route.params.postId
+      }
       this.requestPostList();
     },
     mounted() {

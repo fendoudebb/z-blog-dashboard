@@ -1,7 +1,7 @@
 import axios from '@/libs/axios'
 import {searchRecordListUrl} from '@/api/url';
 
-export const getSearchRecordList = (type, page, size) => {
+export const getSearchRecordList = (page, size) => {
   const data = {
     page,
     size
