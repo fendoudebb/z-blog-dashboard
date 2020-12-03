@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white;">
+  <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
       <label>
         <Input clearable v-model="searchIp" placeholder="请输入IP" style="width: 150px;"/>

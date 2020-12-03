@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 5px">
+  <div>
     <Row>
       <Col span="15">
         <Form>

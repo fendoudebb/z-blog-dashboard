@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white">
+  <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
       <Select v-model="pvType" style="width:150px">
         <Option v-for="item in pvTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>

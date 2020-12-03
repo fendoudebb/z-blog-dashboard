@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 20px;padding:20px;background-color: white;">
+  <div>
     <!--<div style="margin-bottom: 20px">
       <Button type="primary" @click="queryAllIp" :loading="queryLoading">
         <Icon type="ios-search"></Icon>
