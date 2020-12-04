@@ -4,6 +4,7 @@
 
 <script>
 import errorContent from './error-content.vue'
+import error401 from '@/assets/images/error-401.svg'
 export default {
   name: 'error_401',
   components: {
@@ -11,7 +12,7 @@ export default {
   },
   data () {
     return {
-      src: 'https://s.zhangbj.com/pic/svg/error-401.svg'
+      src: error401
     }
   }
 }

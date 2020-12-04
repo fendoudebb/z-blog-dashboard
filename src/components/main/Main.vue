@@ -27,7 +27,7 @@
         </Layout>
       </Content>
       <Footer style="text-align: center">
-        <p>&copy; 2020 <a href="https://www.zhangbj.com" target="_blank">程序员技术之旅</a></p>
+        <p>&copy; {{new Date().getFullYear()}} <a href="/" target="_blank">程序员技术之旅</a></p>
       </Footer>
     </Layout>
   </Layout>

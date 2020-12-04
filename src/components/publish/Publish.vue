@@ -86,6 +86,7 @@
         postStatus: 0,
         publishLoading: false,
         postTitle: '',
+        publish: false,
       }
     },
     methods: {
@@ -145,6 +146,7 @@
         publishPost(data).then(res => {
           this.publishLoading = false;
           if (res.code === 0) {
+            this.publish = true;
             this.$Message.success("操作成功");
             this.$router.push({name:'post', params:{postId: res.data.id}});
           } else {
@@ -175,7 +177,7 @@
       }
     },
     beforeRouteLeave (to, from, next) {
-      if (!this.$route.query.postId && this.$refs.markdownEditor.getValue()) {
+      if (!this.publish && this.$refs.markdownEditor.getValue()) {
         this.$Modal.confirm({
           content:'内容还未保存，是否离开？',
           title:'提示',

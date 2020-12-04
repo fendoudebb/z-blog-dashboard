@@ -1,4 +1,4 @@
-# ![logo](./static/logo.png)Blog项目后台管理
+# Blog项目后台管理
 
 ## 项目地址
 [https://admin.zhangbj.com](https://admin.zhangbj.com)

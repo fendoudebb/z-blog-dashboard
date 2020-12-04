@@ -246,7 +246,7 @@
         this.requestPostList();
       },
       watchPostById(postId) {
-        window.open('https://www.zhangbj.com/p/' + postId + ".html");
+        window.open('/p/' + postId + ".html");
       },
       watchCommentReply(params) {
         this.commentReplyModal = true;
