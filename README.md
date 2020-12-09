@@ -3,6 +3,10 @@
 ## 项目地址
 [https://admin.zhangbj.com](https://admin.zhangbj.com)
 
+访客账号：`guest`
+
+访客密码：`guest`
+
 ## 技术栈
 - [Vue.js: 构建框架](https://github.com/vuejs/vue)
 - [iview: 页面控件](https://github.com/iview/iview)
