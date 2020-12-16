@@ -18,6 +18,7 @@
                      style="height: 600px;z-index: 1"></markdown-editor>
 
     <Modal
+      :mask-closable="false"
       v-model="publishPostModal"
       title="发布文章"
       @on-ok="postPublish"

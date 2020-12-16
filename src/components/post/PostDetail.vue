@@ -6,7 +6,7 @@
         <!--      <span class="expand-value">{{ topic }}</span>-->
         <Tag type="border" :closable='isAdmin' color="green" @on-close="handleClose(topic)">{{ topic }}</Tag>
       </div>
-      <Button v-if="row.topics.length < 3" type="primary" size="small"  @click="addTopicFunc">添加</Button>
+      <Button v-if="row.topics && (row.topics.length < 3)" type="primary" size="small"  @click="addTopicFunc">添加</Button>
     </div>
     <br>
     <span class="expand-key">创建时间: </span>
