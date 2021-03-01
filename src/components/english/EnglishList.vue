@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
+    <div @keyup.enter="findWord" style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
       <label>
         <Input clearable v-model="searchWord" placeholder="搜索" style="width: 150px;"/>
       </label>
@@ -18,6 +18,7 @@
     </div>
 
     <Modal
+      :mask-closable="false"
       v-model="showAddNewWordModal"
       :title="wordModalTitle"
       @on-ok="onModalOkClick">
@@ -147,10 +148,12 @@
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 70, fixed: 'right',
             render: (h, params) => {
               let action = [];
-              //@formatter:off
+              if (this.roles.indexOf("ROLE_ADMIN") > -1) {
+                //@formatter:off
                 let updateWord = h('Button', {props: {type: 'primary', size: 'small',}, style: {marginRight: '5px'}, on: {click: () => {this.updateWord(params.row)}}}, '修改');
                 //@formatter:on
-              action.push(updateWord);
+                action.push(updateWord);
+              }
               return h('div', [action]);
             }
           }

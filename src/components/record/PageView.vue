@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <Select v-model="pvType" style="width:150px">
+      <Select @on-change="watchPv" v-model="pvType" style="width:150px">
         <Option v-for="item in pvTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
       <Button type="primary" @click="watchPv">查看</Button>
@@ -47,7 +47,25 @@
               return h(expandRow, {props: {row: params.row}})
             }
           },
-          {title: 'URL', key: 'url', align: 'center', ellipsis:true, minWidth: 150,},
+          {
+            title: 'URL', key: 'url', align: 'center', ellipsis:true, minWidth: 150,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.url
+                  }
+                }, params.row.url)
+              ])
+            }
+          },
           {
             title: '请求方法', key: 'req_method', align: 'center', ellipsis:true, minWidth: 100,
             render: (h, params) => {
@@ -66,24 +84,60 @@
               } else {
                 text = 'OTHER';
               }
-              return h('span', [text]);
+              // return h('span', [text]);
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    color: params.row.req_param ? 'red' : ''
+                  },
+                  domProps: {
+                    title: "请求参数\n" + (params.row.req_param ? params.row.req_param : "无")
+                  }
+                }, text)
+              ])
             }
           },
           {title: '访问时间', key: 'create_ts', align: 'center' , ellipsis:true, minWidth: 150,},
-          {title: '耗时', key: 'cost_time', align: 'center' , ellipsis:true, minWidth: 150,},
+          {title: '耗时', key: 'cost_time', align: 'center' , ellipsis:true, minWidth: 100,},
           {title: '浏览器', key: 'browser', align: 'center' , ellipsis:true, minWidth: 150,},
           {title: '操作系统', key: 'os', align: 'center' , ellipsis:true, minWidth: 150,},
           {title: 'IP', key: 'ip', align: 'center' , ellipsis:true, minWidth: 150,},
-          {title: '地址', key: 'address', align: 'center' , ellipsis:true, minWidth: 200,},
+          {
+            title: '地址', key: 'address', align: 'center' , ellipsis:true, minWidth: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.address
+                  }
+                }, params.row.address)
+              ])
+            }
+          },
           {
             title: '操作', key: 'action', align: 'center', ellipsis:true, minWidth: 150,
             render: (h, params) => {
               let watch;
               let url = params.row.url;
-              if (url != null && url.indexOf('/p/') === 0) {
-                watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看文章');
-              } else {
-                watch = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看页面');
+              let method = params.row.req_method;
+              if (method !== 1) { // POST
+                if (url != null && url.indexOf('/p/') === 0) {
+                  watch = h('Button', {props: {type: 'success', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看文章');
+                } else {
+                  watch = h('Button', {props: {type: 'primary', size: 'small'}, style: {marginRight: '5px'}, on: {click: () => {this.watchPost(url)}}}, '查看页面');
+                }
               }
               return h('div', [watch]);
             }
@@ -102,7 +156,7 @@
         this.requestPageViewList();
       },
       watchPost(url) {
-        window.open('https://www.zhangbj.com' + url);
+        window.open(url);
       },
       changePage(index) {
         this.currentPage = index;

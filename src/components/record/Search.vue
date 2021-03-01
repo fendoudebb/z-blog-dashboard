@@ -27,12 +27,66 @@
         searchRecordListColumns: [
           // {title: 'ID', key: 'id', align: 'center'},
           {title: '搜索时间', key: 'create_ts', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '关键词', key: 'keywords', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '耗时', key: 'took', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '命中', key: 'hits', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '上游地址', key: 'referer', align: 'center', ellipsis:true, minWidth: 250,},
+          {
+            title: '关键词', key: 'keywords', align: 'center', ellipsis:true, minWidth: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.keywords
+                  }
+                }, params.row.keywords)
+              ])
+            }
+          },
+          {title: '耗时', key: 'took', align: 'center', ellipsis:true, minWidth: 100,},
+          {title: '命中', key: 'hits', align: 'center', ellipsis:true, minWidth: 100,},
+          {
+            title: '上游地址', key: 'referer', align: 'center', ellipsis:true, minWidth: 250,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.referer
+                  }
+                }, params.row.referer)
+              ])
+            }
+          },
           {title: 'IP', key: 'ip', align: 'center', ellipsis:true, minWidth: 150,},
-          {title: '地址', key: 'address', align: 'center', ellipsis:true, minWidth: 150,},
+          {
+            title: '地址', key: 'address', align: 'center', ellipsis:true, minWidth: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.address
+                  }
+                }, params.row.address)
+              ])
+            }
+          },
           {title: '浏览器', key: 'browser', align: 'center', ellipsis:true, minWidth: 150,},
           {title: '操作系统', key: 'os', align: 'center', ellipsis:true, minWidth: 150,},
         ]

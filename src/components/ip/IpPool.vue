@@ -70,7 +70,11 @@
         this.ipPoolListTableLoading = true;
         getIpPoolList(this.searchIp, this.currentPage, this.pageSize).then(value => {
           this.totalCount = value.data.count;
-          this.ipPoolList = value.data.ip_pool;
+          if (this.totalCount > 0) {
+            this.ipPoolList = value.data.ip_pool;
+          } else {
+            this.ipPoolList = [];
+          }
           this.ipPoolListTableLoading = false;
         }).catch(() => {
           this.ipPoolListTableLoading = false;

@@ -12,6 +12,7 @@
     </div>
 
     <Modal
+      :mask-closable="false"
       v-model="showLinkModal"
       :title="linkTitle"
       @on-ok="onModalOkClick">
@@ -78,7 +79,25 @@
           {title: '排序', key: 'sort', align: 'center', ellipsis: true, minWidth: 80,},
           {title: 'ID', key: 'id', align: 'center', ellipsis: true, minWidth: 80,},
           {title: '网站名称', key: 'website', align: 'center', ellipsis: true, minWidth: 150,},
-          {title: '链接', key: 'url', align: 'center', ellipsis: true, minWidth: 200,},
+          {
+            title: '链接', key: 'url', align: 'center', ellipsis: true, minWidth: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.url
+                  }
+                }, params.row.url)
+              ])
+            }
+          },
           {title: '站长', key: 'webmaster', align: 'center', ellipsis: true, minWidth: 100,},
           {
             title: '状态', key: 'status', align: 'center', ellipsis: true, minWidth: 100,
@@ -114,7 +133,7 @@
                 style: {marginRight: '5px'},
                 on: {
                   click: () => {
-                    this.visitLink(params.row.link)
+                    this.visitLink(params.row.url)
                   }
                 }
               }, '访问');

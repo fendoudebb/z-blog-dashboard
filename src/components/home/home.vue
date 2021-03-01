@@ -39,7 +39,7 @@
       </span>
           <ul class="rank">
             <li v-for="(item,index) in rankPost" :key="index">
-              <a :href="`https://www.zhangbj.com/p/${item.id}/.html`" target="_blank">
+              <a :href="`/p/${item.id}/.html`" target="_blank">
                 <div style="width: 80%" :title="item.title">{{index + 1}}. {{ item.title }}</div>
                 <div style="max-width:15%;float: right" :title="item.pv">{{ item.pv }}</div>
               </a>

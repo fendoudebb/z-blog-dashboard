@@ -1,8 +1,10 @@
 <template>
   <div>
     <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
-      <InputNumber clearable :min="1" v-model="searchPostId" number placeholder="请输入文章id" style="width: 150px;"/>
-      <Select v-model="rankType" style="width:150px">
+      <div @keyup.enter="searchPostById" style="display: inline-block">
+        <InputNumber clearable :min="1" v-model="searchPostId" number placeholder="请输入文章id" style="width: 150px;"/>
+      </div>
+      <Select @on-change="searchPostById" v-model="rankType" style="width:150px">
         <Option v-for="item in rankTypeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
       <Button type="primary" @click="searchPostById">搜索</Button>
@@ -158,17 +160,54 @@
         commentList: [],
         commentColumns: [
           {
-            type: 'expand', width: 50, render: (h, params) => {
+            type: 'expand', width: 30, render: (h, params) => {
               return h(expandRow2, {props: {row: params.row}})
             }
           },
-          {title: '楼层', key: 'floor', align: 'center'},
-          {title: '昵称', key: 'nickname', align: 'center'},
-          {title: '留言时间', key: 'comment_date', align: 'center'},
-          {title: '浏览器', key: 'browser', align: 'center'},
-          {title: '操作系统', key: 'os', align: 'center'},
+          {title: '楼层', key: 'floor', align: 'center', minWidth: 20,},
           {
-            title: '状态', key: 'status', align: 'center',
+            title: '昵称', key: 'nickname', align: 'center', minWidth: 50,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.nickname
+                  }
+                }, params.row.nickname)
+              ])
+            }
+          },
+          {
+            title: '评论', key: 'content', align: 'center', minWidth: 80,
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: params.row.content
+                  }
+                }, params.row.content)
+              ])
+            }
+          },
+          {title: '留言时间', key: 'comment_date', align: 'center', minWidth: 50,},
+          {title: '浏览器', key: 'browser', align: 'center', minWidth: 50,},
+          {title: '操作系统', key: 'os', align: 'center', minWidth: 50,},
+          {
+            title: '状态', key: 'status', align: 'center', minWidth: 30,
             render: (h, params) => {
               let commentStatus = params.row.status;
               let text = '';
@@ -184,7 +223,7 @@
             }
           },
           {
-            title: '操作', key: 'action', align: 'center',
+            title: '操作', key: 'action', align: 'center', minWidth: 150, fixed: 'right',
             render: (h, params) => {
               let action = [];
               if (this.roles.indexOf("ROLE_ADMIN") > -1) {
@@ -210,7 +249,7 @@
         ],
         commentReplyList:[],
         commentReplyColumns:[
-          {title: '内容', key: 'content', align: 'center', ellipsis:true, minWidth: 300,
+          {title: '内容', key: 'content', align: 'center', ellipsis:true,
             render: (h, params) => {
               return h('div', [
                 h('span', {
@@ -228,9 +267,9 @@
               ])
             }
           },
-          {title: '留言时间', key: 'reply_date', align: 'center', minWidth: 150},
-          {title: '浏览器', key: 'browser', align: 'center', minWidth: 150},
-          {title: '操作系统', key: 'os', align: 'center', minWidth: 100},
+          {title: '留言时间', key: 'reply_date', align: 'center', },
+          {title: '浏览器', key: 'browser', align: 'center', },
+          {title: '操作系统', key: 'os', align: 'center', },
         ]
       };
     },

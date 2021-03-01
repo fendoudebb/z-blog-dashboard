@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1">
+    <div @keyup.enter="findTopic" style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1">
       <label>
         <Input clearable v-model="searchTopic" placeholder="搜索" style="width: 150px;"/>
       </label>
@@ -18,6 +18,7 @@
     </div>
 
     <Modal
+      :mask-closable="false"
       v-model="showUpsertTopicModal"
       :title="topicModalTitle"
       @on-ok="onUpsertTopicModalOkClick">
