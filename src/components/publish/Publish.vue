@@ -126,6 +126,8 @@
         this.publishLoading = true;
 
         let contentHtml = marked(postContent);
+        contentHtml = contentHtml.replace(/&#39;/g, "'");
+        contentHtml = contentHtml.replace(/&quot;/g, '"');
         let pureContent = contentHtml.replace(/<[^>]+>/g,"");
 
         let data = {
