@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
+    <div @keyup.enter="findIp" style="margin-bottom: 20px" v-if="this.roles.indexOf(`ROLE_ADMIN`) > -1" >
       <label>
         <Input clearable v-model="searchIp" placeholder="请输入IP" style="width: 150px;"/>
       </label>
