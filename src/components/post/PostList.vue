@@ -344,7 +344,8 @@
         this.requestModifyPostStatus(postId, 1);
       },
       edit(postId) {
-        this.$router.push({path: 'publish', query: {postId: postId}})
+        let params = {postId: postId, rankType: this.rankType, currentPage: this.currentPage};
+        this.$router.push({name: 'publish', params: params})
       },
       commentChangePage(index) {
         this.commentCurrentPage = index;
@@ -390,8 +391,11 @@
       }
     },
     created() {
-      if (this.$route.params.postId) {
-        this.searchPostId = this.$route.params.postId
+      if (this.$route.params.rankType) {
+        this.rankType = this.$route.params.rankType
+      }
+      if (this.$route.params.currentPage) {
+        this.currentPage = this.$route.params.currentPage
       }
       this.requestPostList();
     },

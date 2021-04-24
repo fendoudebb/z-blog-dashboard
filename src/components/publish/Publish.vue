@@ -10,7 +10,6 @@
       </Col>
       <Col span="8" offset="1">
         <Button type="success" :loading="publishLoading" @click="publishPostModal = true">发布文章</Button>
-        <Button type="ghost" :loading="publishLoading" @click="postPublish" >存为草稿</Button>
       </Col>
     </Row>
 
@@ -142,8 +141,8 @@
           word_count: pureContent.length
         };
 
-        if (this.$route.query.postId) {
-          data.id = parseInt(this.$route.query.postId)
+        if (this.$route.params.postId) {
+          data.id = parseInt(this.$route.params.postId)
         }
 
         publishPost(data).then(res => {
@@ -151,7 +150,14 @@
           if (res.code === 0) {
             this.publish = true;
             this.$Message.success("操作成功");
-            this.$router.push({name:'post', params:{postId: res.data.id}});
+            let params = {postId: res.data.id};
+            if (this.$route.params.rankType) {
+              params.rankType = this.$route.params.rankType;
+            }
+            if (this.$route.params.currentPage) {
+              params.currentPage = this.$route.params.currentPage;
+            }
+            this.$router.push({name:'post', params: params});
           } else {
             this.$Message.success("操作失败");
           }
@@ -161,8 +167,8 @@
       },
     },
     created() {
-      if (this.$route.query.postId) {
-        getPostInfo(parseInt(this.$route.query.postId)).then(res => {
+      if (this.$route.params.postId) {
+        getPostInfo(parseInt(this.$route.params.postId)).then(res => {
           this.postTitle = res.data.title;
           this.$refs.markdownEditor.setValue(res.data.content);
           this.postProp = res.data.prop;

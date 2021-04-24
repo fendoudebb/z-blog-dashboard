@@ -4,7 +4,7 @@
       <span class="expand-key">标签: </span>
       <div v-for="(topic, index) in row.topics" :key="index" style="display: inline-block">
         <!--      <span class="expand-value">{{ topic }}</span>-->
-        <Tag type="border" :closable='isAdmin' color="green" @on-close="handleClose(topic)">{{ topic }}</Tag>
+        <Tag type="border" :closable='isAdmin' color="green" @click.native="openTopicHtml(topic)" @on-close="handleClose(topic)">{{ topic }}</Tag>
       </div>
       <Button v-if="row.topics && (row.topics.length < 3)" type="primary" size="small"  @click="addTopicFunc">添加</Button>
     </div>
@@ -38,6 +38,9 @@
       }
     },
     methods:{
+      openTopicHtml(topic) {
+        window.open('/topic/' + topic + ".html");
+      },
       handleClose(topic) {
         this.$Modal.confirm(
           {
