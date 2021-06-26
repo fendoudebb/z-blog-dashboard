@@ -41,11 +41,11 @@
 </template>
 
 <script>
-  import expandRow from './PostDetail';
-  import expandRow2 from './PostCommentDetail';
-  import {getPostList, modifyPostStatus, getPostCommentList, deletePostComment, replyPostComment} from '@/api/post';
+import expandRow from './PostDetail';
+import expandRow2 from './PostCommentDetail';
+import {deletePostComment, getPostCommentList, getPostList, modifyPostStatus, replyPostComment} from '@/api/post';
 
-  export default {
+export default {
     name: "post-list",
     components: {expandRow, expandRow2},
     data() {
@@ -164,9 +164,9 @@
               return h(expandRow2, {props: {row: params.row}})
             }
           },
-          {title: '楼层', key: 'floor', align: 'center', minWidth: 20,},
+          {title: '楼层', key: 'floor', align: 'center', minWidth: 15,},
           {
-            title: '昵称', key: 'nickname', align: 'center', minWidth: 50,
+            title: '昵称', key: 'nickname', align: 'center', minWidth: 40,
             render: (h, params) => {
               return h('div', [
                 h('span', {
@@ -203,7 +203,27 @@
               ])
             }
           },
-          {title: '留言时间', key: 'comment_date', align: 'center', minWidth: 50,},
+          {
+            title: '留言时间', key: 'comment_timestamp', align: 'center', minWidth: 110,
+            render: (h, params) => {
+              let date = new Date(params.row.comment_timestamp * 1000);
+              let dateStr = date.toLocaleDateString("zh").replace(/\//g, "-") + " " + date.toTimeString().substr(0, 8);
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: dateStr
+                  }
+                }, dateStr)
+              ])
+            }
+          },
           {title: '浏览器', key: 'browser', align: 'center', minWidth: 50,},
           {title: '操作系统', key: 'os', align: 'center', minWidth: 50,},
           {
@@ -267,13 +287,49 @@
               ])
             }
           },
-          {title: '留言时间', key: 'reply_date', align: 'center', },
+          {title: '回复时间', key: 'reply_timestamp', align: 'center', ellipsis:true,
+            render: (h, params) => {
+              let replyTimestamp = params.row.reply_timestamp;
+              let date = (replyTimestamp).toString().length < 13 ? new Date(replyTimestamp * 1000) : new Date(replyTimestamp);
+              let dateStr = date.toLocaleDateString("zh").replace(/\//g, "-") + " " + date.toTimeString().substr(0, 8);
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: 'inline-block',
+                    width: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  },
+                  domProps: {
+                    title: dateStr
+                  }
+                }, dateStr)
+              ])
+            }
+          },
           {title: '浏览器', key: 'browser', align: 'center', },
           {title: '操作系统', key: 'os', align: 'center', },
         ]
       };
     },
     methods: {
+      formatTime(val) {
+        if (val === "" || val == null) {
+          return "";
+        }
+        let year = parseInt(val.year) + 1900;
+        let month = (parseInt(val.month) + 1);
+        let date = parseInt(val.date);
+        date = date > 9 ? date : ('0' + date);
+        let hours = parseInt(val.hours);
+        hours = hours > 9 ? hours : ('0' + hours);
+        let minutes = parseInt(val.minutes);
+        minutes = minutes > 9 ? minutes : ('0' + minutes);
+        let seconds = parseInt(val.seconds);
+        seconds = seconds > 9 ? seconds : ('0' + seconds);
+        return year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds;
+      },
       resetSearch() {
         this.currentPage = 1;
         this.searchPostId = null;
